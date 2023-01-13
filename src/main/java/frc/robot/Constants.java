@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -88,9 +87,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double MAX_SPEED = 4.5; //TODO: This must be tuned to specific robot
+        public static final double MAX_SPEED = 4.5;
         /** Radians per Second */
-        public static final double MAX_ANGULAR_VELOCITY = 10.0; //TODO: This must be tuned to specific robot
+        public static final double MAX_ANGULAR_VELOCITY = 2 * Math.PI;
 
         /* Neutral Modes */
         public static final NeutralMode STEER_NEUTRAL_MODE = NeutralMode.Coast;
@@ -103,7 +102,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 2;
             public static final int CAN_CODER_ID = 9;
             public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(140.54);
-            public static final SwerveModuleConstants CONSTANTS = 
+            public static final SwerveModuleConstants CONSTANTS =
                 new SwerveModuleConstants(DRIVE_MOTOR_ID, STEER_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
 
@@ -113,17 +112,17 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 4;
             public static final int CAN_CODER_ID = 10;
             public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(191.51);
-            public static final SwerveModuleConstants CONSTANTS = 
+            public static final SwerveModuleConstants CONSTANTS =
                 new SwerveModuleConstants(DRIVE_MOTOR_ID, STEER_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
-        
+
         /* Back Left Module - Module 2 */
         public static final class BL {
             public static final int STEER_MOTOR_ID = 7;
             public static final int DRIVE_MOTOR_ID = 8;
             public static final int CAN_CODER_ID = 12;
             public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(42.1);
-            public static final SwerveModuleConstants CONSTANTS = 
+            public static final SwerveModuleConstants CONSTANTS =
                 new SwerveModuleConstants(DRIVE_MOTOR_ID, STEER_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
 
@@ -133,12 +132,12 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 6;
             public static final int CAN_CODER_ID = 11;
             public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(275.1);
-            public static final SwerveModuleConstants CONSTANTS = 
+            public static final SwerveModuleConstants CONSTANTS =
                 new SwerveModuleConstants(DRIVE_MOTOR_ID, STEER_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
     }
 
-    public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
+    public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned to specific robot
         public static final double MAX_SPEED_METERS_PER_SECOND = 3;
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
         public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
@@ -147,11 +146,6 @@ public final class Constants {
         public static final double PX_CONTROLLER = 1;
         public static final double PY_CONTROLLER = 1;
         public static final double PTHETA_CONTROLLER = 1;
-
-        /* Constraint for the motion profilied robot angle controller */
-        public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS =
-            new TrapezoidProfile.Constraints(
-                MAX_ANGULAR_SPEED_RADIANS_PER_SECOND, MAX_ANGULAR_SPEED_RADIANS_PER_SECOND_SQUARED);
     }
 
     public static final class OIConstants {

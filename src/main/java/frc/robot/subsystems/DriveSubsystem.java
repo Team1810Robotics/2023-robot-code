@@ -9,10 +9,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -20,10 +17,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -31,8 +24,6 @@ public class DriveSubsystem extends SubsystemBase {
     public SwerveModule[] swerveModules;
     public PigeonIMU gyro;
     private ShuffleboardContainer moduleContainer[] = new ShuffleboardContainer[4];
-
-    public double driveP, driveI, driveD;
 
     public DriveSubsystem() {
         gyro = new PigeonIMU(DriveConstants.PIGEON_ID);
@@ -55,14 +46,14 @@ public class DriveSubsystem extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             DriveConstants.SWERVE_KINEMATICS.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation, 
+                                    translation.getX(),
+                                    translation.getY(),
+                                    rotation,
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
+                                    translation.getX(),
+                                    translation.getY(),
                                     rotation)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.MAX_SPEED);
@@ -113,41 +104,18 @@ public class DriveSubsystem extends SubsystemBase {
         return (DriveConstants.INVERT_GYRO) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
+    public void stop() {
+        for (SwerveModule module : swerveModules) {
+            module.stop();
+        }
+    }
+
     @Override
     public void periodic() {
         swerveOdometry.update(getYaw(), getModulePositions());
-
-        SmartDashboard.putNumber("Gyro Yaw", getYaw().getDegrees());
-        SmartDashboard.putNumber("Drive P", driveP);
-        SmartDashboard.putNumber("Drive I", driveI);
-        SmartDashboard.putNumber("Drive D", driveD);
     }
 
     /** path stuff */
-    public Command followTrajectoryCommand(PathPlannerTrajectory trajectory, boolean firstPath) {
-        return new SequentialCommandGroup(
-            new InstantCommand(() -> {
-                if (firstPath)
-                    this.resetOdometry(trajectory.getInitialHolonomicPose());
-            }),
-            new PPSwerveControllerCommand(
-                trajectory,
-                this::getPose,
-                DriveConstants.SWERVE_KINEMATICS,
-                new PIDController(DriveConstants.DRIVE_kP,
-                                  DriveConstants.DRIVE_kI,
-                                  DriveConstants.DRIVE_kD),
-                new PIDController(DriveConstants.DRIVE_kP,
-                                  DriveConstants.DRIVE_kI,
-                                  DriveConstants.DRIVE_kD),
-                new PIDController(DriveConstants.STEER_kP,
-                                  DriveConstants.STEER_kI,
-                                  DriveConstants.STEER_kD),
-                this::setModuleStates
-            )
-        );
-    }
-
     private void setShuffleboard() {
         moduleContainer[0] = Shuffleboard.getTab("Modules")
                             .getLayout("Front Left Module", BuiltInLayouts.kList)

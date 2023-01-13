@@ -1,11 +1,11 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.autos.*;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.paths.TestPathplanner;
 import frc.robot.subsystems.*;
 
 import static frc.robot.IO.*;
@@ -18,10 +18,13 @@ import static frc.robot.IO.*;
  */
 public class RobotContainer {
 
+    SendableChooser<Command> pathChooser = new SendableChooser<>();
+
     /* Subsystems */
     private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    private final Command testPathplanner = new TestPathplanner(driveSubsystem);
+
     public RobotContainer() {
         driveSubsystem.setDefaultCommand(
             new SwerveDrive(
@@ -31,16 +34,13 @@ public class RobotContainer {
                 () -> -rightJoystick.getX(),
                 () -> true));
 
-        // Configure the button bindings
+        pathChooser.setDefaultOption("Null Path", new InstantCommand(() -> {}));
+        pathChooser.addOption("Test Pathplanner", testPathplanner);
+        Shuffleboard.getTab("Autonomous").add(pathChooser);
+
         configureButtonBindings();
     }
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
     private void configureButtonBindings() {
         /* Driver Buttons */
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
@@ -53,7 +53,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new exampleAuto(driveSubsystem);
+        return pathChooser.getSelected();
     }
 }

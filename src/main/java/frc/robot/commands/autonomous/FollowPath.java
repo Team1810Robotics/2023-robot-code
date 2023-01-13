@@ -1,4 +1,4 @@
-package frc.robot.autos;
+package frc.robot.commands.autonomous;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
@@ -8,6 +8,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import static frc.robot.Constants.*;
 
 public class FollowPath extends PPSwerveControllerCommand {
+    PathPlannerTrajectory trajectory;
+    DriveSubsystem driveSubsystem;
+
     public FollowPath(PathPlannerTrajectory trajectory, DriveSubsystem driveSubsystem) {
         super(trajectory,
               driveSubsystem::getPose,
@@ -23,5 +26,29 @@ public class FollowPath extends PPSwerveControllerCommand {
                                 DriveConstants.STEER_kD),
               driveSubsystem::setModuleStates,
               driveSubsystem);
+
+        this.trajectory = trajectory;
+        this.driveSubsystem = driveSubsystem;
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        super.end(interrupted);
+        driveSubsystem.stop();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return super.isFinished();
     }
 }
