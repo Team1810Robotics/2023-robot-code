@@ -75,8 +75,8 @@ public final class Constants {
         public static final double STEER_kF = CHOSEN_MODULE.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double DRIVE_kP = 0.05; //TODO: This must be tuned to specific robot
-        public static final double DRIVE_kI = 0.0;
+        public static final double DRIVE_kP = 1.2; //TODO: This must be tuned to specific robot
+        public static final double DRIVE_kI = 0.5;
         public static final double DRIVE_kD = 0.0;
         public static final double DRIVE_kF = 0.0;
 
@@ -143,11 +143,11 @@ public final class Constants {
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
         public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
         public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND_SQUARED = Math.PI;
-    
+
         public static final double PX_CONTROLLER = 1;
         public static final double PY_CONTROLLER = 1;
-        public static final double PTHETE_CONTROLLER = 1;
-    
+        public static final double PTHETA_CONTROLLER = 1;
+
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS =
             new TrapezoidProfile.Constraints(

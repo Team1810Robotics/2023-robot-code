@@ -30,7 +30,7 @@ public class SwerveModule {
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
-        
+
         /* Angle Encoder Config */
         angleEncoder = new CANCoder(moduleConstants.cancoderID);
         configAngleEncoder();
@@ -54,11 +54,10 @@ public class SwerveModule {
     }
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
-        if(isOpenLoop) {
+        if (isOpenLoop) {
             double percentOutput = desiredState.speedMetersPerSecond / DriveConstants.MAX_SPEED;
             mDriveMotor.set(ControlMode.PercentOutput, percentOutput);
-        }
-        else {
+        } else {
             double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond, DriveConstants.WHEEL_CIRCUMFERENCE, DriveConstants.DRIVE_GEAR_RATIO);
             mDriveMotor.set(ControlMode.Velocity, velocity, DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
         }
@@ -66,7 +65,7 @@ public class SwerveModule {
 
     private void setAngle(SwerveModuleState desiredState) {
         Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (DriveConstants.MAX_SPEED * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
-        
+
         mAngleMotor.set(ControlMode.Position, Conversions.degreesToFalcon(angle.getDegrees(), DriveConstants.STEER_GEAR_RATIO));
         lastAngle = angle;
     }
@@ -84,7 +83,7 @@ public class SwerveModule {
         mAngleMotor.setSelectedSensorPosition(absolutePosition);
     }
 
-    private void configAngleEncoder() {        
+    private void configAngleEncoder() {
         angleEncoder.configFactoryDefault();
         angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
     }
@@ -97,7 +96,7 @@ public class SwerveModule {
         resetToAbsolute();
     }
 
-    private void configDriveMotor() {        
+    private void configDriveMotor() {
         mDriveMotor.configFactoryDefault();
         mDriveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
         mDriveMotor.setInverted(DriveConstants.DRIVE_MOTOR_INVERT);

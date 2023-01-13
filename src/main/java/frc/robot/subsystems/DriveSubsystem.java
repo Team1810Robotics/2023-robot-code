@@ -9,18 +9,30 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] swerveModules;
     public PigeonIMU gyro;
+    private ShuffleboardContainer moduleContainer[] = new ShuffleboardContainer[4];
+
+    public double driveP, driveI, driveD;
 
     public DriveSubsystem() {
         gyro = new PigeonIMU(DriveConstants.PIGEON_ID);
@@ -35,6 +47,8 @@ public class DriveSubsystem extends SubsystemBase {
         };
 
         swerveOdometry = new SwerveDriveOdometry(DriveConstants.SWERVE_KINEMATICS, getYaw(), getModulePositions());
+
+        setShuffleboard();
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -56,16 +70,16 @@ public class DriveSubsystem extends SubsystemBase {
         for (SwerveModule mod : swerveModules) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-    }    
+    }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.MAX_SPEED);
-        
+
         for (SwerveModule mod : swerveModules) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
         }
-    }    
+    }
 
     public Pose2d getPose() {
         return swerveOdometry.getPoseMeters();
@@ -101,12 +115,67 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        swerveOdometry.update(getYaw(), getModulePositions());  
+        swerveOdometry.update(getYaw(), getModulePositions());
+
+        SmartDashboard.putNumber("Gyro Yaw", getYaw().getDegrees());
+        SmartDashboard.putNumber("Drive P", driveP);
+        SmartDashboard.putNumber("Drive I", driveI);
+        SmartDashboard.putNumber("Drive D", driveD);
+    }
+
+    /** path stuff */
+    public Command followTrajectoryCommand(PathPlannerTrajectory trajectory, boolean firstPath) {
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> {
+                if (firstPath)
+                    this.resetOdometry(trajectory.getInitialHolonomicPose());
+            }),
+            new PPSwerveControllerCommand(
+                trajectory,
+                this::getPose,
+                DriveConstants.SWERVE_KINEMATICS,
+                new PIDController(DriveConstants.DRIVE_kP,
+                                  DriveConstants.DRIVE_kI,
+                                  DriveConstants.DRIVE_kD),
+                new PIDController(DriveConstants.DRIVE_kP,
+                                  DriveConstants.DRIVE_kI,
+                                  DriveConstants.DRIVE_kD),
+                new PIDController(DriveConstants.STEER_kP,
+                                  DriveConstants.STEER_kI,
+                                  DriveConstants.STEER_kD),
+                this::setModuleStates
+            )
+        );
+    }
+
+    private void setShuffleboard() {
+        moduleContainer[0] = Shuffleboard.getTab("Modules")
+                            .getLayout("Front Left Module", BuiltInLayouts.kList)
+                            .withSize(2, 4)
+                            .withPosition(0, 0);
+
+        moduleContainer[1] = Shuffleboard.getTab("Modules")
+                            .getLayout("Front Right Module", BuiltInLayouts.kList)
+                            .withSize(2, 4)
+                            .withPosition(2, 0);
+
+        moduleContainer[2] = Shuffleboard.getTab("Modules")
+                            .getLayout("Back Left Module", BuiltInLayouts.kList)
+                            .withSize(2, 4)
+                            .withPosition(4, 0);
+
+        moduleContainer[3] = Shuffleboard.getTab("Modules")
+                            .getLayout("Back Right Module", BuiltInLayouts.kList)
+                            .withSize(2, 4)
+                            .withPosition(6, 0);
 
         for (SwerveModule mod : swerveModules) {
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            moduleContainer[mod.moduleNumber].addNumber("Cancoder Positon",
+                    () -> mod.getCanCoder().getDegrees());
+            moduleContainer[mod.moduleNumber].addNumber("Integrated Encoder",
+                    () -> mod.getPosition().angle.getDegrees());
+            moduleContainer[mod.moduleNumber].addNumber("Module Velocity",
+                    () -> mod.getState().speedMetersPerSecond);
         }
     }
 }

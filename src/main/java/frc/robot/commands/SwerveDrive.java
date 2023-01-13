@@ -17,7 +17,7 @@ public class SwerveDrive extends CommandBase {
     private DoubleSupplier translationX;
     private DoubleSupplier translationY;
     private DoubleSupplier thetaSupplier;
-    private BooleanSupplier fieldOriented;
+    private boolean fieldOriented;
 
     public SwerveDrive(DriveSubsystem driveSubsystem, DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier thetaSupplier, BooleanSupplier fieldOriented) {
         this.driveSubsystem = driveSubsystem;
@@ -26,7 +26,7 @@ public class SwerveDrive extends CommandBase {
         this.translationX = translationX;
         this.translationY = translationY;
         this.thetaSupplier = thetaSupplier;
-        this.fieldOriented = fieldOriented;
+        this.fieldOriented = fieldOriented.getAsBoolean();
     }
 
     @Override
@@ -38,9 +38,9 @@ public class SwerveDrive extends CommandBase {
 
         /* Drive */
         driveSubsystem.drive(
-            new Translation2d(translationXValue, translationYValue).times(DriveConstants.MAX_SPEED), 
+            new Translation2d(translationXValue, translationYValue).times(DriveConstants.MAX_SPEED),
             thetaValue * DriveConstants.MAX_ANGULAR_VELOCITY, 
-            fieldOriented.getAsBoolean(), 
+            fieldOriented,
             true
         );
     }
