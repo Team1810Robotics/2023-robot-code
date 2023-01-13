@@ -9,10 +9,19 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
+/**
+ * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants should be declared
+ * globally (i.e. public static). Do not put anything functional in this class.
+ *
+ * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * constants are needed, to reduce verbosity.
+ * <p>
+ * For example:
+ * <pre> {@code import static frc.robot.Constants.*;} </pre>
+ */
 public final class Constants {
-    public static final double stickDeadband = 0.3;
-
-    public static final class Swerve {
+    public static final class DriveConstants {
         public static final int pigeonID = 13;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
@@ -89,7 +98,7 @@ public final class Constants {
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
-        public static final class Mod0 { //TODO: This must be tuned to specific robot
+        public static final class FL {
             public static final int angleMotorID = 1;
             public static final int driveMotorID = 2;
             public static final int canCoderID = 9;
@@ -99,7 +108,7 @@ public final class Constants {
         }
 
         /* Front Right Module - Module 1 */
-        public static final class Mod1 { //TODO: This must be tuned to specific robot
+        public static final class FR {
             public static final int angleMotorID = 3;
             public static final int driveMotorID = 4;
             public static final int canCoderID = 10;
@@ -109,7 +118,7 @@ public final class Constants {
         }
         
         /* Back Left Module - Module 2 */
-        public static final class Mod2 { //TODO: This must be tuned to specific robot
+        public static final class BL {
             public static final int angleMotorID = 7;
             public static final int driveMotorID = 8;
             public static final int canCoderID = 12;
@@ -119,7 +128,7 @@ public final class Constants {
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 { //TODO: This must be tuned to specific robot
+        public static final class BR {
             public static final int angleMotorID = 5;
             public static final int driveMotorID = 6;
             public static final int canCoderID = 11;
@@ -143,5 +152,13 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+    }
+
+    public static final class OIConstants {
+        public static final int MOVEMENT_JOYSTICK_PORT = 0;
+        public static final int ROTATION_JOYSTICK_PORT = 1;
+        public static final int MANIPULATOR_CONTROLLER_PORT = 2;
+
+        public static final double DEADBAND = 0.3;
     }
 }

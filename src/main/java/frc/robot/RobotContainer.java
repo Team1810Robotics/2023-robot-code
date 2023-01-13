@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+
 import static frc.robot.IO.*;
 
 /**
@@ -18,13 +19,13 @@ import static frc.robot.IO.*;
 public class RobotContainer {
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve,
+        driveSubsystem.setDefaultCommand(
+            new SwerveDrive(
+                driveSubsystem,
                 () -> -leftJoystick.getY(),
                 () -> -leftJoystick.getX(),
                 () -> -rightJoystick.getX(),
@@ -42,8 +43,8 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        LeftJoystick_Button9.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        RightJoystick_Button9.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
+        rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
     }
 
     /**
@@ -53,6 +54,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return new exampleAuto(driveSubsystem);
     }
 }
