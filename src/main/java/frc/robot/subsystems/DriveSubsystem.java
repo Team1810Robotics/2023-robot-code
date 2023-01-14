@@ -56,20 +56,23 @@ public class DriveSubsystem extends SubsystemBase {
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates =
             DriveConstants.SWERVE_KINEMATICS.toSwerveModuleStates(
-                fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX(),
-                                    translation.getY(),
-                                    rotation,
-                                    getGyroYaw()
-                                )
-                                : new ChassisSpeeds(
-                                    translation.getX(),
-                                    translation.getY(),
-                                    rotation)
-                                );
+                fieldRelative ?
+                    ChassisSpeeds.fromFieldRelativeSpeeds(
+                            translation.getX(),
+                            translation.getY(),
+                            rotation,
+                            getGyroYaw()) :
+                    new ChassisSpeeds(
+                            translation.getX(),
+                            translation.getY(),
+                            rotation));
+
         // TODO: remove later
         SmartDashboard.putNumber("tranlation.getX()", translation.getX());
         SmartDashboard.putNumber("tranlation.getY()", translation.getY());
+        SmartDashboard.putBoolean("Gyro?", gyro.getState().value == 2);
+        SmartDashboard.putNumber("Gyro state", gyro.getState().value); // Should be 2 bad if 1
+
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.MAX_SPEED);
 
         for (SwerveModule mod : swerveModules) {
@@ -160,5 +163,7 @@ public class DriveSubsystem extends SubsystemBase {
             moduleContainer[mod.moduleNumber].addNumber("Module Velocity",
                     () -> mod.getState().speedMetersPerSecond);
         }
+
+        Shuffleboard.getTab("SmartDashboard").addNumber("Gyro Temp in F", () -> (gyro.getTemp() * (9 / 5) + 32));
     }
 }

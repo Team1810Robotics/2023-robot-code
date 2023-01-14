@@ -32,7 +32,7 @@ public final class Constants {
         public static final double WHEELBASE = 0.64928;
         public static final double WHEEL_CIRCUMFERENCE = CHOSEN_MODULE.wheelCircumference;
 
-        /* Swerve Kinematics 
+        /* Swerve Kinematics
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
          public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
             new Translation2d(WHEELBASE / 2.0, TRACKWIDTH / 2.0),
@@ -74,14 +74,14 @@ public final class Constants {
         public static final double STEER_kF = CHOSEN_MODULE.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double DRIVE_kP = 1.2; //TODO: This must be tuned to specific robot
+        public static final double DRIVE_kP = 1.2; // TODO: This must be tuned to specific robot
         public static final double DRIVE_kI = 0.5;
         public static final double DRIVE_kD = 0.0;
         public static final double DRIVE_kF = 0.0;
 
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double DRIVE_kS = (0.32 / 12); //TODO: This must be tuned to specific robot
+        public static final double DRIVE_kS = (0.32 / 12); // TODO: This must be tuned to specific robot
         public static final double DRIVE_kV = (1.51 / 12);
         public static final double DRIVE_kA = (0.27 / 12);
 
@@ -137,7 +137,7 @@ public final class Constants {
         }
     }
 
-    public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned to specific robot
+    public static final class AutoConstants {
         public static final double MAX_SPEED_METERS_PER_SECOND = 3;
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
         public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
