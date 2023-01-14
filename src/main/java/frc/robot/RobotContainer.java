@@ -45,7 +45,6 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-        /* Driver Buttons */
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
         rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
     }
