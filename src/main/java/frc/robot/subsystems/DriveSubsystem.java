@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
+import frc.robot.log.Logger;
+
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -17,9 +19,18 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
+    /**
+     * The logger.
+     *
+     * @since 2018
+     */
+    @SuppressWarnings("unused")
+    private static final Logger LOG = new Logger();
+
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] swerveModules;
     public PigeonIMU gyro;
@@ -37,7 +48,7 @@ public class DriveSubsystem extends SubsystemBase {
             new SwerveModule(3, DriveConstants.BR.CONSTANTS)
         };
 
-        swerveOdometry = new SwerveDriveOdometry(DriveConstants.SWERVE_KINEMATICS, getYaw(), getModulePositions());
+        swerveOdometry = new SwerveDriveOdometry(DriveConstants.SWERVE_KINEMATICS, getGyroYaw(), getModulePositions());
 
         setShuffleboard();
     }
@@ -49,13 +60,16 @@ public class DriveSubsystem extends SubsystemBase {
                                     translation.getX(),
                                     translation.getY(),
                                     rotation,
-                                    getYaw()
+                                    getGyroYaw()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(),
                                     translation.getY(),
                                     rotation)
                                 );
+        // TODO: remove later
+        SmartDashboard.putNumber("tranlation.getX()", translation.getX());
+        SmartDashboard.putNumber("tranlation.getY()", translation.getY());
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.MAX_SPEED);
 
         for (SwerveModule mod : swerveModules) {
@@ -77,7 +91,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
     public SwerveModuleState[] getModuleStates() {
@@ -100,7 +114,7 @@ public class DriveSubsystem extends SubsystemBase {
         gyro.setYaw(0);
     }
 
-    public Rotation2d getYaw() {
+    public Rotation2d getGyroYaw() {
         return (DriveConstants.INVERT_GYRO) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
@@ -112,7 +126,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        swerveOdometry.update(getYaw(), getModulePositions());
+        swerveOdometry.update(getGyroYaw(), getModulePositions());
+        SmartDashboard.putNumber("Gyro Yaw", getGyroYaw().getDegrees());
     }
 
     /** path stuff */

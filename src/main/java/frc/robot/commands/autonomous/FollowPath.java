@@ -42,13 +42,13 @@ public class FollowPath extends PPSwerveControllerCommand {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        super.end(interrupted);
-        driveSubsystem.stop();
+    public boolean isFinished() {
+        return super.isFinished();
     }
 
     @Override
-    public boolean isFinished() {
-        return super.isFinished();
+    public void end(boolean interrupted) {
+        super.end(interrupted);
+        driveSubsystem.stop();
     }
 }

@@ -39,9 +39,14 @@ public class SwerveDrive extends CommandBase {
         /* Drive */
         driveSubsystem.drive(
             new Translation2d(translationXValue, translationYValue).times(DriveConstants.MAX_SPEED),
-            thetaValue * DriveConstants.MAX_ANGULAR_VELOCITY, 
+            thetaValue * DriveConstants.MAX_ANGULAR_VELOCITY,
             fieldOriented,
             true
         );
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        driveSubsystem.stop();
     }
 }

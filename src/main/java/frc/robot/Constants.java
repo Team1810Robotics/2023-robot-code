@@ -58,8 +58,8 @@ public final class Constants {
         public static final boolean STEER_ENABLE_CURRENT_LIMIT = true;
 
         public static final int DRIVE_CONTINUOUS_CURRENT_LIMIT = 35;
-        public static final int DRIVE_PEAK_CURRENT_LIMIT = 60;
-        public static final double DEIVE_PEAK_CURRENT_DURATION = 0.1;
+        public static final int DRIVE_PEAK_CURRENT_LIMIT = 80;
+        public static final double DRIVE_PEAK_CURRENT_DURATION = 0.1;
         public static final boolean DRIVE_ENABLE_CURRENT_LIMIT = true;
 
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.

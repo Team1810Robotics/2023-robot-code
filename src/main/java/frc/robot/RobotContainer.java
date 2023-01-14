@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.paths.AutoLine;
 import frc.robot.commands.autonomous.paths.TestPathplanner;
 import frc.robot.subsystems.*;
 
@@ -24,6 +25,7 @@ public class RobotContainer {
     private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
     private final Command testPathplanner = new TestPathplanner(driveSubsystem);
+    private final Command autoline = new AutoLine(driveSubsystem);
 
     public RobotContainer() {
         driveSubsystem.setDefaultCommand(
@@ -36,6 +38,7 @@ public class RobotContainer {
 
         pathChooser.setDefaultOption("Null Path", new InstantCommand(() -> {}));
         pathChooser.addOption("Test Pathplanner", testPathplanner);
+        pathChooser.addOption("4m Path", autoline);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
         configureButtonBindings();

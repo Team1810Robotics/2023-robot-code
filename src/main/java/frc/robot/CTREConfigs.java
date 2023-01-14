@@ -37,7 +37,7 @@ public final class CTREConfigs {
             DriveConstants.DRIVE_ENABLE_CURRENT_LIMIT, 
             DriveConstants.DRIVE_CONTINUOUS_CURRENT_LIMIT, 
             DriveConstants.DRIVE_PEAK_CURRENT_LIMIT, 
-            DriveConstants.DEIVE_PEAK_CURRENT_DURATION);
+            DriveConstants.DRIVE_PEAK_CURRENT_DURATION);
 
         swerveDriveFXConfig.slot0.kP = DriveConstants.DRIVE_kP;
         swerveDriveFXConfig.slot0.kI = DriveConstants.DRIVE_kI;
