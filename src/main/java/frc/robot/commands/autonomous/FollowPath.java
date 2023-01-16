@@ -7,6 +7,7 @@ import edu.wpi.first.math.controller.PIDController;
 import frc.robot.subsystems.DriveSubsystem;
 import static frc.robot.Constants.*;
 
+// thin wrapper around PPSwerveControllerCommand to follow a PathPlannerTrajectory
 public class FollowPath extends PPSwerveControllerCommand {
     PathPlannerTrajectory trajectory;
     DriveSubsystem driveSubsystem;

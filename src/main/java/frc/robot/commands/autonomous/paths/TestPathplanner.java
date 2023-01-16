@@ -10,6 +10,8 @@ import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
+// default path planner path
+// https://drive.google.com/file/d/1FnDsJA_6mmZu-9TIkjMY9jorip5BepSF/view?usp=sharing
 public class TestPathplanner extends SequentialCommandGroup {
     public TestPathplanner(DriveSubsystem driveSubsystem) {
         PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("defaultPath",

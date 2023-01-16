@@ -10,6 +10,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 import static frc.robot.Constants.*;
 
+// Should be a four meter path that drives forward
 public class AutoLine extends SequentialCommandGroup {
     public AutoLine(DriveSubsystem driveSubsystem) {
         PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("line",

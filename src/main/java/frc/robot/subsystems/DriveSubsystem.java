@@ -133,7 +133,7 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Gyro Yaw", getGyroYaw().getDegrees());
     }
 
-    /** path stuff */
+    // sets the shuffleboard a few values from the modules
     private void setShuffleboard() {
         moduleContainer[0] = Shuffleboard.getTab("Modules")
                             .getLayout("Front Left Module", BuiltInLayouts.kList)
