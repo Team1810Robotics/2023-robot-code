@@ -130,7 +130,10 @@ public class DriveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         swerveOdometry.update(getGyroYaw(), getModulePositions());
+
         SmartDashboard.putNumber("Gyro Yaw", getGyroYaw().getDegrees());
+        SmartDashboard.putNumber("Gyro Temp in F", gyro.getTemp() * (9 / 5) + 32);
+        SmartDashboard.putBoolean("Gyro Zero", (Math.abs(getGyroYaw().getDegrees()) % 360) < 0.5);
     }
 
     // sets the shuffleboard a few values from the modules
@@ -163,7 +166,5 @@ public class DriveSubsystem extends SubsystemBase {
             moduleContainer[mod.moduleNumber].addNumber("Module Velocity",
                     () -> mod.getState().speedMetersPerSecond);
         }
-
-        Shuffleboard.getTab("SmartDashboard").addNumber("Gyro Temp in F", () -> (gyro.getTemp() * (9 / 5) + 32));
     }
 }

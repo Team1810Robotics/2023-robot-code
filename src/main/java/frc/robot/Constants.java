@@ -59,7 +59,7 @@ public final class Constants {
 
         public static final int DRIVE_CONTINUOUS_CURRENT_LIMIT = 35;
         public static final int DRIVE_PEAK_CURRENT_LIMIT = 80;
-        public static final double DRIVE_PEAK_CURRENT_DURATION = 0.1;
+        public static final double DRIVE_PEAK_CURRENT_DURATION = 3;
         public static final boolean DRIVE_ENABLE_CURRENT_LIMIT = true;
 
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
@@ -74,9 +74,9 @@ public final class Constants {
         public static final double STEER_kF = CHOSEN_MODULE.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double DRIVE_kP = 1.2; // TODO: This must be tuned to specific robot
-        public static final double DRIVE_kI = 0.5;
-        public static final double DRIVE_kD = 0.0;
+        public static final double DRIVE_kP = 0.1; // TODO: This must be tuned to specific robot
+        public static final double DRIVE_kI = 0.0;
+        public static final double DRIVE_kD = 0.01;
         public static final double DRIVE_kF = 0.0;
 
         /* Drive Motor Characterization Values 
@@ -87,9 +87,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double MAX_SPEED = 4.5;
+        public static final double MAX_SPEED = 4;
         /** Radians per Second */
-        public static final double MAX_ANGULAR_VELOCITY = 2 * Math.PI;
+        public static final double MAX_ANGULAR_VELOCITY = Math.PI;
 
         /* Neutral Modes */
         public static final NeutralMode STEER_NEUTRAL_MODE = NeutralMode.Coast;
