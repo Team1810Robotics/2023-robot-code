@@ -20,7 +20,6 @@ public class AutoLine extends SequentialCommandGroup {
 
         addCommands(
             new InstantCommand(() -> driveSubsystem.resetOdometry(trajectory1.getInitialHolonomicPose())),
-            new InstantCommand(() -> driveSubsystem.zeroGyro()),
             new WaitCommand(0.5),
             new FollowPath(trajectory1, driveSubsystem)
         );

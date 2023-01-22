@@ -18,7 +18,7 @@ public class SpinTest extends SequentialCommandGroup {
             AutoConstants.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
         addCommands(
-            new InstantCommand(() -> driveSubsystem.zeroGyro()),
+            new InstantCommand(() -> driveSubsystem.resetOdometry(trajectory1.getInitialHolonomicPose())),
             new FollowPath(trajectory1, driveSubsystem)
         );
     }

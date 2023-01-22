@@ -32,9 +32,9 @@ public class SwerveDrive extends CommandBase {
     @Override
     public void execute() {
         /* Get Values, Deadband*/
-        double translationXValue = MathUtil.applyDeadband(translationX.getAsDouble(), OIConstants.DEADBAND);
-        double translationYValue = MathUtil.applyDeadband(translationY.getAsDouble(), OIConstants.DEADBAND);
-        double thetaValue = MathUtil.applyDeadband(thetaSupplier.getAsDouble(), OIConstants.DEADBAND);
+        double translationXValue = MathUtil.applyDeadband(translationX.getAsDouble(),  OIConstants.DEADBAND);
+        double translationYValue = MathUtil.applyDeadband(translationY.getAsDouble(),  OIConstants.DEADBAND);
+        double thetaValue        = MathUtil.applyDeadband(thetaSupplier.getAsDouble(), OIConstants.DEADBAND);
 
         /* Drive */
         driveSubsystem.drive(

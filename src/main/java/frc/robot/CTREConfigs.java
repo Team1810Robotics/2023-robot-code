@@ -21,9 +21,9 @@ public final class CTREConfigs {
 
         /* Swerve Angle Motor Configurations */
         SupplyCurrentLimitConfiguration angleSupplyLimit = new SupplyCurrentLimitConfiguration(
-            DriveConstants.STEER_ENABLE_CURRENT_LIMIT, 
-            DriveConstants.STEER_CONTINUOUS_CURRENT_LIMIT, 
-            DriveConstants.STEER_PEAK_CURRENT_LIMIT, 
+            DriveConstants.STEER_ENABLE_CURRENT_LIMIT,
+            DriveConstants.STEER_CONTINUOUS_CURRENT_LIMIT,
+            DriveConstants.STEER_PEAK_CURRENT_LIMIT,
             DriveConstants.STEER_PEAK_CURRENT_DURATION);
 
         swerveAngleFXConfig.slot0.kP = DriveConstants.STEER_kP;
@@ -34,9 +34,9 @@ public final class CTREConfigs {
 
         /* Swerve Drive Motor Configuration */
         SupplyCurrentLimitConfiguration driveSupplyLimit = new SupplyCurrentLimitConfiguration(
-            DriveConstants.DRIVE_ENABLE_CURRENT_LIMIT, 
-            DriveConstants.DRIVE_CONTINUOUS_CURRENT_LIMIT, 
-            DriveConstants.DRIVE_PEAK_CURRENT_LIMIT, 
+            DriveConstants.DRIVE_ENABLE_CURRENT_LIMIT,
+            DriveConstants.DRIVE_CONTINUOUS_CURRENT_LIMIT,
+            DriveConstants.DRIVE_PEAK_CURRENT_LIMIT,
             DriveConstants.DRIVE_PEAK_CURRENT_DURATION);
 
         swerveDriveFXConfig.slot0.kP = DriveConstants.DRIVE_kP;
