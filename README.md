@@ -1,4 +1,7 @@
-# 2023-robot-code
-FRC Team 1810 - Catatronics - 2023 -Charged Up - Varsity Robot Code 
+# 2023 Varsity Robot Code 
 
-[![CI](https://github.com/Team1810Robotics/2023-robot-code/actions/workflows/main.yml/badge.svg)](https://github.com/Team1810Robotics/2023-robot-code/actions/workflows/main.yml)
+## Team 1810 - Catatronics - code for the 2023 competition season
+
+### Bot yet unnamed
+
+---
