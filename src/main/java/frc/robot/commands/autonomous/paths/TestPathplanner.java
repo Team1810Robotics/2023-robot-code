@@ -7,7 +7,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 
 import frc.robot.commands.autonomous.FollowPath;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 // default path planner path
@@ -19,7 +18,6 @@ public class TestPathplanner extends SequentialCommandGroup {
                                 AutoConstants.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
         addCommands(
-            new InstantCommand(() -> driveSubsystem.resetOdometry(trajectory1.getInitialHolonomicPose())),
             new FollowPath(trajectory1, driveSubsystem)
         );
     }

@@ -148,6 +148,23 @@ public final class Constants {
         public static final double PTHETA_CONTROLLER = 1;
     }
 
+    public static final class ArmConstants {
+        public static final class IntakeConstants {
+
+        }
+
+        public static final class ExtenderConstants {
+            public static final int RELAY_ID = 0; // TODO: get actual ID
+            public static final int ENCODER_PORTS[] = {0, 1}; // TODO: get real values
+
+            public static final int LIMIT_SWITCH_PORTS[] = {0, 1};
+        }
+
+        public static final class LiftConstants {
+
+        }
+    }
+
     public static final class OIConstants {
         public static final int MOVEMENT_JOYSTICK_PORT = 0;
         public static final int ROTATION_JOYSTICK_PORT = 1;

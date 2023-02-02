@@ -3,9 +3,7 @@ package frc.robot.commands.autonomous.paths;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.autonomous.FollowPath;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -19,8 +17,6 @@ public class AutoLine extends SequentialCommandGroup {
                 AutoConstants.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
         addCommands(
-            new InstantCommand(() -> driveSubsystem.resetOdometry(trajectory1.getInitialHolonomicPose())),
-            new WaitCommand(0.5),
             new FollowPath(trajectory1, driveSubsystem)
         );
     }
