@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -150,7 +151,14 @@ public final class Constants {
 
     public static final class ArmConstants {
         public static final class IntakeConstants {
+            public static final int MOTOR_ID = 15;
+            public static final boolean MOTOR_INVERTED = false;
 
+            public final static Color CONE_COLOR = new Color(0.361, 0.524, 0.113); // FIXME: not tuned
+            public final static Color CUBE_COLOR = new Color(0.541, 0.169, 0.886); // FIXME: not tuned
+
+            public final static int RIGHT_COLOR_SENSOR = 0; // FIXME: get a value that is real
+            public final static int LEFT_COLOR_SENSOR = 1; // FIXME: get a value that is real
         }
 
         public static final class ExtenderConstants {
