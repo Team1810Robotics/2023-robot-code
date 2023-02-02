@@ -169,7 +169,11 @@ public final class Constants {
         }
 
         public static final class LiftConstants {
+            public static final int MOTOR_ID = 14;
 
+            public static final double kP = 1; // TODO: tune
+            public static final double kI = 1; // TODO: tune
+            public static final double kD = 1; // TODO: tune
         }
     }
 
