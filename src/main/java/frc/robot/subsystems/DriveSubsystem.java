@@ -10,7 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -33,11 +33,11 @@ public class DriveSubsystem extends SubsystemBase {
 
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] swerveModules;
-    public PigeonIMU gyro;
+    public Pigeon2 gyro;
     private ShuffleboardContainer moduleContainer[] = new ShuffleboardContainer[4];
 
     public DriveSubsystem() {
-        gyro = new PigeonIMU(DriveConstants.PIGEON_ID);
+        gyro = new Pigeon2(DriveConstants.PIGEON_ID);
         gyro.configFactoryDefault();
         zeroGyro();
 
@@ -70,8 +70,6 @@ public class DriveSubsystem extends SubsystemBase {
         // TODO: remove later
         SmartDashboard.putNumber("tranlation.getX()", translation.getX());
         SmartDashboard.putNumber("tranlation.getY()", translation.getY());
-        SmartDashboard.putBoolean("Gyro?", gyro.getState().value == 2);
-        SmartDashboard.putNumber("Gyro state", gyro.getState().value); // Should be 2 bad if 1
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.MAX_SPEED);
 
