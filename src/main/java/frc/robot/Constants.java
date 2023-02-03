@@ -75,16 +75,18 @@ public final class Constants {
         public static final double STEER_kF = CHOSEN_MODULE.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double DRIVE_kP = 0.1; // TODO: This must be tuned to specific robot
+        // TODO: This must be tuned after the arm is attached
+        public static final double DRIVE_kP = 5.3092e-6;
         public static final double DRIVE_kI = 0.0;
-        public static final double DRIVE_kD = 0.01;
+        public static final double DRIVE_kD = 0.0;
         public static final double DRIVE_kF = 0.0;
 
-        /* Drive Motor Characterization Values 
+        /* Drive Motor Characterization Values
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double DRIVE_kS = (0.32 / 12); // TODO: This must be tuned to specific robot
-        public static final double DRIVE_kV = (1.51 / 12);
-        public static final double DRIVE_kA = (0.27 / 12);
+        // TODO: This must be tuned after the arm is attached
+        public static final double DRIVE_kS = (0.17 / 12);
+        public static final double DRIVE_kV = (0.32 / 12);
+        public static final double DRIVE_kA = (0.03 / 12);
 
         /* Swerve Profiling Values */
         /** Meters per Second */
@@ -143,10 +145,6 @@ public final class Constants {
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
         public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
         public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND_SQUARED = Math.PI;
-
-        public static final double PX_CONTROLLER = 1;
-        public static final double PY_CONTROLLER = 1;
-        public static final double PTHETA_CONTROLLER = 1;
     }
 
     public static final class ArmConstants {

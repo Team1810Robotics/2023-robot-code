@@ -28,15 +28,14 @@ public class FollowPath extends PPSwerveControllerCommand {
               driveSubsystem::setModuleStates,
               driveSubsystem);
 
-        driveSubsystem.resetOdometry(trajectory.getInitialHolonomicPose());
-
-        this.trajectory = trajectory;
-        this.driveSubsystem = driveSubsystem;
-    }
+              this.trajectory = trajectory;
+              this.driveSubsystem = driveSubsystem;
+            }
 
     @Override
     public void initialize() {
         super.initialize();
+        driveSubsystem.resetOdometry(trajectory.getInitialHolonomicPose());
     }
 
     @Override

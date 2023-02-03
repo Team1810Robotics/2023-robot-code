@@ -41,8 +41,8 @@ public class RobotContainer {
 
         pathChooser.setDefaultOption("Null Path", new InstantCommand(() -> {}));
         pathChooser.addOption("Test Pathplanner", testPathplanner);
-        pathChooser.addOption("4m Path", autoline);
-        pathChooser.addOption("3m spin", spinTest);
+        pathChooser.addOption("4m autoline", autoline);
+        pathChooser.addOption("5m spin", spinTest);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
         configureButtonBindings();
@@ -59,8 +59,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // FIXME
-        return autoline;
-        // return pathChooser.getSelected();
+        return pathChooser.getSelected();
     }
 }
