@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.*;
 import frc.robot.commands.autonomous.paths.AutoLine;
+import frc.robot.commands.autonomous.paths.FullSpin;
 import frc.robot.commands.autonomous.paths.SpinTest;
 import frc.robot.commands.autonomous.paths.TestPathplanner;
 import frc.robot.subsystems.*;
@@ -29,6 +30,7 @@ public class RobotContainer {
     private final Command testPathplanner = new TestPathplanner(driveSubsystem);
     private final Command autoline = new AutoLine(driveSubsystem);
     private final Command spinTest = new SpinTest(driveSubsystem);
+    private final Command fullSpin = new FullSpin(driveSubsystem);
 
     public RobotContainer() {
         driveSubsystem.setDefaultCommand(
@@ -43,6 +45,7 @@ public class RobotContainer {
         pathChooser.addOption("Test Pathplanner", testPathplanner);
         pathChooser.addOption("4m autoline", autoline);
         pathChooser.addOption("5m spin", spinTest);
+        pathChooser.addOption("360 spin", fullSpin);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
         configureButtonBindings();
