@@ -90,7 +90,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double MAX_SPEED = 4;
+        public static final double MAX_SPEED = 2.4;
         /** Radians per Second */
         public static final double MAX_ANGULAR_VELOCITY = Math.PI;
 

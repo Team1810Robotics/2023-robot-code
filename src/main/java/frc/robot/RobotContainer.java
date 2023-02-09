@@ -1,5 +1,7 @@
 package frc.robot;
 
+import static frc.robot.controller.IO.*;
+
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,8 +12,6 @@ import frc.robot.commands.autonomous.paths.FullSpin;
 import frc.robot.commands.autonomous.paths.SpinTest;
 import frc.robot.commands.autonomous.paths.TestPathplanner;
 import frc.robot.subsystems.*;
-
-import static frc.robot.IO.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

@@ -3,8 +3,11 @@ package frc.robot;
 import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import static frc.robot.controller.IO.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,6 +30,11 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         ctreConfigs = new CTREConfigs();
         PathPlannerServer.startServer(5811);
+        Shuffleboard.getTab("Controller").addNumber("Left Pot", () -> pipebomb.getLeftPot());
+        Shuffleboard.getTab("Controller").addNumber("Right Pot", () -> pipebomb.getRightPot());
+        Shuffleboard.getTab("Controller").addNumber("Center Pot", () -> pipebomb.getCenterPot());
+        Shuffleboard.getTab("Controller").addBoolean("Blue Switch", () -> pipebomb.getBlueSwitch());
+        Shuffleboard.getTab("Controller").addNumber("Red Switch", () -> pipebomb.getRedSwitch());
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
