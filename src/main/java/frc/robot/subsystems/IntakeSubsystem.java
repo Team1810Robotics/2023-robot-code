@@ -3,13 +3,14 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.ArmConstants.*;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final CANSparkMax intakeMotor;
-    // TODO: line break thing
+    private final DigitalInput lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
 
     public IntakeSubsystem() {
         intakeMotor = new CANSparkMax(IntakeConstants.MOTOR_ID, MotorType.kBrushless);
@@ -22,6 +23,16 @@ public class IntakeSubsystem extends SubsystemBase {
         } else {
             intakeMotor.set(-1);
         }
+    }
+
+    /**
+     * By default the linebreak is HIGH if the
+     * line is NOT broken and LOW if it is
+     * @return HIGH - line broken <br>
+     *         LOW - line connected
+     */
+    public boolean lineBreak() {
+        return !lineBreak.get();
     }
 
     public void stop() {

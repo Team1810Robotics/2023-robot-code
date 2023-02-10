@@ -152,11 +152,7 @@ public final class Constants {
             public static final int MOTOR_ID = 15;
             public static final boolean MOTOR_INVERTED = false;
 
-            public final static Color CONE_COLOR = new Color(0.361, 0.524, 0.113); // FIXME: not tuned
-            public final static Color CUBE_COLOR = new Color(0.541, 0.169, 0.886); // FIXME: not tuned
-
-            public final static int RIGHT_COLOR_SENSOR = 0; // FIXME: get a value that is real
-            public final static int LEFT_COLOR_SENSOR = 1; // FIXME: get a value that is real
+            public static final int LINE_BREAK_PORT = 0; // TODO: figure out port
         }
 
         public static final class ExtenderConstants {
