@@ -1,6 +1,7 @@
 package io.github.team1810robotics.robot.controller;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import io.github.team1810robotics.robot.log.Logger;
 import static io.github.team1810robotics.robot.Constants.*;
@@ -18,9 +19,10 @@ public final class IO {
     public static final Joystick leftJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
     public static final Joystick rightJoystick = LOG.catchAll(() -> new Joystick(OIConstants.ROTATION_JOYSTICK_PORT));
     public static final Pipebomb pipebomb = LOG.catchAll(() -> new Pipebomb(OIConstants.MANIPULATOR_CONTROLLER_PORT));
+    public static final XboxController xboxController = new XboxController(3);
 
     // Xbox buttons
-    /* public static final JoystickButton manipulatorXbox_B      = LOG.catchAll(() -> new JoystickButton(xboxController, 2));
+    public static final JoystickButton manipulatorXbox_B      = LOG.catchAll(() -> new JoystickButton(xboxController, 2));
     public static final JoystickButton manipulatorXbox_X      = LOG.catchAll(() -> new JoystickButton(xboxController, 3));
     public static final JoystickButton manipulatorXbox_A      = LOG.catchAll(() -> new JoystickButton(xboxController, 1));
     public static final JoystickButton manipulatorXbox_Y      = LOG.catchAll(() -> new JoystickButton(xboxController, 4));
@@ -29,7 +31,7 @@ public final class IO {
     public static final JoystickButton manipulatorXbox_Back   = LOG.catchAll(() -> new JoystickButton(xboxController, 7));
     public static final JoystickButton manipulatorXbox_Start  = LOG.catchAll(() -> new JoystickButton(xboxController, 8));
     public static final JoystickButton manipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(xboxController, 9));
-    public static final JoystickButton manipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(xboxController, 10)); */
+    public static final JoystickButton manipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(xboxController, 10));
 
     // Joystick Buttons
     public static final JoystickButton leftJoystick_Trigger  = LOG.catchAll(() -> new JoystickButton(leftJoystick, 1));

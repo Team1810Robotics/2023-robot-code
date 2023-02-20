@@ -27,7 +27,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
 
     public void forward() {
-        if (!farLimitSwitch.get()) {
+        if (farLimitSwitch.get()) {
             extenderMotor.set(Value.kForward);
         } else {
             stop();
@@ -35,7 +35,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
 
     public void backward() {
-        if (!closeLimitSwitch.get()) {
+        if (closeLimitSwitch.get()) {
             extenderMotor.set(Value.kReverse);
         } else {
             stop();

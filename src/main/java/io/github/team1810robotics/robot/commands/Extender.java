@@ -18,9 +18,9 @@ public class Extender extends CommandBase {
     @Override
     public void execute() {
         if (in) {
-            extender.backward();
-        } else {
             extender.forward();
+        } else {
+            extender.backward();
         }
     }
 

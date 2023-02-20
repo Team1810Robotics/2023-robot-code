@@ -67,10 +67,6 @@ public class DriveSubsystem extends SubsystemBase {
                             translation.getY(),
                             rotation));
 
-        // TODO: remove later
-        SmartDashboard.putNumber("tranlation.getX()", translation.getX());
-        SmartDashboard.putNumber("tranlation.getY()", translation.getY());
-
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.MAX_SPEED);
 
         for (SwerveModule mod : swerveModules) {

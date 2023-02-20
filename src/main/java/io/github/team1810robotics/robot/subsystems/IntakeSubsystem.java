@@ -8,25 +8,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static io.github.team1810robotics.robot.Constants.ArmConstants.*;
 
-import org.photonvision.PhotonCamera;
+// import org.photonvision.PhotonCamera;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final CANSparkMax intakeMotor;
-    private final PhotonCamera camera;
+    // private final PhotonCamera camera;
     private final DigitalInput lineBreak;
 
     public IntakeSubsystem() {
         intakeMotor = new CANSparkMax(IntakeConstants.MOTOR_ID, MotorType.kBrushless);
         intakeMotor.setInverted(IntakeConstants.MOTOR_INVERTED);
 
-        camera = new PhotonCamera(IntakeConstants.CAMERA_NAME);
+        // camera = new PhotonCamera(IntakeConstants.CAMERA_NAME);
 
         lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
     }
 
     public void intake(boolean in) {
         if (in) {
-            intakeMotor.set(1);
+            intakeMotor.set(0.9);
         } else {
             intakeMotor.set(-1);
         }
@@ -47,12 +47,12 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean hasCube() {
-        var result = camera.getLatestResult();
+        /* var result = camera.getLatestResult();
         if (!result.hasTargets())
             return false;
 
         if (result.getBestTarget().getArea() <= IntakeConstants.MIN_TARGET_AREA)
-            return false;
+            return false; */
 
         return true;
     }

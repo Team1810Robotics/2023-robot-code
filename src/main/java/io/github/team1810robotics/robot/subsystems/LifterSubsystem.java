@@ -22,7 +22,7 @@ public class LifterSubsystem extends SubsystemBase {
     private TrapezoidProfile.State currentSetpoint;
 
     public LifterSubsystem() {
-        lifterMotor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushless);
+        lifterMotor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
         lifterMotor.setIdleMode(IdleMode.kBrake);
         lifterMotor.burnFlash();
 
