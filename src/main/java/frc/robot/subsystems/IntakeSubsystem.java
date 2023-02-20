@@ -8,13 +8,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.ArmConstants.*;
 
+import org.photonvision.PhotonCamera;
+
 public class IntakeSubsystem extends SubsystemBase {
     private final CANSparkMax intakeMotor;
-    private final DigitalInput lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
+    private final PhotonCamera camera;
+    private final DigitalInput lineBreak;
 
     public IntakeSubsystem() {
         intakeMotor = new CANSparkMax(IntakeConstants.MOTOR_ID, MotorType.kBrushless);
         intakeMotor.setInverted(IntakeConstants.MOTOR_INVERTED);
+
+        camera = new PhotonCamera(IntakeConstants.CAMERA_NAME);
+
+        lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
     }
 
     public void intake(boolean in) {
@@ -37,5 +44,16 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void stop() {
         intakeMotor.set(0);
+    }
+
+    public boolean hasCube() {
+        var result = camera.getLatestResult();
+        if (!result.hasTargets())
+            return false;
+
+        if (result.getBestTarget().getArea() <= IntakeConstants.MIN_TARGET_AREA)
+            return false;
+
+        return true;
     }
 }

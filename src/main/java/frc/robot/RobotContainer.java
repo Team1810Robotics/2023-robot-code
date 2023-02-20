@@ -26,6 +26,7 @@ public class RobotContainer {
 
     /* Subsystems */
     private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+    private final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem();
 
     private final Command testPathplanner = new TestPathplanner(driveSubsystem);
     private final Command autoline = new AutoLine(driveSubsystem);
@@ -54,6 +55,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
         rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
+
+        redSwitchHigh.whileTrue(new Extender(extenderSubsystem, true));
+        redSwitchLow.whileTrue(new Extender(extenderSubsystem, false));
     }
 
     /**

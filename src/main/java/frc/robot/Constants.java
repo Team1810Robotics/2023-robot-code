@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -33,9 +33,7 @@ public final class Constants {
         public static final double WHEELBASE = 0.74;
         public static final double WHEEL_CIRCUMFERENCE = CHOSEN_MODULE.wheelCircumference;
 
-        /* Swerve Kinematics
-         * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
-         public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
+        public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
             new Translation2d(WHEELBASE / 2.0, TRACKWIDTH / 2.0),
             new Translation2d(WHEELBASE / 2.0, -TRACKWIDTH / 2.0),
             new Translation2d(-WHEELBASE / 2.0, TRACKWIDTH / 2.0),
@@ -153,6 +151,9 @@ public final class Constants {
             public static final boolean MOTOR_INVERTED = false;
 
             public static final int LINE_BREAK_PORT = 0; // TODO: figure out port
+
+            public static final String CAMERA_NAME = "Intake Camera";
+            public static final int MIN_TARGET_AREA = 10; // %
         }
 
         public static final class ExtenderConstants {
@@ -166,8 +167,20 @@ public final class Constants {
             public static final int MOTOR_ID = 14;
 
             public static final double kP = 1; // TODO: tune
-            public static final double kI = 1; // TODO: tune
-            public static final double kD = 1; // TODO: tune
+            public static final double kI = 0; // TODO: tune
+            public static final double kD = 0; // TODO: tune
+
+            public static final double kS = 0; // TODO: tune
+            public static final double kG = 0; // TODO: tune
+            public static final double kV = 0; // TODO: tune
+            public static final double kA = 0; // TODO: tune
+
+            private static final double MAX_SPEED = 0.5; // m/s
+            private static final double MAX_ACCEL = 0.5; // m/s/s
+            public static final TrapezoidProfile.Constraints CONSTRAINTS =
+                new TrapezoidProfile.Constraints(MAX_SPEED, MAX_ACCEL);
+
+            public static final double DELTA_TIME = 0.02;
         }
     }
 

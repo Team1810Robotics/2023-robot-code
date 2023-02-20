@@ -1,7 +1,6 @@
 package frc.robot.controller;
 
 import edu.wpi.first.wpilibj.Joystick;
-// import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.log.Logger;
 import static frc.robot.Constants.*;
@@ -57,6 +56,11 @@ public final class IO {
     public static final JoystickButton rightJoystick_Button9  = LOG.catchAll(() -> new JoystickButton(rightJoystick, 9));
     public static final JoystickButton rightJoystick_Button10 = LOG.catchAll(() -> new JoystickButton(rightJoystick, 10));
     public static final JoystickButton rightJoystick_Button11 = LOG.catchAll(() -> new JoystickButton(rightJoystick, 11));
+
+    // manipulator buttons
+    public static final JoystickButton blueSwitch    = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kBlueSwitch.value));
+    public static final JoystickButton redSwitchHigh = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchH.value));
+    public static final JoystickButton redSwitchLow  = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
 
     private IO() {/* what does sleep feel like */}
 }
