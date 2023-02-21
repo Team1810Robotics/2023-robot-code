@@ -17,7 +17,7 @@ import io.github.team1810robotics.chargedup.subsystems.*;
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * 
+ *
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -28,6 +28,7 @@ public class RobotContainer {
     private final DriveSubsystem driveSubsystem = new DriveSubsystem();
     private final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    private final LifterSubsystem lifterSubsystem = new LifterSubsystem();
 
     private final Command testPathplanner = new TestPathplanner(driveSubsystem);
     private final Command autoline = new AutoLine(driveSubsystem);
@@ -57,11 +58,11 @@ public class RobotContainer {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
-        manipulatorXbox_Y.whileTrue(new Extender(extenderSubsystem, true));
-        manipulatorXbox_A.whileTrue(new Extender(extenderSubsystem, false));
+        manipulatorXbox_X.whileTrue(new Extender(extenderSubsystem, true));
+        manipulatorXbox_B.whileTrue(new Extender(extenderSubsystem, false));
 
-        manipulatorXbox_X.whileTrue(new Intake(intakeSubsystem, true));
-        manipulatorXbox_B.whileTrue(new Intake(intakeSubsystem, false));
+        manipulatorXbox_Y.whileTrue(new LifterSpeed(lifterSubsystem, 0.25));
+        manipulatorXbox_A.whileTrue(new LifterSpeed(lifterSubsystem, -0.25));
     }
 
     /**

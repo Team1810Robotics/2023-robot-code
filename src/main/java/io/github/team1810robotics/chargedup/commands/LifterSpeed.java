@@ -3,6 +3,7 @@ package io.github.team1810robotics.chargedup.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import io.github.team1810robotics.chargedup.subsystems.LifterSubsystem;
 
+// "Why did you make that a command?"
 public class LifterSpeed extends CommandBase {
 
     private LifterSubsystem lifter;
