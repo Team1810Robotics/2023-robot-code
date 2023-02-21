@@ -22,6 +22,7 @@ public class Intake extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        // TODO: fix issue
         /* if (intake.hasCube())
             return true;
 

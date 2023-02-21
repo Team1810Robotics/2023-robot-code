@@ -5,6 +5,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -53,6 +54,11 @@ public class LifterSubsystem extends SubsystemBase {
 
         lifterMotor.setVoltage(feedforward.calculate(setpoint, currentSetpoint.velocity)
             + pidController.calculate(lifterEncoder.getPosition(), setpoint));
+    }
+
+    public void setSpeed(double speed) {
+        double boundSpeed = MathUtil.clamp(speed, -1, 1);
+        lifterMotor.set(boundSpeed);
     }
 
     public void stop() {
