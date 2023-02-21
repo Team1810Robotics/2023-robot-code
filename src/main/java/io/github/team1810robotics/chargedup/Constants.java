@@ -152,7 +152,7 @@ public final class Constants {
 
             public static final int LINE_BREAK_PORT = 2;
 
-            public static final String CAMERA_NAME = "Intake Camera"; // TODO: ask Josh about name
+            public static final String CAMERA_NAME = "OV5781"; // TODO: ask Josh about name
             public static final int MIN_TARGET_AREA = 10; // %
         }
 
