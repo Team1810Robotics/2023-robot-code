@@ -1,14 +1,14 @@
-package io.github.team1810robotics.chargedup.commands;
+package io.github.team1810robotics.chargedup.commands.testing;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import io.github.team1810robotics.chargedup.subsystems.ExtenderSubsystem;
 
-public class Extender extends CommandBase {
+public class ExtenderBool extends CommandBase {
 
     private ExtenderSubsystem extender;
     private boolean in;
 
-    public Extender(ExtenderSubsystem extenderSubsystem, boolean in) {
+    public ExtenderBool(ExtenderSubsystem extenderSubsystem, boolean in) {
         this.extender = extenderSubsystem;
         this.in = in;
 
@@ -17,11 +17,7 @@ public class Extender extends CommandBase {
 
     @Override
     public void execute() {
-        if (in) {
-            extender.forward();
-        } else {
-            extender.backward();
-        }
+        extender.move(in);
     }
 
     @Override

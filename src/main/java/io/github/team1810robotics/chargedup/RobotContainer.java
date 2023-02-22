@@ -11,6 +11,8 @@ import io.github.team1810robotics.chargedup.commands.autonomous.paths.AutoLine;
 import io.github.team1810robotics.chargedup.commands.autonomous.paths.FullSpin;
 import io.github.team1810robotics.chargedup.commands.autonomous.paths.SpinTest;
 import io.github.team1810robotics.chargedup.commands.autonomous.paths.TestPathplanner;
+import io.github.team1810robotics.chargedup.commands.testing.ExtenderBool;
+import io.github.team1810robotics.chargedup.commands.testing.LifterSpeed;
 import io.github.team1810robotics.chargedup.subsystems.*;
 
 /**
@@ -28,7 +30,7 @@ public class RobotContainer {
     private final DriveSubsystem driveSubsystem = new DriveSubsystem();
     private final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-    private final LifterSubsystem lifterSubsystem = new LifterSubsystem();
+    private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
     private final Command testPathplanner = new TestPathplanner(driveSubsystem);
     private final Command autoline = new AutoLine(driveSubsystem);
@@ -58,11 +60,18 @@ public class RobotContainer {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
-        manipulatorXbox_X.whileTrue(new Extender(extenderSubsystem, true));
-        manipulatorXbox_B.whileTrue(new Extender(extenderSubsystem, false));
+        manipulatorXbox_X.whileTrue(new ExtenderBool(extenderSubsystem, true));
+        manipulatorXbox_B.whileTrue(new ExtenderBool(extenderSubsystem, false));
 
-        manipulatorXbox_Y.whileTrue(new LifterSpeed(lifterSubsystem, 0.25));
-        manipulatorXbox_A.whileTrue(new LifterSpeed(lifterSubsystem, -0.25));
+        manipulatorXbox_Y.whileTrue(new LifterSpeed(armSubsystem, 0.25));
+        manipulatorXbox_A.whileTrue(new LifterSpeed(armSubsystem, -0.25));
+
+        rotary0thPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(0),  0));
+        rotary1stPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(18), 0));
+        rotary2ndPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(36), 0));
+        rotary3rdPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(54), 0));
+        rotary4thPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(72), 0));
+        rotary5thPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(90), 0));
     }
 
     /**

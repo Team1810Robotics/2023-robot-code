@@ -63,6 +63,12 @@ public final class IO {
     public static final JoystickButton blueSwitch    = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kBlueSwitch.value));
     public static final JoystickButton redSwitchHigh = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchH.value));
     public static final JoystickButton redSwitchLow  = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
+    public static final JoystickButton rotary0thPos  = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
+    public static final JoystickButton rotary1stPos  = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
+    public static final JoystickButton rotary2ndPos  = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
+    public static final JoystickButton rotary3rdPos  = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
+    public static final JoystickButton rotary4thPos  = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
+    public static final JoystickButton rotary5thPos  = LOG.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
 
     private IO() {/* what does sleep feel like */}
 }

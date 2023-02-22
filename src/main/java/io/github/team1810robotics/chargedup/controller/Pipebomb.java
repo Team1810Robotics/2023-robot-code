@@ -26,19 +26,6 @@ public class Pipebomb extends GenericHID {
         Button(int value) {
             this.value = value;
         }
-
-        /**
-         * Get the human-friendly name of the button, matching the relevant methods. This is done by
-         * stripping the leading `k`, and if not a Bumper button append `Button`.
-         *
-         * <p>Primarily used for automated unit tests.
-         *
-         * @return the human-friendly name of the button.
-         */
-        @Override
-        public String toString() {
-            return this.name().substring(1);
-        }
     }
 
     public double getLeftPot() {

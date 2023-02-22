@@ -13,21 +13,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
 
-public class LifterSubsystem extends SubsystemBase {
+public class ArmSubsystem extends SubsystemBase {
 
-    private final CANSparkMax lifterMotor;
-    private final RelativeEncoder lifterEncoder;
+    private final CANSparkMax armMotor;
+    private final RelativeEncoder armEncoder;
 
     private final ProfiledPIDController pidController;
     private final ArmFeedforward feedforward;
     private TrapezoidProfile.State currentSetpoint;
 
-    public LifterSubsystem() {
-        lifterMotor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
-        lifterMotor.setIdleMode(IdleMode.kBrake);
-        lifterMotor.burnFlash();
+    public ArmSubsystem() {
+        armMotor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
+        armMotor.setIdleMode(IdleMode.kBrake);
+        armMotor.burnFlash();
 
-        lifterEncoder = lifterMotor.getEncoder();
+        armEncoder = armMotor.getEncoder();
 
         pidController =
             new ProfiledPIDController(LiftConstants.kP,
@@ -41,10 +41,11 @@ public class LifterSubsystem extends SubsystemBase {
                                LiftConstants.kV,
                                LiftConstants.kA);
 
-        currentSetpoint = new TrapezoidProfile.State(0, 0);
+        currentSetpoint = new TrapezoidProfile.State(Math.PI / 2, 0);
     }
 
     public void setpoint(double setpoint) {
+        pidController.setGoal(setpoint);
         // TODO: look at this?
         var profile = new TrapezoidProfile(LiftConstants.CONSTRAINTS,
                                            new TrapezoidProfile.State(setpoint, 0),
@@ -52,16 +53,20 @@ public class LifterSubsystem extends SubsystemBase {
 
         currentSetpoint = profile.calculate(LiftConstants.DELTA_TIME);
 
-        lifterMotor.setVoltage(feedforward.calculate(setpoint, currentSetpoint.velocity)
-            + pidController.calculate(lifterEncoder.getPosition(), setpoint));
+        armMotor.setVoltage(feedforward.calculate(setpoint, currentSetpoint.velocity)
+            + pidController.calculate(armEncoder.getPosition(), setpoint));
+    }
+
+    public boolean atSetpoint() { // TODO: might break something ¯\_(ツ)_/¯
+        return pidController.atGoal();
     }
 
     public void setSpeed(double speed) {
         double boundSpeed = MathUtil.clamp(speed, -1, 1);
-        lifterMotor.set(boundSpeed);
+        armMotor.set(boundSpeed);
     }
 
     public void stop() {
-        lifterMotor.stopMotor();
+        armMotor.stopMotor();
     }
 }

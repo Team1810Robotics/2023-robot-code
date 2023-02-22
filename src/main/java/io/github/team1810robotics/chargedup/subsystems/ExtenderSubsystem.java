@@ -22,11 +22,23 @@ public class ExtenderSubsystem extends SubsystemBase {
         closeLimitSwitch = new DigitalInput(ExtenderConstants.LIMIT_SWITCH_PORTS[1]);
     }
 
-    public double getEncoder() {
+    public double getDistance() {
         return extenderEncoder.getDistance();
     }
 
-    public void forward() {
+    public void move(boolean forward) {
+        if (forward) {
+            forward();
+        } else {
+            backward();
+        }
+    }
+
+    public void stop() {
+        extenderMotor.set(Value.kOff);
+    }
+
+    private void forward() {
         if (farLimitSwitch.get()) {
             extenderMotor.set(Value.kForward);
         } else {
@@ -34,7 +46,7 @@ public class ExtenderSubsystem extends SubsystemBase {
         }
     }
 
-    public void backward() {
+    private void backward() {
         if (closeLimitSwitch.get()) {
             extenderMotor.set(Value.kReverse);
         } else {
@@ -43,7 +55,4 @@ public class ExtenderSubsystem extends SubsystemBase {
         }
     }
 
-    public void stop() {
-        extenderMotor.set(Value.kOff);
-    }
 }
