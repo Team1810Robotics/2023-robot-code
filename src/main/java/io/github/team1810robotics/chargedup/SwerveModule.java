@@ -4,7 +4,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-
+import edu.wpi.first.wpilibj.Timer;
 import io.github.team1810robotics.lib.math.Conversions;
 import io.github.team1810robotics.lib.util.CTREModuleState;
 import io.github.team1810robotics.lib.util.SwerveModuleConstants;
@@ -94,6 +94,8 @@ public class SwerveModule {
         steerMotor.setInverted(DriveConstants.STEER_MOTOR_INVERT);
         steerMotor.setNeutralMode(DriveConstants.STEER_NEUTRAL_MODE);
         resetToAbsolute();
+        // https://github.com/Team364/BaseFalconSwerve/issues/8#issuecomment-1384600950
+        Timer.delay(1.0);
     }
 
     private void configDriveMotor() {

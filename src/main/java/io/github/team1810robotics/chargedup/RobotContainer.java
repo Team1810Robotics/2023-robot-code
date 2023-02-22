@@ -66,6 +66,9 @@ public class RobotContainer {
         manipulatorXbox_Y.whileTrue(new LifterSpeed(armSubsystem, 0.25));
         manipulatorXbox_A.whileTrue(new LifterSpeed(armSubsystem, -0.25));
 
+        redSwitchHigh.whileTrue(new Intake(intakeSubsystem, true));
+        redSwitchLow.whileTrue(new Intake(intakeSubsystem, false));
+
         rotary0thPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(0),  0));
         rotary1stPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(18), 0));
         rotary2ndPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(36), 0));
