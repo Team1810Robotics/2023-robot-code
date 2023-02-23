@@ -174,9 +174,9 @@ public final class Constants {
             public static final double kD = 0; // TODO: tune
 
             public static final double kS = 0; // TODO: tune
-            public static final double kG = 0; // TODO: tune
-            public static final double kV = 0; // TODO: tune
-            public static final double kA = 0; // TODO: tune
+            public static final double kG = 317.1; // TODO: tune
+            public static final double kV = 0.19; // TODO: tune
+            public static final double kA = 42.92; // TODO: tune
 
             private static final double MAX_SPEED = 0.5; // m/s
             private static final double MAX_ACCEL = 0.5; // m/s/s
