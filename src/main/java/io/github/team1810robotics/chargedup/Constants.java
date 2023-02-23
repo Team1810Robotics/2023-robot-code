@@ -152,19 +152,22 @@ public final class Constants {
 
             public static final int LINE_BREAK_PORT = 2;
 
-            public static final String CAMERA_NAME = "OV5781"; // TODO: ask Josh about name
+            public static final String CAMERA_NAME = "OV5781";
             public static final int MIN_TARGET_AREA = 10; // %
         }
 
         public static final class ExtenderConstants {
             public static final int RELAY_ID = 0;
-            public static final int ENCODER_PORTS[] = {0, 1}; // TODO: get real values
+            public static final int ENCODER_PORTS[] = {6, 7};
 
-            public static final int LIMIT_SWITCH_PORTS[] = {5, 4};
+            public static final int CLOSE_LS = 5;
+            public static final int FAR_LS = 4;
         }
 
         public static final class LiftConstants {
             public static final int MOTOR_ID = 15;
+
+            public static final int ENCODER_PORTS[] = {0, 1};
 
             public static final double kP = 1; // TODO: tune
             public static final double kI = 0; // TODO: tune

@@ -1,7 +1,6 @@
 package io.github.team1810robotics.chargedup.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -9,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
@@ -16,7 +16,7 @@ import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
 public class ArmSubsystem extends SubsystemBase {
 
     private final CANSparkMax armMotor;
-    private final RelativeEncoder armEncoder;
+    private final Encoder armEncoder;
 
     private final ProfiledPIDController pidController;
     private final ArmFeedforward feedforward;
@@ -27,7 +27,7 @@ public class ArmSubsystem extends SubsystemBase {
         armMotor.setIdleMode(IdleMode.kBrake);
         armMotor.burnFlash();
 
-        armEncoder = armMotor.getEncoder();
+        armEncoder = new Encoder(LiftConstants.ENCODER_PORTS[0], LiftConstants.ENCODER_PORTS[1]);
 
         pidController =
             new ProfiledPIDController(LiftConstants.kP,
@@ -54,7 +54,7 @@ public class ArmSubsystem extends SubsystemBase {
         currentSetpoint = profile.calculate(LiftConstants.DELTA_TIME);
 
         armMotor.setVoltage(feedforward.calculate(setpoint, currentSetpoint.velocity)
-            + pidController.calculate(armEncoder.getPosition(), setpoint));
+            + pidController.calculate(armEncoder.getDistance(), setpoint));
     }
 
     public boolean atSetpoint() { // TODO: might break something ¯\_(ツ)_/¯

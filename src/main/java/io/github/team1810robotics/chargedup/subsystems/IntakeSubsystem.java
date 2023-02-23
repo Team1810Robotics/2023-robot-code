@@ -26,7 +26,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void intake(boolean in) {
         if (in) {
-            intakeMotor.set(0.9);
+            intakeMotor.set(1);
         } else {
             intakeMotor.set(-1);
         }

@@ -18,8 +18,8 @@ public class ExtenderSubsystem extends SubsystemBase {
         extenderMotor = new Relay(ExtenderConstants.RELAY_ID, Direction.kBoth);
         extenderEncoder = new Encoder(ExtenderConstants.ENCODER_PORTS[0], ExtenderConstants.ENCODER_PORTS[1]);
 
-        farLimitSwitch = new DigitalInput(ExtenderConstants.LIMIT_SWITCH_PORTS[0]);
-        closeLimitSwitch = new DigitalInput(ExtenderConstants.LIMIT_SWITCH_PORTS[1]);
+        farLimitSwitch = new DigitalInput(ExtenderConstants.FAR_LS);
+        closeLimitSwitch = new DigitalInput(ExtenderConstants.CLOSE_LS);
     }
 
     public double getDistance() {
