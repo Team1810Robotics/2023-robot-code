@@ -167,7 +167,7 @@ public final class Constants {
         public static final class LiftConstants {
             public static final int MOTOR_ID = 15;
 
-            public static final int ENCODER_PORTS[] = {0, 1};
+            public static final int ENCODER_PORT = 0; // TODO: get port
 
             public static final double kP = 1; // TODO: tune
             public static final double kI = 0; // TODO: tune

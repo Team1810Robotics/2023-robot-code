@@ -1,33 +1,34 @@
 package io.github.team1810robotics.chargedup.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
 
 public class ArmSubsystem extends SubsystemBase {
 
-    private final CANSparkMax armMotor;
-    private final Encoder armEncoder;
+    private final VictorSPX armMotor;
+    private final DutyCycleEncoder armEncoder;
 
     private final ProfiledPIDController pidController;
     private final ArmFeedforward feedforward;
     private TrapezoidProfile.State currentSetpoint;
 
     public ArmSubsystem() {
-        armMotor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
-        armMotor.setIdleMode(IdleMode.kBrake);
-        armMotor.burnFlash();
+        armMotor = new VictorSPX(LiftConstants.MOTOR_ID);
+        armMotor.setNeutralMode(NeutralMode.Brake);
 
-        armEncoder = new Encoder(LiftConstants.ENCODER_PORTS[0], LiftConstants.ENCODER_PORTS[1]);
+        armEncoder = new DutyCycleEncoder(LiftConstants.ENCODER_PORT);
+        armEncoder.setDistancePerRotation(1440);
 
         pidController =
             new ProfiledPIDController(LiftConstants.kP,
@@ -53,20 +54,29 @@ public class ArmSubsystem extends SubsystemBase {
 
         currentSetpoint = profile.calculate(LiftConstants.DELTA_TIME);
 
-        armMotor.setVoltage(feedforward.calculate(setpoint, currentSetpoint.velocity)
-            + pidController.calculate(armEncoder.getDistance(), setpoint));
+        armMotor.set(ControlMode.Velocity, currentSetpoint.velocity,
+                     DemandType.ArbitraryFeedForward,
+                     feedforward.calculate(getEncoderRadians(), setpoint));
     }
 
     public boolean atSetpoint() { // TODO: might break something ¯\_(ツ)_/¯
         return pidController.atGoal();
     }
 
+    public double getEncoderDistance() {
+        return armEncoder.getDistance();
+    }
+
+    public double getEncoderRadians() {
+        return Math.toRadians(getEncoderDistance() / 4);
+    }
+
     public void setSpeed(double speed) {
         double boundSpeed = MathUtil.clamp(speed, -1, 1);
-        armMotor.set(boundSpeed);
+        armMotor.set(ControlMode.PercentOutput, boundSpeed);
     }
 
     public void stop() {
-        armMotor.stopMotor();
+        armMotor.set(ControlMode.PercentOutput, 0);
     }
 }

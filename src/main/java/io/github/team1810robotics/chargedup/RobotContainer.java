@@ -27,10 +27,10 @@ public class RobotContainer {
     SendableChooser<Command> pathChooser = new SendableChooser<>();
 
     /* Subsystems */
-    private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+    public final DriveSubsystem driveSubsystem = new DriveSubsystem();
     public final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem();
-    private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-    private final ArmSubsystem armSubsystem = new ArmSubsystem();
+    public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    public final ArmSubsystem armSubsystem = new ArmSubsystem();
 
     private final Command testPathplanner = new TestPathplanner(driveSubsystem);
     private final Command autoline = new AutoLine(driveSubsystem);
@@ -63,8 +63,8 @@ public class RobotContainer {
         manipulatorXbox_X.whileTrue(new ExtenderBool(extenderSubsystem, true));
         manipulatorXbox_B.whileTrue(new ExtenderBool(extenderSubsystem, false));
 
-        manipulatorXbox_Y.whileTrue(new LifterSpeed(armSubsystem, -1));
         manipulatorXbox_A.whileTrue(new LifterSpeed(armSubsystem,  1));
+        manipulatorXbox_Y.whileTrue(new LifterSpeed(armSubsystem, -1));
 
         manipulatorXbox_LStick.whileTrue(new Intake(intakeSubsystem, true));
         manipulatorXbox_RStick.whileTrue(new Intake(intakeSubsystem, false));
