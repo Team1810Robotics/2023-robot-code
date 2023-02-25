@@ -6,14 +6,11 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 import io.github.team1810robotics.chargedup.commands.*;
-import io.github.team1810robotics.chargedup.commands.autonomous.paths.AutoLine;
-import io.github.team1810robotics.chargedup.commands.autonomous.paths.FullSpin;
-import io.github.team1810robotics.chargedup.commands.autonomous.paths.SpinTest;
-import io.github.team1810robotics.chargedup.commands.autonomous.paths.TestPathplanner;
-import io.github.team1810robotics.chargedup.commands.testing.ExtenderBool;
-import io.github.team1810robotics.chargedup.commands.testing.LifterSpeed;
 import io.github.team1810robotics.chargedup.subsystems.*;
+import io.github.team1810robotics.chargedup.commands.autonomous.paths.*;
+import io.github.team1810robotics.chargedup.commands.testing.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -63,8 +60,8 @@ public class RobotContainer {
         manipulatorXbox_X.whileTrue(new ExtenderBool(extenderSubsystem, true));
         manipulatorXbox_B.whileTrue(new ExtenderBool(extenderSubsystem, false));
 
-        manipulatorXbox_A.whileTrue(new LifterSpeed(armSubsystem,  1));
-        manipulatorXbox_Y.whileTrue(new LifterSpeed(armSubsystem, -1));
+        manipulatorXbox_A.whileTrue(new LifterSpeed(armSubsystem, -1));
+        manipulatorXbox_Y.whileTrue(new LifterSpeed(armSubsystem,  1));
 
         manipulatorXbox_LStick.whileTrue(new Intake(intakeSubsystem, true));
         manipulatorXbox_RStick.whileTrue(new Intake(intakeSubsystem, false));

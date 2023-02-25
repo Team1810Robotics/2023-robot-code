@@ -17,16 +17,7 @@ public class Arm extends CommandBase {
 
     @Override
     public void execute() {
-        arm.setpoint(setpointAngle);
-    }
-
-    @Override
-    public boolean isFinished() {
-        // TODO: command my need to run continuously to keep it from falling
-        if (arm.atSetpoint())
-            return true;
-
-        return false;
+        arm.setGoal(setpointAngle);
     }
 
     @Override

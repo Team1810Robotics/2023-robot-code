@@ -1,82 +1,84 @@
 package io.github.team1810robotics.chargedup.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
 
-public class ArmSubsystem extends SubsystemBase {
+import com.revrobotics.CANSparkMax;
+// import com.revrobotics.SparkMaxAlternateEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-    private final VictorSPX armMotor;
-    private final DutyCycleEncoder armEncoder;
+public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
-    private final ProfiledPIDController pidController;
+    private final CANSparkMax motor;
+    private final Encoder encoder;
+    // private final SparkMaxAlternateEncoder encoder;
+
     private final ArmFeedforward feedforward;
-    private TrapezoidProfile.State currentSetpoint;
+    private final SparkMaxPIDController pid;
 
     public ArmSubsystem() {
-        armMotor = new VictorSPX(LiftConstants.MOTOR_ID);
-        armMotor.setNeutralMode(NeutralMode.Brake);
+        super(LiftConstants.CONSTRAINTS,
+              LiftConstants.ARM_OFFSET);
 
-        armEncoder = new DutyCycleEncoder(LiftConstants.ENCODER_PORT);
-        armEncoder.setDistancePerRotation(1440);
+        this.feedforward = new ArmFeedforward(LiftConstants.kS,
+                                              LiftConstants.kG,
+                                              LiftConstants.kV,
+                                              LiftConstants.kA);
 
-        pidController =
-            new ProfiledPIDController(LiftConstants.kP,
-                                      LiftConstants.kI,
-                                      LiftConstants.kD,
-                                      LiftConstants.CONSTRAINTS);
+        this.motor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
+        motor.restoreFactoryDefaults();
 
-        feedforward =
-            new ArmFeedforward(LiftConstants.kS,
-                               LiftConstants.kG,
-                               LiftConstants.kV,
-                               LiftConstants.kA);
+        this.encoder = new Encoder(LiftConstants.ENCODER_PORTS[0], LiftConstants.ENCODER_PORTS[1]);
+        encoder.setDistancePerPulse(LiftConstants.ENCODER_DISTANCE_PER_PULSE);
 
-        currentSetpoint = new TrapezoidProfile.State(Math.PI / 2, 0);
+        this.pid = motor.getPIDController();
+
+        // TODO: make this work by changing how encoder interfaces
+        // this.encoder = motor.getEncoder();
+        // pid.setFeedbackDevice(encoder);
+
+        // encoder.setPositionConversionFactor(LiftConstants.ENCODER_POSITION_FACTOR);
+        // encoder.setVelocityConversionFactor(LiftConstants.ENCODER_VELOCITY_FACTOR);
+
+        pid.setP(LiftConstants.kP);
+        pid.setI(LiftConstants.kI);
+        pid.setD(LiftConstants.kD);
+        pid.setFF(LiftConstants.kF);
+        pid.setOutputRange(-1, 1);
+
+        motor.setIdleMode(IdleMode.kBrake);
+        motor.setSmartCurrentLimit(LiftConstants.CURRENT_LIMIT);
+
+        motor.burnFlash();
     }
 
-    public void setpoint(double setpoint) {
-        pidController.setGoal(setpoint);
-        // TODO: look at this?
-        var profile = new TrapezoidProfile(LiftConstants.CONSTRAINTS,
-                                           new TrapezoidProfile.State(setpoint, 0),
-                                           currentSetpoint);
+    @Override
+    public void useState(TrapezoidProfile.State setpoint) {
+        var feed = feedforward.calculate(setpoint.position, setpoint.velocity);
 
-        currentSetpoint = profile.calculate(LiftConstants.DELTA_TIME);
-
-        armMotor.set(ControlMode.Velocity, currentSetpoint.velocity,
-                     DemandType.ArbitraryFeedForward,
-                     feedforward.calculate(getEncoderRadians(), setpoint));
+        pid.setReference(setpoint.position - LiftConstants.ARM_OFFSET,
+                         ControlType.kPosition, 0, feed);
     }
 
-    public boolean atSetpoint() { // TODO: might break something ¯\_(ツ)_/¯
-        return pidController.atGoal();
-    }
-
-    public double getEncoderDistance() {
-        return armEncoder.getDistance();
-    }
-
-    public double getEncoderRadians() {
-        return Math.toRadians(getEncoderDistance() / 4);
+    public double getDistance() {
+        return encoder.getDistance() - LiftConstants.ARM_OFFSET;
     }
 
     public void setSpeed(double speed) {
         double boundSpeed = MathUtil.clamp(speed, -1, 1);
-        armMotor.set(ControlMode.PercentOutput, boundSpeed);
+        motor.set(-boundSpeed);
     }
 
     public void stop() {
-        armMotor.set(ControlMode.PercentOutput, 0);
+        motor.stopMotor();
     }
+
 }
