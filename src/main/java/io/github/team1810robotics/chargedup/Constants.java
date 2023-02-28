@@ -176,6 +176,7 @@ public final class Constants {
             public static final int CURRENT_LIMIT = 40;
 
             public static final double GEAR_RATIO = (124 / 24) * (71 / 1);
+            // TODO: check math?
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians
             public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad per sec
 

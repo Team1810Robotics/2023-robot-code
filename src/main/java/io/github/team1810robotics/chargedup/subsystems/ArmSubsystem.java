@@ -1,25 +1,24 @@
 package io.github.team1810robotics.chargedup.subsystems;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
+import io.github.team1810robotics.lib.util.ArmFeedforward;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
 
 import com.revrobotics.CANSparkMax;
-// import com.revrobotics.SparkMaxAlternateEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     private final CANSparkMax motor;
-    private final Encoder encoder;
-    // private final SparkMaxAlternateEncoder encoder;
+    private final RelativeEncoder encoder;
 
     private final ArmFeedforward feedforward;
     private final SparkMaxPIDController pid;
@@ -28,25 +27,21 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         super(LiftConstants.CONSTRAINTS,
               LiftConstants.ARM_OFFSET);
 
-        this.feedforward = new ArmFeedforward(LiftConstants.kS,
-                                              LiftConstants.kG,
-                                              LiftConstants.kV,
-                                              LiftConstants.kA);
+        this.feedforward = new ArmFeedforward(this::calculateKs,
+                                              this::calculateKg,
+                                              this::calculateKv,
+                                              this::calculateKa);
 
         this.motor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
         motor.restoreFactoryDefaults();
 
-        this.encoder = new Encoder(LiftConstants.ENCODER_PORTS[0], LiftConstants.ENCODER_PORTS[1]);
-        encoder.setDistancePerPulse(LiftConstants.ENCODER_DISTANCE_PER_PULSE);
-
         this.pid = motor.getPIDController();
 
-        // TODO: make this work by changing how encoder interfaces
-        // this.encoder = motor.getEncoder();
-        // pid.setFeedbackDevice(encoder);
+        this.encoder = motor.getEncoder(Type.kQuadrature, LiftConstants.ENCODER_CPR);
+        pid.setFeedbackDevice(encoder);
 
-        // encoder.setPositionConversionFactor(LiftConstants.ENCODER_POSITION_FACTOR);
-        // encoder.setVelocityConversionFactor(LiftConstants.ENCODER_VELOCITY_FACTOR);
+        encoder.setPositionConversionFactor(LiftConstants.ENCODER_POSITION_FACTOR);
+        encoder.setVelocityConversionFactor(LiftConstants.ENCODER_VELOCITY_FACTOR);
 
         pid.setP(LiftConstants.kP);
         pid.setI(LiftConstants.kI);
@@ -69,7 +64,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
     }
 
     public double getDistance() {
-        return encoder.getDistance() - LiftConstants.ARM_OFFSET;
+        return encoder.getPosition() - LiftConstants.ARM_OFFSET;
     }
 
     public void setSpeed(double speed) {
@@ -81,4 +76,19 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         motor.stopMotor();
     }
 
+    private double calculateKs() {
+        return LiftConstants.kS;
+    }
+
+    private double calculateKg() {
+        return LiftConstants.kG;
+    }
+
+    private double calculateKv() {
+        return LiftConstants.kV;
+    }
+
+    private double calculateKa() {
+        return LiftConstants.kA;
+    }
 }
