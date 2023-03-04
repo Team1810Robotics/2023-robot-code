@@ -187,7 +187,6 @@ public final class Constants {
             public static final double kS = 12; // TODO: tune
             public static final double kG = 12.65; // TODO: tune
             public static final double kV = 0.61; // TODO: tune
-            public static final double kA = 0.10; // TODO: tune
 
             private static final double MAX_SPEED = 0.5; // m/s
             private static final double MAX_ACCEL = 0.5; // m/s/s

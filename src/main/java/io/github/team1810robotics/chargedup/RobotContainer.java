@@ -28,7 +28,6 @@ public class RobotContainer {
     public final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem();
     public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     public final ArmSubsystem armSubsystem = new ArmSubsystem();
-    public final ArmSubsystemOld armSubsystemOld = new ArmSubsystemOld();
 
     private final Command testPathplanner = new TestPathplanner(driveSubsystem);
     private final Command autoline = new AutoLine(driveSubsystem);
