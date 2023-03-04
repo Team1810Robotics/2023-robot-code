@@ -165,29 +165,28 @@ public final class Constants {
         }
 
         public static final class LiftConstants {
-            public static final int MOTOR_ID = 15;
+            public static final int MOTOR_ID = 16;
 
-            public static final int ENCODER_PORTS[] = {0, 1}; // TODO: get port
-            public static final int ENCODER_CPR = 1440; // TODO: subject to change
+            public static final int ENCODER_CPR = 1536;
             public static final double ENCODER_DISTANCE_PER_PULSE = (2 * Math.PI) / ENCODER_CPR;
+            public static final int ENCODER_OFFSET = 550;
 
             public static final double ARM_OFFSET = Math.PI / 2;
 
             public static final int CURRENT_LIMIT = 40;
 
-            public static final double GEAR_RATIO = (124 / 24) * (71 / 1);
-            // TODO: check math?
+            public static final double GEAR_RATIO = (4 / 1);
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians
             public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad per sec
 
-            public static final double kP = 1; // TODO: tune
+            public static final double kP = 0.25; // TODO: tune
             public static final double kI = 0; // TODO: tune
-            public static final double kD = 0; // TODO: tune
+            public static final double kD = 25; // TODO: tune
             public static final double kF = 0;
 
-            public static final double kS = 0; // TODO: tune
-            public static final double kG = 1.69; // TODO: tune
-            public static final double kV = 2.24; // TODO: tune
+            public static final double kS = 12; // TODO: tune
+            public static final double kG = 12.65; // TODO: tune
+            public static final double kV = 0.61; // TODO: tune
             public static final double kA = 0.10; // TODO: tune
 
             private static final double MAX_SPEED = 0.5; // m/s

@@ -27,7 +27,7 @@ public class ArmSubsystemOld extends SubsystemBase {
         armMotor = new VictorSPX(LiftConstants.MOTOR_ID);
         armMotor.setNeutralMode(NeutralMode.Brake);
 
-        armEncoder = new DutyCycleEncoder(LiftConstants.ENCODER_PORTS[0]);
+        armEncoder = new DutyCycleEncoder(0);
         armEncoder.setDistancePerRotation(1440);
 
         pidController =

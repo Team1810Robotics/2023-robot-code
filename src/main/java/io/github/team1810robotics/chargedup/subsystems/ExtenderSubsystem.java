@@ -39,20 +39,19 @@ public class ExtenderSubsystem extends SubsystemBase {
     }
 
     private void forward() {
-        if (farLimitSwitch.get()) {
-            extenderMotor.set(Value.kForward);
+        extenderMotor.set(Value.kForward);
+        /* if (!farLimitSwitch.get()) {
         } else {
             stop();
-        }
+        } */
     }
 
     private void backward() {
-        if (closeLimitSwitch.get()) {
-            extenderMotor.set(Value.kReverse);
+        extenderMotor.set(Value.kReverse);
+        /* if (!closeLimitSwitch.get()) {
         } else {
             stop();
             extenderEncoder.reset();
-        }
+        } */
     }
-
 }

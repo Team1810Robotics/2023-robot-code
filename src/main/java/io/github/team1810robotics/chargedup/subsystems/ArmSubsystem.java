@@ -34,10 +34,13 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
         this.motor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
         motor.restoreFactoryDefaults();
+        motor.setInverted(false);
 
         this.pid = motor.getPIDController();
 
         this.encoder = motor.getEncoder(Type.kQuadrature, LiftConstants.ENCODER_CPR);
+        encoder.setInverted(true);
+        encoder.setPosition(LiftConstants.ENCODER_OFFSET);
         pid.setFeedbackDevice(encoder);
 
         encoder.setPositionConversionFactor(LiftConstants.ENCODER_POSITION_FACTOR);
@@ -49,27 +52,33 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         pid.setFF(LiftConstants.kF);
         pid.setOutputRange(-1, 1);
 
-        motor.setIdleMode(IdleMode.kBrake);
+        motor.setIdleMode(IdleMode.kCoast);
         motor.setSmartCurrentLimit(LiftConstants.CURRENT_LIMIT);
 
         motor.burnFlash();
+
+        setGoal(Math.PI / 2);
     }
 
     @Override
     public void useState(TrapezoidProfile.State setpoint) {
         var feed = feedforward.calculate(setpoint.position, setpoint.velocity);
 
-        pid.setReference(setpoint.position - LiftConstants.ARM_OFFSET,
+        pid.setReference(setpoint.position,
                          ControlType.kPosition, 0, feed);
     }
 
     public double getDistance() {
-        return encoder.getPosition() - LiftConstants.ARM_OFFSET;
+        return encoder.getPosition() - (274.5 * Math.PI);
+    }
+
+    public double getDistanceDeg() {
+        return Math.toDegrees(getDistance());
     }
 
     public void setSpeed(double speed) {
         double boundSpeed = MathUtil.clamp(speed, -1, 1);
-        motor.set(-boundSpeed);
+        motor.set(boundSpeed);
     }
 
     public void stop() {

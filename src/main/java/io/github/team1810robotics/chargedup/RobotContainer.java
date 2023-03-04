@@ -61,8 +61,8 @@ public class RobotContainer {
         manipulatorXbox_X.whileTrue(new ExtenderBool(extenderSubsystem, true));
         manipulatorXbox_B.whileTrue(new ExtenderBool(extenderSubsystem, false));
 
-        manipulatorXbox_A.whileTrue(new LifterSpeed(armSubsystem, -1));
         manipulatorXbox_Y.whileTrue(new LifterSpeed(armSubsystem,  1));
+        manipulatorXbox_A.whileTrue(new LifterSpeed(armSubsystem, -1));
 
         manipulatorXbox_LStick.whileTrue(new Intake(intakeSubsystem, true));
         manipulatorXbox_RStick.whileTrue(new Intake(intakeSubsystem, false));
