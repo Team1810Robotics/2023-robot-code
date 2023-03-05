@@ -46,7 +46,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
                                                LiftConstants.kI,
                                                LiftConstants.kD);
 
-        motor.setIdleMode(IdleMode.kBrake);
+        motor.setIdleMode(IdleMode.kCoast);
         motor.setSmartCurrentLimit(LiftConstants.CURRENT_LIMIT);
 
         motor.burnFlash();

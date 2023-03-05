@@ -57,6 +57,11 @@ public class RobotContainer {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
+        leftJoystick_Button2.whileTrue(new BBArm(armSubsystem, Math.toRadians(0)));
+        leftJoystick_Button3.whileTrue(new BBArm(armSubsystem, Math.toRadians(30)));
+        leftJoystick_Button4.whileTrue(new BBArm(armSubsystem, Math.toRadians(60)));
+        leftJoystick_Button5.whileTrue(new BBArm(armSubsystem, Math.toRadians(90)));
+
         manipulatorXbox_X.whileTrue(new ExtenderBool(extenderSubsystem, true));
         manipulatorXbox_B.whileTrue(new ExtenderBool(extenderSubsystem, false));
 

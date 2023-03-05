@@ -182,7 +182,6 @@ public final class Constants {
             public static final double kP = 0.25; // TODO: tune
             public static final double kI = 0; // TODO: tune
             public static final double kD = 25; // TODO: tune
-            public static final double kF = 0;
 
             public static final double kS = 12; // TODO: tune
             public static final double kG = 12.65; // TODO: tune
@@ -192,8 +191,6 @@ public final class Constants {
             private static final double MAX_ACCEL = 0.5; // m/s/s
             public static final TrapezoidProfile.Constraints CONSTRAINTS =
                 new TrapezoidProfile.Constraints(MAX_SPEED, MAX_ACCEL);
-
-            public static final double DELTA_TIME = 0.02;
         }
     }
 
