@@ -169,9 +169,10 @@ public final class Constants {
 
             public static final int ENCODER_CPR = 1536;
             public static final double ENCODER_DISTANCE_PER_PULSE = (2 * Math.PI) / ENCODER_CPR;
-            public static final int ENCODER_OFFSET = 550;
 
+            public static final int ENCODER_OFFSET = 550;
             public static final double ARM_OFFSET = Math.PI / 2;
+            public static final double RADIAN_OFFSET = ENCODER_OFFSET * ((2 * Math.PI) / LiftConstants.GEAR_RATIO);
 
             public static final int CURRENT_LIMIT = 40;
 
@@ -179,16 +180,17 @@ public final class Constants {
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians
             public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad per sec
 
-            public static final double kP = 0.25; // TODO: tune
-            public static final double kI = 0; // TODO: tune
-            public static final double kD = 25; // TODO: tune
+            public static final double kP = 25; // TODO: tune
+            public static final double kI = 1; // TODO: tune
+            public static final double kD = 5; // TODO: tune
 
-            public static final double kS = 12; // TODO: tune
-            public static final double kG = 12.65; // TODO: tune
-            public static final double kV = 0.61; // TODO: tune
+            public static final double kS = 0; // TODO: tune
+            public static final double kG = 0; // TODO: tune
+            public static final double kV = 0; // TODO: tune
+            public static final double kA = 0; // TODO: tune
 
-            private static final double MAX_SPEED = 0.5; // m/s
-            private static final double MAX_ACCEL = 0.5; // m/s/s
+            private static final double MAX_SPEED = 1; // m/s
+            private static final double MAX_ACCEL = 1; // m/s/s
             public static final TrapezoidProfile.Constraints CONSTRAINTS =
                 new TrapezoidProfile.Constraints(MAX_SPEED, MAX_ACCEL);
         }

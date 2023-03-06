@@ -57,16 +57,16 @@ public class RobotContainer {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
-        leftJoystick_Button2.whileTrue(new BBArm(armSubsystem, Math.toRadians(0)));
-        leftJoystick_Button3.whileTrue(new BBArm(armSubsystem, Math.toRadians(30)));
-        leftJoystick_Button4.whileTrue(new BBArm(armSubsystem, Math.toRadians(60)));
-        leftJoystick_Button5.whileTrue(new BBArm(armSubsystem, Math.toRadians(90)));
+        leftJoystick_Button2.whileTrue(new Arm(armSubsystem, Math.toRadians(0)));
+        leftJoystick_Button3.whileTrue(new Arm(armSubsystem, Math.toRadians(30)));
+        leftJoystick_Button4.whileTrue(new Arm(armSubsystem, Math.toRadians(60)));
+        leftJoystick_Button5.whileTrue(new Arm(armSubsystem, Math.toRadians(90)));
 
         manipulatorXbox_X.whileTrue(new ExtenderBool(extenderSubsystem, true));
         manipulatorXbox_B.whileTrue(new ExtenderBool(extenderSubsystem, false));
 
-        manipulatorXbox_Y.whileTrue(new LifterSpeed(armSubsystem,  1));
-        manipulatorXbox_A.whileTrue(new LifterSpeed(armSubsystem, -1));
+        manipulatorXbox_Y.onTrue(new Arm(armSubsystem, Math.toRadians(90)));
+        manipulatorXbox_A.onTrue(new Arm(armSubsystem, -0.52));
 
         manipulatorXbox_LStick.whileTrue(new Intake(intakeSubsystem, true));
         manipulatorXbox_RStick.whileTrue(new Intake(intakeSubsystem, false));

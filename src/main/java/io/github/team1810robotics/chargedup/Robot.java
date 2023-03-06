@@ -42,7 +42,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
-        SmartDashboard.putNumber("SparkMAX encoder", m_robotContainer.armSubsystem.getDistance());
         SmartDashboard.putNumber("extender encoder", m_robotContainer.extenderSubsystem.getDistance());
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,

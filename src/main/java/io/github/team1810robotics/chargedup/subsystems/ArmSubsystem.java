@@ -3,6 +3,7 @@ package io.github.team1810robotics.chargedup.subsystems;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
 import io.github.team1810robotics.lib.util.ArmFeedforward;
 
@@ -24,15 +25,16 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     public ArmSubsystem() {
         super(LiftConstants.CONSTRAINTS,
-              LiftConstants.ARM_OFFSET);
+              LiftConstants.ARM_OFFSET + LiftConstants.RADIAN_OFFSET);
 
         this.feedforward = new ArmFeedforward(this::calculateKs,
                                               this::calculateKg,
-                                              this::calculateKv);
+                                              this::calculateKv,
+                                              this::calculateKa);
 
         this.motor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
         motor.restoreFactoryDefaults();
-        motor.setInverted(false);
+        motor.setInverted(true);
 
         this.encoder = motor.getEncoder(Type.kQuadrature, LiftConstants.ENCODER_CPR);
 
@@ -50,14 +52,25 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         motor.setSmartCurrentLimit(LiftConstants.CURRENT_LIMIT);
 
         motor.burnFlash();
+
+        setShuffleboard();
+        this.setGoal(LiftConstants.ARM_OFFSET);
+    }
+
+    public void setGoal(double goal) {
+        super.setGoal(goal + LiftConstants.RADIAN_OFFSET - Math.PI);
     }
 
     @Override
     public void useState(TrapezoidProfile.State setpoint) {
-        var pid  = pidController.calculate(getDistance() - LiftConstants.ARM_OFFSET, setpoint.position);
+        var pid  = pidController.calculate(encoder.getPosition() - LiftConstants.ARM_OFFSET, setpoint.position);
         var feed = feedforward.calculate(setpoint.position, setpoint.velocity);
 
         motor.setVoltage(pid + feed);
+    }
+
+    public double getPIDError() {
+        return pidController.getPositionError();
     }
 
     public double getDistance() {
@@ -77,6 +90,16 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         motor.stopMotor();
     }
 
+    private void setShuffleboard() {
+        Shuffleboard.getTab("Arm").addNumber("Encoder", this::getDistance);
+        Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
+        Shuffleboard.getTab("Arm").addNumber("Output kP Volts", this::getKpVolts);
+    }
+
+    private double getKpVolts() {
+        return getPIDError() * LiftConstants.kP;
+    }
+
     private double calculateKs() {
         return LiftConstants.kS;
     }
@@ -87,5 +110,9 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     private double calculateKv() {
         return LiftConstants.kV;
+    }
+
+    private double calculateKa() {
+        return LiftConstants.kA;
     }
 }
