@@ -9,6 +9,8 @@ import io.github.team1810robotics.lib.util.ArmFeedforward;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -23,14 +25,14 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
     private final ArmFeedforward feedforward;
     private final PIDController pidController;
 
-    public ArmSubsystem() {
+    public ArmSubsystem(DoubleSupplier extenderEncoder) {
         super(LiftConstants.CONSTRAINTS,
               LiftConstants.ARM_OFFSET + LiftConstants.RADIAN_OFFSET);
 
-        this.feedforward = new ArmFeedforward(this::calculateKs,
-                                              this::calculateKg,
-                                              this::calculateKv,
-                                              this::calculateKa);
+        this.feedforward = new ArmFeedforward(() -> calculateKs(extenderEncoder),
+                                              () -> calculateKg(extenderEncoder),
+                                              () -> calculateKv(extenderEncoder),
+                                              () -> calculateKa(extenderEncoder));
 
         this.motor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
         motor.restoreFactoryDefaults();
@@ -64,7 +66,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
     @Override
     public void useState(TrapezoidProfile.State setpoint) {
         var pid  = pidController.calculate(encoder.getPosition() - LiftConstants.ARM_OFFSET, setpoint.position);
-        var feed = feedforward.calculate(setpoint.position, setpoint.velocity);
+        var feed = feedforward.calculate(encoder.getPosition() - LiftConstants.ARM_OFFSET, encoder.getVelocity());
 
         motor.setVoltage(pid + feed);
     }
@@ -75,6 +77,10 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     public double getDistance() {
         return encoder.getPosition() - (274.5 * Math.PI);
+    }
+
+    public double getVelocity() {
+        return encoder.getVelocity();
     }
 
     public double getDistanceDeg() {
@@ -92,6 +98,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     private void setShuffleboard() {
         Shuffleboard.getTab("Arm").addNumber("Encoder", this::getDistance);
+        Shuffleboard.getTab("Arm").addNumber("Velocity", this::getVelocity);
         Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
         Shuffleboard.getTab("Arm").addNumber("Output kP Volts", this::getKpVolts);
     }
@@ -100,19 +107,19 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         return getPIDError() * LiftConstants.kP;
     }
 
-    private double calculateKs() {
-        return LiftConstants.kS;
+    private double calculateKs(DoubleSupplier extender) {
+        return extender.getAsDouble() * 1.03092783505e-4;
     }
 
-    private double calculateKg() {
-        return LiftConstants.kG;
+    private double calculateKg(DoubleSupplier extender) {
+        return extender.getAsDouble() * 3.40206185567e-4;
     }
 
-    private double calculateKv() {
+    private double calculateKv(DoubleSupplier extender) {
         return LiftConstants.kV;
     }
 
-    private double calculateKa() {
+    private double calculateKa(DoubleSupplier extender) {
         return LiftConstants.kA;
     }
 }

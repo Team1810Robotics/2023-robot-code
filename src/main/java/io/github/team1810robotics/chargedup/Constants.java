@@ -146,6 +146,11 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
+        public static final double LOW    = Math.toRadians(-30);
+        public static final double MEDIUM = Math.toRadians(0);
+        public static final double HIGH   = Math.toRadians(45);
+        public static final double SHELF  = Math.toRadians(90);
+
         public static final class IntakeConstants {
             public static final int MOTOR_ID = 14;
             public static final boolean MOTOR_INVERTED = false;
@@ -180,14 +185,12 @@ public final class Constants {
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians
             public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad per sec
 
-            public static final double kP = 25; // TODO: tune
-            public static final double kI = 1; // TODO: tune
-            public static final double kD = 5; // TODO: tune
+            public static final double kP = 72.5;
+            public static final double kI = 0;
+            public static final double kD = 3;
 
-            public static final double kS = 0; // TODO: tune
-            public static final double kG = 0; // TODO: tune
-            public static final double kV = 0; // TODO: tune
-            public static final double kA = 0; // TODO: tune
+            public static final double kV = 0.65;
+            public static final double kA = 0.10;
 
             private static final double MAX_SPEED = 1; // m/s
             private static final double MAX_ACCEL = 1; // m/s/s

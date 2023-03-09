@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-
+import io.github.team1810robotics.chargedup.Constants.ArmConstants;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.paths.*;
-import io.github.team1810robotics.chargedup.commands.testing.*;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,12 +27,14 @@ public class RobotContainer {
     public final DriveSubsystem driveSubsystem = new DriveSubsystem();
     public final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem();
     public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-    public final ArmSubsystem armSubsystem = new ArmSubsystem();
+    public final ArmSubsystem armSubsystem = new ArmSubsystem(extenderSubsystem::getDistance);
 
     private final Command testPathplanner = new TestPathplanner(driveSubsystem);
     private final Command autoline = new AutoLine(driveSubsystem);
     private final Command spinTest = new SpinTest(driveSubsystem);
     private final Command fullSpin = new FullSpin(driveSubsystem);
+
+    private double trim = 0;
 
     public RobotContainer() {
         driveSubsystem.setDefaultCommand(
@@ -57,29 +59,8 @@ public class RobotContainer {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
-        leftJoystick_Button2.whileTrue(new Arm(armSubsystem, Math.toRadians(0)));
-        leftJoystick_Button3.whileTrue(new Arm(armSubsystem, Math.toRadians(30)));
-        leftJoystick_Button4.whileTrue(new Arm(armSubsystem, Math.toRadians(60)));
-        leftJoystick_Button5.whileTrue(new Arm(armSubsystem, Math.toRadians(90)));
+        setManipulator();
 
-        manipulatorXbox_X.whileTrue(new ExtenderBool(extenderSubsystem, true));
-        manipulatorXbox_B.whileTrue(new ExtenderBool(extenderSubsystem, false));
-
-        manipulatorXbox_Y.onTrue(new Arm(armSubsystem, Math.toRadians(90)));
-        manipulatorXbox_A.onTrue(new Arm(armSubsystem, -0.52));
-
-        manipulatorXbox_LStick.whileTrue(new Intake(intakeSubsystem, true));
-        manipulatorXbox_RStick.whileTrue(new Intake(intakeSubsystem, false));
-
-        redSwitchHigh.whileTrue(new Intake(intakeSubsystem, true));
-        redSwitchLow.whileTrue(new Intake(intakeSubsystem, false));
-
-        rotary0thPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(0),  0));
-        rotary1stPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(18), 0));
-        rotary2ndPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(36), 0));
-        rotary3rdPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(54), 0));
-        rotary4thPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(72), 0));
-        rotary5thPos.whileTrue(new ArmExtender(armSubsystem, extenderSubsystem, Math.toRadians(90), 0));
     }
 
     /**
@@ -89,5 +70,30 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return pathChooser.getSelected();
+    }
+
+    // please stop. : )
+    private void setManipulator() {
+        manipulatorXbox_A.onTrue(new Arm(armSubsystem, ArmConstants.LOW, trim))
+                            .onFalse(new InstantCommand(() -> { trim = 0; }));
+        manipulatorXbox_B.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM, trim))
+                            .onFalse(new InstantCommand(() -> { trim = 0; }));
+        manipulatorXbox_Y.onTrue(new Arm(armSubsystem, ArmConstants.HIGH, trim))
+                            .onFalse(new InstantCommand(() -> { trim = 0; }));
+        manipulatorXbox_X.onTrue(new Arm(armSubsystem, ArmConstants.SHELF, trim))
+                            .onFalse(new InstantCommand(() -> { trim = 0; }));
+
+        manipulatorXbox_Start.whileTrue(new InstantCommand(() -> setTrim(Math.toRadians(10))));
+        manipulatorXbox_Start.whileTrue(new InstantCommand(() -> setTrim(Math.toRadians(-10))));
+
+        manipulatorXbox_RB.whileTrue(new Intake(intakeSubsystem, true));
+        manipulatorXbox_LB.whileTrue(new Intake(intakeSubsystem, false));
+
+        manipulatorXbox_RStick.whileTrue(new ExtenderBool(extenderSubsystem, true));
+        manipulatorXbox_LStick.whileTrue(new ExtenderBool(extenderSubsystem, false));
+    }
+
+    private void setTrim(double incrementValue) {
+        trim += incrementValue;
     }
 }

@@ -17,6 +17,7 @@ public class ExtenderSubsystem extends SubsystemBase {
     public ExtenderSubsystem() {
         extenderMotor = new Relay(ExtenderConstants.RELAY_ID, Direction.kBoth);
         extenderEncoder = new Encoder(ExtenderConstants.ENCODER_PORTS[0], ExtenderConstants.ENCODER_PORTS[1]);
+        extenderEncoder.setReverseDirection(true);
 
         farLimitSwitch = new DigitalInput(ExtenderConstants.FAR_LS);
         closeLimitSwitch = new DigitalInput(ExtenderConstants.CLOSE_LS);

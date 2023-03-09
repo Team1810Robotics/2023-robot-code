@@ -7,17 +7,19 @@ public class Arm extends CommandBase {
 
     private ArmSubsystem arm;
     private double setpointAngle;
+    private double trim;
 
-    public Arm(ArmSubsystem armSubsystem, double setpointAngleRadians) {
+    public Arm(ArmSubsystem armSubsystem, double setpointAngleRadians, double trim) {
         this.arm = armSubsystem;
         this.setpointAngle = setpointAngleRadians;
+        this.trim = trim;
 
         addRequirements(armSubsystem);
     }
 
     @Override
     public void execute() {
-        arm.setGoal(setpointAngle);
+        arm.setGoal(setpointAngle + trim);
     }
 
     @Override
