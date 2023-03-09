@@ -100,12 +100,12 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         Shuffleboard.getTab("Arm").addNumber("Encoder", this::getDistance);
         Shuffleboard.getTab("Arm").addNumber("Velocity", this::getVelocity);
         Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
-        Shuffleboard.getTab("Arm").addNumber("Output kP Volts", this::getKpVolts);
     }
 
-    private double getKpVolts() {
-        return getPIDError() * LiftConstants.kP;
-    }
+    /**
+     * all calculateK[x] method's magic numbers come from here:
+     * https://www.desmos.com/calculator/g7nmtvtam8
+     */
 
     private double calculateKs(DoubleSupplier extender) {
         return extender.getAsDouble() * 1.03092783505e-4;
@@ -116,10 +116,10 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
     }
 
     private double calculateKv(DoubleSupplier extender) {
-        return LiftConstants.kV;
+        return extender.getAsDouble() * 1.25773195876e-4;
     }
 
     private double calculateKa(DoubleSupplier extender) {
-        return LiftConstants.kA;
+        return extender.getAsDouble() * 2.0618556701e-5;
     }
 }
