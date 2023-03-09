@@ -51,7 +51,7 @@ public class ExtenderSubsystem extends SubsystemBase {
         extenderMotor.set(Value.kReverse);
         if (!closeLimitSwitch.get()) {
         } else {
-            extenderEncoder.reset();
+            // stop();
         }
     }
 
