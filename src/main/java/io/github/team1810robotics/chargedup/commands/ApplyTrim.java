@@ -17,4 +17,9 @@ public class ApplyTrim extends CommandBase {
     public void execute() {
         arm.setTrim(trim);
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        arm.setTrim(0);
+    }
 }
