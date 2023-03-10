@@ -88,9 +88,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double MAX_SPEED = 2.4;
+        public static final double MAX_SPEED = 2.2;
         /** Radians per Second */
-        public static final double MAX_ANGULAR_VELOCITY = Math.PI;
+        public static final double MAX_ANGULAR_VELOCITY = Math.PI / 2;
 
         /* Neutral Modes */
         public static final NeutralMode STEER_NEUTRAL_MODE = NeutralMode.Brake;
@@ -185,12 +185,9 @@ public final class Constants {
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians
             public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad per sec
 
-            public static final double kP = 72.5;
+            public static final double kP = 70;
             public static final double kI = 0;
             public static final double kD = 3;
-
-            public static final double kV = 0.65;
-            public static final double kA = 0.10;
 
             private static final double MAX_SPEED = 1; // m/s
             private static final double MAX_ACCEL = 1; // m/s/s

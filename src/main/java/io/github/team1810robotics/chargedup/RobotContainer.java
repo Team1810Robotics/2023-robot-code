@@ -34,8 +34,6 @@ public class RobotContainer {
     private final Command spinTest = new SpinTest(driveSubsystem);
     private final Command fullSpin = new FullSpin(driveSubsystem);
 
-    private double trim = 0;
-
     public RobotContainer() {
         driveSubsystem.setDefaultCommand(
             new SwerveDrive(
@@ -74,26 +72,22 @@ public class RobotContainer {
 
     // please stop. : )
     private void setManipulator() {
-        manipulatorXbox_A.onTrue(new Arm(armSubsystem, ArmConstants.LOW, trim))
-                            .onFalse(new InstantCommand(() -> { trim = 0; }));
-        manipulatorXbox_B.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM, trim))
-                            .onFalse(new InstantCommand(() -> { trim = 0; }));
-        manipulatorXbox_Y.onTrue(new Arm(armSubsystem, ArmConstants.HIGH, trim))
-                            .onFalse(new InstantCommand(() -> { trim = 0; }));
-        manipulatorXbox_X.onTrue(new Arm(armSubsystem, ArmConstants.SHELF, trim))
-                            .onFalse(new InstantCommand(() -> { trim = 0; }));
+        manipulatorXbox_A.onTrue(new Arm(armSubsystem, ArmConstants.LOW))
+                            .onFalse(new InstantCommand(() -> armSubsystem.zeroTrim()));
+        manipulatorXbox_B.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM))
+                            .onFalse(new InstantCommand(() -> armSubsystem.zeroTrim()));
+        manipulatorXbox_Y.onTrue(new Arm(armSubsystem, ArmConstants.HIGH))
+                            .onFalse(new InstantCommand(() -> armSubsystem.zeroTrim()));
+        manipulatorXbox_X.onTrue(new Arm(armSubsystem, ArmConstants.SHELF))
+                            .onFalse(new InstantCommand(() -> armSubsystem.zeroTrim()));
 
-        manipulatorXbox_Start.whileTrue(new InstantCommand(() -> setTrim(Math.toRadians(10))));
-        manipulatorXbox_Start.whileTrue(new InstantCommand(() -> setTrim(Math.toRadians(-10))));
+        manipulatorXbox_Start.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(10)));
+        manipulatorXbox_Back.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-10)));
 
         manipulatorXbox_RB.whileTrue(new Intake(intakeSubsystem, true));
         manipulatorXbox_LB.whileTrue(new Intake(intakeSubsystem, false));
 
-        manipulatorXbox_RStick.whileTrue(new ExtenderBool(extenderSubsystem, true));
-        manipulatorXbox_LStick.whileTrue(new ExtenderBool(extenderSubsystem, false));
-    }
-
-    private void setTrim(double incrementValue) {
-        trim += incrementValue;
+        manipulatorXbox_RStick.whileTrue(new ExtenderBool(extenderSubsystem, false));
+        manipulatorXbox_LStick.whileTrue(new ExtenderBool(extenderSubsystem, true));
     }
 }

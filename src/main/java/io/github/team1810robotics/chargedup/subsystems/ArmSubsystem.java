@@ -25,6 +25,8 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
     private final ArmFeedforward feedforward;
     private final PIDController pidController;
 
+    private static double trim = 0;
+
     public ArmSubsystem(DoubleSupplier extenderEncoder) {
         super(LiftConstants.CONSTRAINTS,
               LiftConstants.ARM_OFFSET + LiftConstants.RADIAN_OFFSET);
@@ -102,6 +104,18 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
     }
 
+    public double getTrim() {
+        return trim;
+    }
+
+    public void setTrim(double incrementValue) {
+        trim += incrementValue;
+    }
+
+    public void zeroTrim() {
+        trim = 0;
+    }
+
     /**
      * all calculateK[x] method's magic numbers come from here:
      * https://www.desmos.com/calculator/g7nmtvtam8
@@ -116,10 +130,10 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
     }
 
     private double calculateKv(DoubleSupplier extender) {
-        return extender.getAsDouble() * 1.25773195876e-4;
+        return 0.65;
     }
 
     private double calculateKa(DoubleSupplier extender) {
-        return extender.getAsDouble() * 2.0618556701e-5;
+        return 0.1;
     }
 }

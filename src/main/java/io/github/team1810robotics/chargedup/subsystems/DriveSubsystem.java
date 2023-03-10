@@ -1,7 +1,6 @@
 package io.github.team1810robotics.chargedup.subsystems;
 
 import io.github.team1810robotics.chargedup.SwerveModule;
-import io.github.team1810robotics.chargedup.log.Logger;
 
 import static io.github.team1810robotics.chargedup.Constants.*;
 
@@ -23,14 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
-    /**
-     * The logger.
-     *
-     * @since 2018
-     */
-    @SuppressWarnings("unused")
-    private static final Logger LOG = new Logger();
-
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] swerveModules;
     public Pigeon2 gyro;

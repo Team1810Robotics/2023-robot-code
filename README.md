@@ -2,7 +2,7 @@
 
 ## Team 1810 - Catatronics - code for the 2023 competition season
 
-### Bot yet unnamed
+### Bot Named Hoover
 
 ---
 ### Controller Bindings

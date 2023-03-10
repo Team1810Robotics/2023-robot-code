@@ -1,33 +1,50 @@
 package io.github.team1810robotics.chargedup.log;
 
-/**
- * An enum of the different log levels
- * 
- * @author Zach
- * @since 2018
- * 
- */
 public enum LogLevel {
-    FATAL(0), ERROR(1), STDERR(2), WARN(3), STDOUT(4), INFO(5), DEBUG(6), TRACE(7);
     /**
-     * The level ID.
+     * One or more key business functionalities are not working and the whole
+     * system doesn't fulfill the business functionalities
      */
-    int levelId;
+    FATAL(0),
 
     /**
-     * Gets the ID of the log level.
-     * 
-     * @return The level ID of the log.
+     * One or more functionalities are not working, preventing some
+     * functionalities from working correctly
      */
-    public int getLevelId() {
+    ERROR(1),
+
+    /**
+     * Unexpected behavior happened inside the application, but it is
+     * continuing its work and the key business features are operating as
+     * expected
+     */
+    WARN(2),
+
+    /**
+     * An event happened, the event is purely informative and can be ignored
+     * during normal operations
+     */
+    INFO(3),
+
+    /**
+     * A log level used for events considered to be useful during software
+     * debugging when more granular information is needed
+     */
+    DEBUG(4),
+
+    /**
+     * A log level describing events showing step by step execution of your
+     * code that can be ignored during the standard operation, but may be
+     * useful during extended debugging sessions
+     */
+    TRACE(5);
+
+    int levelId;
+
+    public int id() {
         return levelId;
     }
 
-    /**
-     * Sets the level ID.
-     * 
-     * @param levelId
-     */
     private LogLevel(int levelId) {
         this.levelId = levelId;
     }
