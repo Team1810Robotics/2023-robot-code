@@ -13,7 +13,7 @@ public class Log {
         try {
             Calendar cal = Calendar.getInstance();
             String msg = String.format("[%02d:%02d:%02d.%03d] [%s] %s%n", cal.get(Calendar.HOUR),
-                    cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND), cal.get(Calendar.MILLISECOND), LogColors.color(level), message);
+                    cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND), cal.get(Calendar.MILLISECOND), level, message);
             System.out.printf(msg);
         } catch (Throwable t) {
             t.printStackTrace();
