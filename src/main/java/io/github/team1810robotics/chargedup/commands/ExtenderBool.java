@@ -21,6 +21,11 @@ public class ExtenderBool extends CommandBase {
     }
 
     @Override
+    public boolean isFinished() {
+        return extender.getCloseLS() && !in;
+    }
+
+    @Override
     public void end(boolean interrupted) {
         extender.stop();
     }

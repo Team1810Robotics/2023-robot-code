@@ -176,7 +176,7 @@ public final class Constants {
             public static final double ENCODER_DISTANCE_PER_PULSE = (2 * Math.PI) / ENCODER_CPR;
 
             public static final int ENCODER_OFFSET = 550;
-            public static final double ARM_OFFSET = Math.PI / 2;
+            public static final double ARM_INITIAL = Math.PI / 2;
             public static final double RADIAN_OFFSET = ENCODER_OFFSET * ((2 * Math.PI) / LiftConstants.GEAR_RATIO);
 
             public static final int CURRENT_LIMIT = 40;
@@ -187,7 +187,7 @@ public final class Constants {
 
             public static final double kP = 70;
             public static final double kI = 0;
-            public static final double kD = 3;
+            public static final double kD = 5;
 
             private static final double MAX_SPEED = 1; // m/s
             private static final double MAX_ACCEL = 1; // m/s/s

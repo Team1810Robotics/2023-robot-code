@@ -72,17 +72,13 @@ public class RobotContainer {
 
     // please stop. : )
     private void setManipulator() {
-        manipulatorXbox_A.onTrue(new Arm(armSubsystem, ArmConstants.LOW))
-                            .onFalse(new InstantCommand(() -> armSubsystem.zeroTrim()));
-        manipulatorXbox_B.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM))
-                            .onFalse(new InstantCommand(() -> armSubsystem.zeroTrim()));
-        manipulatorXbox_Y.onTrue(new Arm(armSubsystem, ArmConstants.HIGH))
-                            .onFalse(new InstantCommand(() -> armSubsystem.zeroTrim()));
-        manipulatorXbox_X.onTrue(new Arm(armSubsystem, ArmConstants.SHELF))
-                            .onFalse(new InstantCommand(() -> armSubsystem.zeroTrim()));
+        manipulatorXbox_A.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
+        manipulatorXbox_B.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
+        manipulatorXbox_Y.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
+        manipulatorXbox_X.onTrue(new Reset(armSubsystem, extenderSubsystem));
 
-        manipulatorXbox_Start.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(10)));
-        manipulatorXbox_Back.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-10)));
+        manipulatorXbox_Start.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
+        manipulatorXbox_Back.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.5)));
 
         manipulatorXbox_RB.whileTrue(new Intake(intakeSubsystem, true));
         manipulatorXbox_LB.whileTrue(new Intake(intakeSubsystem, false));

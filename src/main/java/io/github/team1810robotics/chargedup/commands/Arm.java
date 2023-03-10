@@ -11,6 +11,13 @@ public class Arm extends CommandBase {
     public Arm(ArmSubsystem armSubsystem, double setpointAngleRadians) {
         this.arm = armSubsystem;
         this.setpointAngle = setpointAngleRadians;
+
+        addRequirements(armSubsystem);
+    }
+
+    @Override
+    public void initialize() {
+        arm.zeroTrim();
     }
 
     @Override

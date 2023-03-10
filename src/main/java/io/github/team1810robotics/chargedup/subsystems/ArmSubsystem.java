@@ -5,6 +5,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
+import io.github.team1810robotics.chargedup.log.Log;
 import io.github.team1810robotics.lib.util.ArmFeedforward;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
@@ -29,7 +30,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     public ArmSubsystem(DoubleSupplier extenderEncoder) {
         super(LiftConstants.CONSTRAINTS,
-              LiftConstants.ARM_OFFSET + LiftConstants.RADIAN_OFFSET);
+              LiftConstants.ARM_INITIAL + LiftConstants.RADIAN_OFFSET);
 
         this.feedforward = new ArmFeedforward(() -> calculateKs(extenderEncoder),
                                               () -> calculateKg(extenderEncoder),
@@ -58,7 +59,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         motor.burnFlash();
 
         setShuffleboard();
-        this.setGoal(LiftConstants.ARM_OFFSET);
+        this.setGoal(LiftConstants.ARM_INITIAL);
     }
 
     public void setGoal(double goal) {
@@ -67,8 +68,8 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     @Override
     public void useState(TrapezoidProfile.State setpoint) {
-        var pid  = pidController.calculate(encoder.getPosition() - LiftConstants.ARM_OFFSET, setpoint.position);
-        var feed = feedforward.calculate(encoder.getPosition() - LiftConstants.ARM_OFFSET, encoder.getVelocity());
+        var pid  = pidController.calculate(encoder.getPosition() - LiftConstants.ARM_INITIAL, setpoint.position);
+        var feed = feedforward.calculate(encoder.getPosition() - LiftConstants.ARM_INITIAL, encoder.getVelocity());
 
         motor.setVoltage(pid + feed);
     }
@@ -105,6 +106,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
     }
 
     public double getTrim() {
+        Log.debug("Trim: " + trim);
         return trim;
     }
 

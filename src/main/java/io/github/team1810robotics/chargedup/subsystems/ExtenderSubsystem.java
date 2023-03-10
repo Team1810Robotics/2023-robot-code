@@ -27,6 +27,10 @@ public class ExtenderSubsystem extends SubsystemBase {
         return extenderEncoder.getDistance();
     }
 
+    public boolean getCloseLS() {
+        return (!closeLimitSwitch.get());
+    }
+
     public void move(boolean forward) {
         if (forward) {
             forward();
@@ -49,15 +53,11 @@ public class ExtenderSubsystem extends SubsystemBase {
 
     private void backward() {
         extenderMotor.set(Value.kReverse);
-        if (!closeLimitSwitch.get()) {
-        } else {
-            // stop();
-        }
     }
 
     @Override
     public void periodic() {
-        if (!closeLimitSwitch.get())
+        if (getCloseLS())
             extenderEncoder.reset();
     }
 }
