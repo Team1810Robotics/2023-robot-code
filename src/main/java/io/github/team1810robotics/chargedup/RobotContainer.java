@@ -55,6 +55,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
+        // leftJoystick_Button11.onTrue(new GrabShelf(driveSubsystem, intakeSubsystem, extenderSubsystem));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
         setManipulator();
@@ -77,8 +78,8 @@ public class RobotContainer {
         manipulatorXbox_Y.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
         manipulatorXbox_X.onTrue(new Reset(armSubsystem, extenderSubsystem));
 
-        manipulatorXbox_Start.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
-        manipulatorXbox_Back.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.5)));
+        manipulatorXbox_Start.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.25)));
+        manipulatorXbox_Back.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
 
         manipulatorXbox_RB.whileTrue(new Intake(intakeSubsystem, true));
         manipulatorXbox_LB.whileTrue(new Intake(intakeSubsystem, false));

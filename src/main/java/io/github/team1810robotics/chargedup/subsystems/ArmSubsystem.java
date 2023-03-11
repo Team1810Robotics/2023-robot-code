@@ -5,7 +5,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
-import io.github.team1810robotics.chargedup.log.Log;
 import io.github.team1810robotics.lib.util.ArmFeedforward;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
@@ -101,12 +100,12 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     private void setShuffleboard() {
         Shuffleboard.getTab("Arm").addNumber("Encoder", this::getDistance);
+        Shuffleboard.getTab("Arm").addNumber("Encoder Deg", this::getDistanceDeg);
         Shuffleboard.getTab("Arm").addNumber("Velocity", this::getVelocity);
         Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
     }
 
     public double getTrim() {
-        Log.debug("Trim: " + trim);
         return trim;
     }
 

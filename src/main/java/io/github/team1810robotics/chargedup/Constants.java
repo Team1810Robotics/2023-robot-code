@@ -74,7 +74,7 @@ public final class Constants {
 
         /* Drive Motor PID Values */
         // TODO: This must be tuned after the arm is attached
-        public static final double DRIVE_kP = 0.013031;
+        public static final double DRIVE_kP = 0.35444;
         public static final double DRIVE_kI = 0.0;
         public static final double DRIVE_kD = 0.0;
         public static final double DRIVE_kF = 0.0;
@@ -82,9 +82,9 @@ public final class Constants {
         /* Drive Motor Characterization Values
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
         // TODO: This must be tuned after the arm is attached
-        public static final double DRIVE_kS = (0.17 / 12);
-        public static final double DRIVE_kV = (2.14 / 12);
-        public static final double DRIVE_kA = (0.41 / 12);
+        public static final double DRIVE_kS = (0.29170 / 12);
+        public static final double DRIVE_kV = (2.16650 / 12);
+        public static final double DRIVE_kA = (0.46999 / 12);
 
         /* Swerve Profiling Values */
         /** Meters per Second */
@@ -147,9 +147,9 @@ public final class Constants {
 
     public static final class ArmConstants {
         public static final double LOW    = Math.toRadians(-30);
-        public static final double MEDIUM = Math.toRadians(0);
-        public static final double HIGH   = Math.toRadians(45);
-        public static final double SHELF  = Math.toRadians(90);
+        public static final double MEDIUM = Math.toRadians(22);
+        public static final double HIGH   = Math.toRadians(31);
+        public static final double SHELF  = Math.toRadians(44.25);
 
         public static final class IntakeConstants {
             public static final int MOTOR_ID = 14;
