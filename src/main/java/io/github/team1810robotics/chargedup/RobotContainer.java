@@ -10,8 +10,6 @@ import io.github.team1810robotics.chargedup.Constants.ArmConstants;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.paths.*;
-import io.github.team1810robotics.chargedup.controller.Pipebomb;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -59,7 +57,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
-        // leftJoystick_Button11.onTrue(new GrabShelf(driveSubsystem, intakeSubsystem, extenderSubsystem));
+        leftJoystick_Button11.onTrue(new GrabShelf(driveSubsystem, armSubsystem, intakeSubsystem, extenderSubsystem).andThen(new Reset(armSubsystem, extenderSubsystem)));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
         setXboxManipulator();
