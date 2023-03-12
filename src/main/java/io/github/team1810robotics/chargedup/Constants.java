@@ -139,17 +139,14 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double MAX_SPEED_METERS_PER_SECOND = 3;
-        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
-        public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
-        public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND_SQUARED = Math.PI;
+        public static final double MAX_SPEED_METERS_PER_SECOND = DriveConstants.MAX_SPEED;
+        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 1;
     }
 
     public static final class ArmConstants {
         public static final double LOW    = Math.toRadians(-30);
         public static final double MEDIUM = Math.toRadians(22);
         public static final double HIGH   = Math.toRadians(31);
-        public static final double SHELF  = Math.toRadians(44.25);
 
         public static final class IntakeConstants {
             public static final int MOTOR_ID = 14;

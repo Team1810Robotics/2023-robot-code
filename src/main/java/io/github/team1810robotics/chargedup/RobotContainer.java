@@ -10,6 +10,7 @@ import io.github.team1810robotics.chargedup.Constants.ArmConstants;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.paths.*;
+import io.github.team1810robotics.chargedup.controller.Pipebomb;
 
 
 /**
@@ -43,6 +44,9 @@ public class RobotContainer {
                 () -> -leftJoystick.getZ(),
                 () -> true));
 
+        intakeSubsystem.setDefaultCommand(new Intake(intakeSubsystem, pipebomb.getJoystickIntake()));
+        extenderSubsystem.setDefaultCommand(new ExtenderBool(extenderSubsystem, pipebomb.getJoystickExtender()));
+
         pathChooser.setDefaultOption("Null Path", new InstantCommand(() -> {}));
         pathChooser.addOption("Test Pathplanner", testPathplanner);
         pathChooser.addOption("4m autoline", autoline);
@@ -58,8 +62,8 @@ public class RobotContainer {
         // leftJoystick_Button11.onTrue(new GrabShelf(driveSubsystem, intakeSubsystem, extenderSubsystem));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
+        setXboxManipulator();
         setManipulator();
-
     }
 
     /**
@@ -73,6 +77,22 @@ public class RobotContainer {
 
     // please stop. : )
     private void setManipulator() {
+        pipebomb_low.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
+        pipebomb_mid.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
+        pipebomb_high.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
+        pipebomb_reset.onTrue(new Reset(armSubsystem, extenderSubsystem));
+
+        pipebomb_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.25)));
+        pipebomb_trimDown.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
+
+        pipebomb_altExtenderIn.whileTrue(new Intake(intakeSubsystem, true));
+        pipebomb_altExtenderOut.whileTrue(new Intake(intakeSubsystem, false));
+
+        pipebomb_altIntakeIn.whileTrue(new ExtenderBool(extenderSubsystem, true));
+        pipebomb_altIntakeOut.whileTrue(new ExtenderBool(extenderSubsystem, false));
+    }
+
+    private void setXboxManipulator() {
         manipulatorXbox_A.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
         manipulatorXbox_B.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
         manipulatorXbox_Y.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));

@@ -31,10 +31,10 @@ public class ExtenderSubsystem extends SubsystemBase {
         return (!closeLimitSwitch.get());
     }
 
-    public void move(boolean forward) {
-        if (forward) {
+    public void move(double speed) {
+        if (speed == 1) {
             forward();
-        } else {
+        } else if (speed == -1) {
             backward();
         }
     }

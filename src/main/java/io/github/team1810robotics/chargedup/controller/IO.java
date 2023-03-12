@@ -15,16 +15,16 @@ public final class IO {
     public static final XboxController xboxController = new XboxController(3);
 
     // Xbox buttons
-    public static final JoystickButton manipulatorXbox_B      = Log.catchAll(() -> new JoystickButton(xboxController, 2));
-    public static final JoystickButton manipulatorXbox_X      = Log.catchAll(() -> new JoystickButton(xboxController, 3));
-    public static final JoystickButton manipulatorXbox_A      = Log.catchAll(() -> new JoystickButton(xboxController, 1));
-    public static final JoystickButton manipulatorXbox_Y      = Log.catchAll(() -> new JoystickButton(xboxController, 4));
-    public static final JoystickButton manipulatorXbox_LB     = Log.catchAll(() -> new JoystickButton(xboxController, 5));
-    public static final JoystickButton manipulatorXbox_RB     = Log.catchAll(() -> new JoystickButton(xboxController, 6));
-    public static final JoystickButton manipulatorXbox_Back   = Log.catchAll(() -> new JoystickButton(xboxController, 7));
-    public static final JoystickButton manipulatorXbox_Start  = Log.catchAll(() -> new JoystickButton(xboxController, 8));
-    public static final JoystickButton manipulatorXbox_LStick = Log.catchAll(() -> new JoystickButton(xboxController, 9));
-    public static final JoystickButton manipulatorXbox_RStick = Log.catchAll(() -> new JoystickButton(xboxController, 10));
+    public static final JoystickButton manipulatorXbox_A      = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kA.value));
+    public static final JoystickButton manipulatorXbox_B      = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kB.value));
+    public static final JoystickButton manipulatorXbox_X      = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kX.value));
+    public static final JoystickButton manipulatorXbox_Y      = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kY.value));
+    public static final JoystickButton manipulatorXbox_LB     = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kLeftBumper.value));
+    public static final JoystickButton manipulatorXbox_RB     = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kRightBumper.value));
+    public static final JoystickButton manipulatorXbox_Back   = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kBack.value));
+    public static final JoystickButton manipulatorXbox_Start  = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kStart.value));
+    public static final JoystickButton manipulatorXbox_LStick = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kLeftStick.value));
+    public static final JoystickButton manipulatorXbox_RStick = Log.catchAll(() -> new JoystickButton(xboxController, XboxController.Button.kRightStick.value));
 
     // Joystick Buttons
     public static final JoystickButton leftJoystick_Trigger  = Log.catchAll(() -> new JoystickButton(leftJoystick, 1));
@@ -53,15 +53,16 @@ public final class IO {
     public static final JoystickButton rightJoystick_Button11 = Log.catchAll(() -> new JoystickButton(rightJoystick, 11));
 
     // manipulator buttons
-    public static final JoystickButton blueSwitch    = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kBlueSwitch.value));
-    public static final JoystickButton redSwitchHigh = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchH.value));
-    public static final JoystickButton redSwitchLow  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
-    public static final JoystickButton rotary0thPos  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
-    public static final JoystickButton rotary1stPos  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
-    public static final JoystickButton rotary2ndPos  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
-    public static final JoystickButton rotary3rdPos  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
-    public static final JoystickButton rotary4thPos  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
-    public static final JoystickButton rotary5thPos  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.kRedSwitchL.value));
+    public static final JoystickButton pipebomb_reset          = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.reset.value));
+    public static final JoystickButton pipebomb_high           = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.high.value));
+    public static final JoystickButton pipebomb_mid            = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.mid.value));
+    public static final JoystickButton pipebomb_low            = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.low.value));
+    public static final JoystickButton pipebomb_altIntakeOut   = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altIntakeOut.value));
+    public static final JoystickButton pipebomb_altIntakeIn    = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altIntakeIn.value));
+    public static final JoystickButton pipebomb_trimDown       = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.trimDown.value));
+    public static final JoystickButton pipebomb_trimUp         = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.trimUp.value));
+    public static final JoystickButton pipebomb_altExtenderOut = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altExtenderOut.value));
+    public static final JoystickButton pipebomb_altExtenderIn  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altExtenderIn.value));
 
     private IO() {/* what does sleep feel like */}
 }

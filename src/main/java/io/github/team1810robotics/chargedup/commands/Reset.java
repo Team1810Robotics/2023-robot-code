@@ -21,7 +21,7 @@ public class Reset extends CommandBase {
     public void execute() {
         arm.setGoal(LiftConstants.ARM_INITIAL);
 
-        extender.move(false);
+        extender.move(-1);
     }
 
     @Override

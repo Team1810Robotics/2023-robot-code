@@ -3,6 +3,7 @@ package io.github.team1810robotics.chargedup.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -30,6 +31,10 @@ public class IntakeSubsystem extends SubsystemBase {
         } else {
             intakeMotor.set(-1);
         }
+    }
+
+    public void intake(double speed) {
+        intakeMotor.set(MathUtil.clamp(speed, -1, 1));
     }
 
     /**
