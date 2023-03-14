@@ -1,4 +1,4 @@
-# 2023 Varsity Robot Code 
+# 2023 Varsity Robot Code
 
 ## Team 1810 - Catatronics - code for the 2023 competition season
 
@@ -9,29 +9,39 @@
 
 #### Josh's Controller
 
-| Button        | Purpose            |
-| -----         | -----              |
-| Red Switch H  | Intake - in        |
-| Red Switch L  | Intake - out       |
-| Blue Switch   |                    |
-| Rotary 0-5    | Arm Positioning    |
+| Button             | Purpose           |
+| -----              | -----             |
+| Reset              | Reset             |
+| High               | Arm - High        |
+| Mid                | Arm - Mid         |
+| Low                | Arm - Low         |
+| | |
+| Alt Intake - In    | Intake            |
+| Alt Intake - Out   | Outtake           |
+| | |
+| Alt Extender - In  | Extender - In     |
+| Alt Extender - Out | Extender - Out    |
+| | |
+| Trim Up            | Trim Up           |
+| Trim Down          | Trim Down         |
+
 
 #### Joystick
 
-| Button         | Purpose   |
-| -----          | -----     |
-| Trigger        |           |
-| 1              |           |
-| 2              |           |
-| 3              |           |
-| 4              |           |
-| 5              |           |
-| 6              |           |
-| 7              |           |
-| 8              |           |
-| 9              | Zero Gyro |
-| 10             |           |
-| 11             |           |
+| Button         | Purpose    |
+| -----          | -----      |
+| Trigger        |            |
+| 1              |            |
+| 2              |            |
+| 3              |            |
+| 4              |            |
+| 5              |            |
+| 6              |            |
+| 7              |            |
+| 8              |            |
+| 9              | Zero Gyro  |
+| 10             |            |
+| 11             | Grab Shelf |
 
 ---
 
