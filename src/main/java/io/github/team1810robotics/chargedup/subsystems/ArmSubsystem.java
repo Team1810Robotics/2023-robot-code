@@ -67,8 +67,8 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     @Override
     public void useState(TrapezoidProfile.State setpoint) {
-        var pid  = pidController.calculate(encoder.getPosition() - LiftConstants.ARM_INITIAL, setpoint.position);
-        var feed = feedforward.calculate(getDistance(), encoder.getVelocity());
+        double pid  = pidController.calculate(encoder.getPosition() - LiftConstants.ARM_INITIAL, setpoint.position);
+        double feed = feedforward.calculate(getDistance(), encoder.getVelocity());
 
         motor.setVoltage(pid + feed);
     }
@@ -118,25 +118,24 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         trim = 0;
     }
 
-    /**
-     * all calculateKg method's magic numbers come from here:
-     * https://www.desmos.com/calculator/qlubzqpbu1
-     */
-
     private double calculateKs(DoubleSupplier extender) {
-        return 0.5;
+        return LiftConstants.kS;
     }
 
+    /**
+     * calculateKg's magic numbers come from here:
+     * https://www.desmos.com/calculator/qlubzqpbu1
+     */
     private double calculateKg(DoubleSupplier extender) {
         double e = extender.getAsDouble();
-        return 6.5324e-8 * (e * e) + 0.000336428 * e + 0.228167920645;
+        return (6.5324e-8 * (e * e)) + (3.36428e-4 * e) + 0.228167920645;
     }
 
     private double calculateKv(DoubleSupplier extender) {
-        return 0.65;
+        return LiftConstants.kV;
     }
 
     private double calculateKa(DoubleSupplier extender) {
-        return 0.1;
+        return LiftConstants.kA;
     }
 }

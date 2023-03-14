@@ -180,6 +180,11 @@ public final class Constants {
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians
             public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad per sec
 
+
+            public static final double kS = 0.50;
+            public static final double kV = 0.65;
+            public static final double kA = 0.10;
+
             public static final double kP = 70;
             public static final double kI = 0;
             public static final double kD = 5;
