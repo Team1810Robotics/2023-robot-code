@@ -73,7 +73,6 @@ public final class Constants {
         public static final double STEER_kF = CHOSEN_MODULE.angleKF;
 
         /* Drive Motor PID Values */
-        // TODO: This must be tuned after the arm is attached
         public static final double DRIVE_kP = 0.35444;
         public static final double DRIVE_kI = 0.0;
         public static final double DRIVE_kD = 0.0;
@@ -81,7 +80,6 @@ public final class Constants {
 
         /* Drive Motor Characterization Values
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        // TODO: This must be tuned after the arm is attached
         public static final double DRIVE_kS = (0.29170 / 12);
         public static final double DRIVE_kV = (2.16650 / 12);
         public static final double DRIVE_kA = (0.46999 / 12);
