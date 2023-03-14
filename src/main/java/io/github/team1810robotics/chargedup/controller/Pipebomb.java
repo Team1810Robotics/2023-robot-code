@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 
 public class Pipebomb extends GenericHID {
 
-    public static final int extenderAxis = 0;
-    public static final int intakeAxis = 1;
+    public static final int intakeAxis = 0;
+    public static final int extenderAxis = 1;
 
     public Pipebomb(int port) {
         super(port);

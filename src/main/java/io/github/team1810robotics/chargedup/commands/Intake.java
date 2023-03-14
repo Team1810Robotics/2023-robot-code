@@ -6,22 +6,19 @@ import io.github.team1810robotics.chargedup.subsystems.IntakeSubsystem;
 public class Intake extends CommandBase {
 
     private IntakeSubsystem intake;
-    private double speed;
-
-    public Intake(IntakeSubsystem intakeSubsystem, double speed) {
-        this.intake = intakeSubsystem;
-        this.speed = speed;
-
-        addRequirements(intakeSubsystem);
-    }
+    private boolean in;
 
     public Intake(IntakeSubsystem intakeSubsystem, boolean in) {
-        this(intakeSubsystem, (in ? 1 : -1));
+        this.intake = intakeSubsystem;
+        this.in = in;
+
+        addRequirements(intakeSubsystem);
+
     }
 
     @Override
     public void execute() {
-        intake.intake(speed);
+        intake.intake(in);
     }
 
     @Override
@@ -30,8 +27,8 @@ public class Intake extends CommandBase {
         /* if (intake.hasCube())
             return true; */
 
-        if (intake.lineBreak() && (speed == 1))
-            return true;
+        /* if (intake.lineBreak() && in)
+            return true; */
 
         return false;
     }

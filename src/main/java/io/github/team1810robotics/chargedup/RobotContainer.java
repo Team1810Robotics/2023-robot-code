@@ -42,9 +42,6 @@ public class RobotContainer {
                 () -> -leftJoystick.getZ(),
                 () -> true));
 
-        intakeSubsystem.setDefaultCommand(new Intake(intakeSubsystem, pipebomb.getJoystickIntake()));
-        extenderSubsystem.setDefaultCommand(new ExtenderBool(extenderSubsystem, pipebomb.getJoystickExtender()));
-
         pathChooser.setDefaultOption("Null Path", new InstantCommand(() -> {}));
         pathChooser.addOption("Test Pathplanner", testPathplanner);
         pathChooser.addOption("4m autoline", autoline);
