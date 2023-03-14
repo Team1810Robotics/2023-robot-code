@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.*;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
@@ -21,6 +22,8 @@ public class ExtenderSubsystem extends SubsystemBase {
 
         farLimitSwitch = new DigitalInput(ExtenderConstants.FAR_LS);
         closeLimitSwitch = new DigitalInput(ExtenderConstants.CLOSE_LS);
+
+        Shuffleboard.getTab("Arm").addNumber("Extender Encoder", this::getDistance);
     }
 
     public double getDistance() {

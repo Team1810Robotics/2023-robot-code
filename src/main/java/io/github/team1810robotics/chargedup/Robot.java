@@ -3,7 +3,6 @@ package io.github.team1810robotics.chargedup;
 import static io.github.team1810robotics.chargedup.controller.IO.*;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import io.github.team1810robotics.chargedup.commands.ExtenderBool;
@@ -26,8 +25,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        SmartDashboard.putNumber("extender encoder", m_robotContainer.extenderSubsystem.getDistance());
-
         CommandScheduler.getInstance().run();
     }
 

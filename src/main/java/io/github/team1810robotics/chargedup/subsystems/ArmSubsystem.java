@@ -103,7 +103,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         Shuffleboard.getTab("Arm").addNumber("Encoder Deg", this::getDistanceDeg);
         Shuffleboard.getTab("Arm").addNumber("Velocity", this::getVelocity);
         Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
-        Shuffleboard.getTab("Arm").addNumber("Kp Voltage", () -> { return getPIDError() * LiftConstants.kP; } );
+        Shuffleboard.getTab("Arm").addCamera("Intake Camera", IntakeConstants.CAMERA_NAME, "https://10.18.10.?:?");
     }
 
     public double getTrim() {

@@ -117,7 +117,7 @@ public class DriveSubsystem extends SubsystemBase {
         swerveOdometry.update(getGyroYaw(), getModulePositions());
 
         SmartDashboard.putNumber("Gyro Yaw", getGyroYaw().getDegrees());
-        SmartDashboard.putNumber("Gyro Temp in F", gyro.getTemp() * (9 / 5) + 32);
+        SmartDashboard.putNumber("Gyro Temp in F", gyro.getTemp() * (9. / 5.) + 32);
         SmartDashboard.putBoolean("Gyro Zero", (Math.abs(getGyroYaw().getDegrees()) % 360) < 0.5);
     }
 
