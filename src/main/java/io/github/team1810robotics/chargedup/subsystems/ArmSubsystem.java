@@ -4,6 +4,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
 import io.github.team1810robotics.lib.util.ArmFeedforward;
 
@@ -13,6 +14,7 @@ import java.util.function.DoubleSupplier;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
@@ -71,6 +73,8 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         double feed = feedforward.calculate(getDistance(), encoder.getVelocity());
 
         motor.setVoltage(pid + feed);
+        // TODO: remove later
+        SmartDashboard.putData("Arm PID", pidController);
     }
 
     public double getPIDError() {
@@ -103,6 +107,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         Shuffleboard.getTab("Arm").addNumber("Encoder Deg", this::getDistanceDeg);
         Shuffleboard.getTab("Arm").addNumber("Velocity", this::getVelocity);
         Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
+        Shuffleboard.getTab("Arm").addString("SparkMAX Fault", this::getFaults);
         Shuffleboard.getTab("Arm").addCamera("Intake Camera", IntakeConstants.CAMERA_NAME, "https://10.18.10.?:?");
     }
 
@@ -137,5 +142,56 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     private double calculateKa(DoubleSupplier extender) {
         return LiftConstants.kA;
+    }
+
+    /**
+     * there is most definitly a better way to do this with bit manipulation with
+     * {@link CANSparkMax#getFaults()} but java bit manipulation is more than I
+     * want to mess with rn
+     * @return String containing a list of active faults
+     */
+    private String getFaults() {
+        motor.clearFaults();
+
+        String[] faults = {""};
+        int index = 0;
+
+        if (motor.getFault(FaultID.kBrownout)) {
+            faults[index++] = "Brownout";
+        } else if (motor.getFault(FaultID.kCANRX)) {
+            faults[index++] = "CANRX";
+        } else if (motor.getFault(FaultID.kCANTX)) {
+            faults[index++] = "CANTX";
+        } else if (motor.getFault(FaultID.kDRVFault)) {
+            faults[index++] = "DRV Fault";
+        } else if (motor.getFault(FaultID.kEEPROMCRC)) {
+            faults[index++] = "EEPROMCRC";
+        } else if (motor.getFault(FaultID.kHardLimitFwd)) {
+            faults[index++] = "Hard Limit Forward";
+        } else if (motor.getFault(FaultID.kHardLimitRev)) {
+            faults[index++] = "Hard Limit Reverse";
+        } else if (motor.getFault(FaultID.kHasReset)) {
+            faults[index++] = "Has Reset";
+        } else if (motor.getFault(FaultID.kIWDTReset)) {
+            faults[index++] = "IWDT Reset";
+        } else if (motor.getFault(FaultID.kBrownout)) {
+            faults[index++] = "Brownout";
+        } else if (motor.getFault(FaultID.kMotorFault)) {
+            faults[index++] = "Motor Fault";
+        } else if (motor.getFault(FaultID.kOtherFault)) {
+            faults[index++] = "Other Fault";
+        } else if (motor.getFault(FaultID.kOvercurrent)) {
+            faults[index++] = "Over current";
+        } else if (motor.getFault(FaultID.kSensorFault)) {
+            faults[index++] = "Sensor Fault";
+        } else if (motor.getFault(FaultID.kSoftLimitFwd)) {
+            faults[index++] = "Soft Limit Forward";
+        } else if (motor.getFault(FaultID.kSoftLimitRev)) {
+            faults[index++] = "Soft Limit Reverse";
+        } else if (motor.getFault(FaultID.kStall)) {
+            faults[index++] = "Stall";
+        }
+
+        return String.join(",", faults);
     }
 }
