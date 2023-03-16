@@ -174,7 +174,7 @@ public final class Constants {
             public static final double ARM_INITIAL = Math.PI / 2;
             public static final double RADIAN_OFFSET = ENCODER_OFFSET * ((2 * Math.PI) / LiftConstants.GEAR_RATIO);
 
-            public static final int CURRENT_LIMIT = 40;
+            public static final int CURRENT_LIMIT = 15;
 
             public static final double GEAR_RATIO = (4 / 1);
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians

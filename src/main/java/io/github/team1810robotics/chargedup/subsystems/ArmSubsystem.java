@@ -110,7 +110,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         Shuffleboard.getTab("Arm").addNumber("Velocity", this::getVelocity);
         Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
         Shuffleboard.getTab("Arm").addString("SparkMAX Fault", this::getFaults);
-        Shuffleboard.getTab("Arm").addCamera("Intake Camera", IntakeConstants.CAMERA_NAME, "https://10.18.10.?:?");
+        Shuffleboard.getTab("Arm").addCamera("Intake Camera", IntakeConstants.CAMERA_NAME, "http://10.18.10.24:1182/stream.mjpg?1678920294634");
     }
 
     public double getTrim() {
