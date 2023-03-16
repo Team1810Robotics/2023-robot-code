@@ -5,9 +5,6 @@ import static io.github.team1810robotics.chargedup.controller.IO.*;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import io.github.team1810robotics.chargedup.commands.ExtenderBool;
-import io.github.team1810robotics.chargedup.commands.Intake;
-
 public class Robot extends TimedRobot {
     public static CTREConfigs ctreConfigs;
 
@@ -57,15 +54,19 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         // fastest way to get it to work and im lazy
         if (pipebomb.getJoystickExtender() == 1) {
-            new ExtenderBool(m_robotContainer.extenderSubsystem, false);
+            m_robotContainer.extenderSubsystem.move(false);
         } else if (pipebomb.getJoystickExtender() == -1) {
-            new ExtenderBool(m_robotContainer.extenderSubsystem, true);
+            m_robotContainer.extenderSubsystem.move(true);
+        } else {
+            m_robotContainer.extenderSubsystem.stop();
         }
 
         if (pipebomb.getJoystickIntake() == 1) {
-            new Intake(m_robotContainer.intakeSubsystem, true);
+            m_robotContainer.intakeSubsystem.intake(true);
         } else if (pipebomb.getJoystickIntake() == -1) {
-            new Intake(m_robotContainer.intakeSubsystem, false);
+            m_robotContainer.intakeSubsystem.intake(false);
+        } else {
+            m_robotContainer.intakeSubsystem.stop();
         }
     }
 }

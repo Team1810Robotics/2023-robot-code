@@ -165,7 +165,7 @@ public final class Constants {
         }
 
         public static final class LiftConstants {
-            public static final int MOTOR_ID = 16;
+            public static final int MOTOR_ID = 20;
 
             public static final int ENCODER_CPR = 1536;
             public static final double ENCODER_DISTANCE_PER_PULSE = (2 * Math.PI) / ENCODER_CPR;

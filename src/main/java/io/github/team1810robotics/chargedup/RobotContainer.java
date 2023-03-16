@@ -11,13 +11,6 @@ import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.paths.*;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- *
- * subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
 
     SendableChooser<Command> pathChooser = new SendableChooser<>();
@@ -61,11 +54,6 @@ public class RobotContainer {
         setManipulator();
     }
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
     public Command getAutonomousCommand() {
         return pathChooser.getSelected();
     }

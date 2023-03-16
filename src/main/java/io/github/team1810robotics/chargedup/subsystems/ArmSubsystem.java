@@ -10,8 +10,8 @@ import io.github.team1810robotics.lib.util.ArmFeedforward;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.DoubleSupplier;
 
 import com.revrobotics.CANSparkMax;
@@ -19,6 +19,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 public class ArmSubsystem extends TrapezoidProfileSubsystem {
@@ -41,6 +42,13 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
                                               () -> calculateKa(extenderEncoder));
 
         this.motor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
+
+        // TODO: check
+        motor.setControlFramePeriodMs(10);
+        motor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10); // https://docs.revrobotics.com/sparkmax/operating-modes/control-interfaces#position-control-on-the-roborio
+        motor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
+        // end of todo
+
         motor.restoreFactoryDefaults();
         motor.setInverted(true);
 
@@ -110,6 +118,9 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         Shuffleboard.getTab("Arm").addNumber("Velocity", this::getVelocity);
         Shuffleboard.getTab("Arm").addNumber("Error", this::getPIDError);
         Shuffleboard.getTab("Arm").addString("SparkMAX Fault", this::getFaults);
+        Shuffleboard.getTab("Arm").addNumber("Motor Temp (C)", () -> motor.getMotorTemperature());
+        Shuffleboard.getTab("Arm").addNumber("Output Current", () -> motor.getOutputCurrent());
+        Shuffleboard.getTab("Arm").addNumber("Bus Voltage", () -> motor.getBusVoltage());
         Shuffleboard.getTab("Arm").addCamera("Intake Camera", IntakeConstants.CAMERA_NAME, "http://10.18.10.24:1182/stream.mjpg?1678920294634");
     }
 
@@ -150,15 +161,12 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
      * @return String containing a list of active faults
      */
     private String getFaults() {
-        motor.clearFaults();
-
-        List<String> faults = new ArrayList<String>();
+        Set<String> faults = new HashSet<>();
         short faultBits = motor.getFaults();
 
-        for (int i = 0; i < (Short.BYTES * 8); i++) {
+        for (int i = 0; i < Short.BYTES * 8; i++) {
             if ((faultBits & (1 << i)) != 0) {
-                String errorString = FaultID.fromId(i).name();
-                faults.add(errorString.substring(1, errorString.length()));
+                faults.add(FaultID.fromId(i).name().substring(1));
             }
         }
 
