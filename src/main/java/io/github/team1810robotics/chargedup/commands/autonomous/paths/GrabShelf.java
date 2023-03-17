@@ -1,8 +1,10 @@
-package io.github.team1810robotics.chargedup.commands;
+package io.github.team1810robotics.chargedup.commands.autonomous.paths;
 
 import com.pathplanner.lib.PathPlanner;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import io.github.team1810robotics.chargedup.Constants.AutoConstants;
+import io.github.team1810robotics.chargedup.commands.ApplyTrim;
+import io.github.team1810robotics.chargedup.commands.Intake;
 import io.github.team1810robotics.chargedup.commands.autonomous.FollowPath;
 import io.github.team1810robotics.chargedup.subsystems.ArmSubsystem;
 import io.github.team1810robotics.chargedup.subsystems.DriveSubsystem;

@@ -1,39 +1,32 @@
 package io.github.team1810robotics.chargedup;
 
 import static io.github.team1810robotics.chargedup.controller.IO.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.github.team1810robotics.chargedup.Constants.*;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.AutoDock;
-import io.github.team1810robotics.chargedup.commands.autonomous.paths.tests.*;
+import io.github.team1810robotics.chargedup.commands.autonomous.paths.GrabShelf;
 import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
 
 public class RobotContainer {
 
-    SendableChooser<Command> pathChooser = new SendableChooser<>();
+    List<SendableChooser<Command>> autoChooser = new ArrayList<>();
 
     /* Subsystems */
     public final DriveSubsystem driveSubsystem = new DriveSubsystem();
     public final ExtenderSubsystem extenderSubsystem = new ExtenderSubsystem();
     public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     public final ArmSubsystem armSubsystem = new ArmSubsystem(extenderSubsystem::getDistance);
-
-    // private final Command testPathplanner = new TestPathplanner(driveSubsystem);
-    // private final Command autoline = new AutoLine(driveSubsystem);
-    // private final Command spinTest = new SpinTest(driveSubsystem);
-    // private final Command fullSpin = new FullSpin(driveSubsystem);
-    private final Command HiCone = new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem);
-    private final Command MidCone = new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem);
-    private final Command LowCone = new LowCone(armSubsystem, extenderSubsystem, intakeSubsystem);
-    private final Command HiCube = new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem);
-    private final Command MidCube = new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem);
-    private final Command LowCube = new LowCube(armSubsystem, extenderSubsystem, intakeSubsystem);
-    private final Command autoDock = new AutoDock(driveSubsystem);
 
     public RobotContainer() {
         driveSubsystem.setDefaultCommand(
@@ -44,19 +37,10 @@ public class RobotContainer {
                 () -> -leftJoystick.getZ(),
                 () -> true));
 
-        pathChooser.setDefaultOption("Null Path", new InstantCommand(() -> {}));
-        // pathChooser.addOption("Test Pathplanner", testPathplanner);
-        // pathChooser.addOption("4m autoline", autoline);
-        // pathChooser.addOption("5m spin", spinTest);
-        // pathChooser.addOption("360 spin", fullSpin);
-        pathChooser.addOption("Cone Hi", HiCone);
-        pathChooser.addOption("Cone Mid", MidCone);
-        pathChooser.addOption("Cone Low", LowCone);
-        pathChooser.addOption("Cube Hi", HiCube);
-        pathChooser.addOption("Cube Mid", MidCube);
-        pathChooser.addOption("Cube Low", LowCube);
-        pathChooser.addOption("Auto Dock", autoDock);
-        Shuffleboard.getTab("Autonomous").add(pathChooser);
+        populateAutoChooser();
+        for (var choices : autoChooser) {
+            Shuffleboard.getTab("Autonomous").add(choices);
+        }
 
         configureButtonBindings();
     }
@@ -71,7 +55,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return pathChooser.getSelected();
+        return sequenceAutoChooserCommands(0.5);
     }
 
     // please stop. : )
@@ -105,5 +89,34 @@ public class RobotContainer {
 
         manipulatorXbox_RStick.whileTrue(new Extender(extenderSubsystem, false));
         manipulatorXbox_LStick.whileTrue(new Extender(extenderSubsystem, true));
+    }
+
+    private void populateAutoChooser() {
+        for (var c : autoChooser) {
+            c.setDefaultOption("Null", new InstantCommand());
+        }
+
+        var score = autoChooser.get(0);
+        var dock = autoChooser.get(1);
+
+        score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Cone Low", new LowCone(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Cube Low", new LowCube(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Auto Dock", new AutoDock(driveSubsystem));
+
+        dock.addOption("Don't Dock", new InstantCommand());
+        dock.addOption("Dock", new AutoDock(driveSubsystem));
+    }
+
+    /** builds a SequentialCommandGroup for auto */
+    private Command sequenceAutoChooserCommands(double delay) {
+        Command out = new InstantCommand();
+        for (var c : autoChooser) {
+            out = out.andThen(new WaitCommand(delay), c.getSelected());
+        }
+        return out;
     }
 }
