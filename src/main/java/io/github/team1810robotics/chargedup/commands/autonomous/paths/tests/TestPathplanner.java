@@ -1,4 +1,4 @@
-package io.github.team1810robotics.chargedup.commands.autonomous.paths;
+package io.github.team1810robotics.chargedup.commands.autonomous.paths.tests;
 
 import static io.github.team1810robotics.chargedup.Constants.*;
 

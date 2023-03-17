@@ -1,15 +1,17 @@
 package io.github.team1810robotics.chargedup;
 
 import static io.github.team1810robotics.chargedup.controller.IO.*;
+import static io.github.team1810robotics.chargedup.Constants.*;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import io.github.team1810robotics.chargedup.Constants.ArmConstants;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
-import io.github.team1810robotics.chargedup.commands.autonomous.paths.*;
+import io.github.team1810robotics.chargedup.commands.autonomous.AutoDock;
+import io.github.team1810robotics.chargedup.commands.autonomous.paths.tests.*;
+import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
 
 public class RobotContainer {
 
@@ -21,10 +23,17 @@ public class RobotContainer {
     public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     public final ArmSubsystem armSubsystem = new ArmSubsystem(extenderSubsystem::getDistance);
 
-    private final Command testPathplanner = new TestPathplanner(driveSubsystem);
-    private final Command autoline = new AutoLine(driveSubsystem);
-    private final Command spinTest = new SpinTest(driveSubsystem);
-    private final Command fullSpin = new FullSpin(driveSubsystem);
+    // private final Command testPathplanner = new TestPathplanner(driveSubsystem);
+    // private final Command autoline = new AutoLine(driveSubsystem);
+    // private final Command spinTest = new SpinTest(driveSubsystem);
+    // private final Command fullSpin = new FullSpin(driveSubsystem);
+    private final Command HiCone = new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem);
+    private final Command MidCone = new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem);
+    private final Command LowCone = new LowCone(armSubsystem, extenderSubsystem, intakeSubsystem);
+    private final Command HiCube = new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem);
+    private final Command MidCube = new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem);
+    private final Command LowCube = new LowCube(armSubsystem, extenderSubsystem, intakeSubsystem);
+    private final Command autoDock = new AutoDock(driveSubsystem);
 
     public RobotContainer() {
         driveSubsystem.setDefaultCommand(
@@ -36,10 +45,17 @@ public class RobotContainer {
                 () -> true));
 
         pathChooser.setDefaultOption("Null Path", new InstantCommand(() -> {}));
-        pathChooser.addOption("Test Pathplanner", testPathplanner);
-        pathChooser.addOption("4m autoline", autoline);
-        pathChooser.addOption("5m spin", spinTest);
-        pathChooser.addOption("360 spin", fullSpin);
+        // pathChooser.addOption("Test Pathplanner", testPathplanner);
+        // pathChooser.addOption("4m autoline", autoline);
+        // pathChooser.addOption("5m spin", spinTest);
+        // pathChooser.addOption("360 spin", fullSpin);
+        pathChooser.addOption("Cone Hi", HiCone);
+        pathChooser.addOption("Cone Mid", MidCone);
+        pathChooser.addOption("Cone Low", LowCone);
+        pathChooser.addOption("Cube Hi", HiCube);
+        pathChooser.addOption("Cube Mid", MidCube);
+        pathChooser.addOption("Cube Low", LowCube);
+        pathChooser.addOption("Auto Dock", autoDock);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
         configureButtonBindings();
@@ -71,8 +87,8 @@ public class RobotContainer {
         pipebomb_altExtenderIn.whileTrue(new Intake(intakeSubsystem, true));
         pipebomb_altExtenderOut.whileTrue(new Intake(intakeSubsystem, false));
 
-        pipebomb_altIntakeIn.whileTrue(new ExtenderBool(extenderSubsystem, true));
-        pipebomb_altIntakeOut.whileTrue(new ExtenderBool(extenderSubsystem, false));
+        pipebomb_altIntakeIn.whileTrue(new Extender(extenderSubsystem, true));
+        pipebomb_altIntakeOut.whileTrue(new Extender(extenderSubsystem, false));
     }
 
     private void setXboxManipulator() {
@@ -87,7 +103,7 @@ public class RobotContainer {
         manipulatorXbox_RB.whileTrue(new Intake(intakeSubsystem, true));
         manipulatorXbox_LB.whileTrue(new Intake(intakeSubsystem, false));
 
-        manipulatorXbox_RStick.whileTrue(new ExtenderBool(extenderSubsystem, false));
-        manipulatorXbox_LStick.whileTrue(new ExtenderBool(extenderSubsystem, true));
+        manipulatorXbox_RStick.whileTrue(new Extender(extenderSubsystem, false));
+        manipulatorXbox_LStick.whileTrue(new Extender(extenderSubsystem, true));
     }
 }
