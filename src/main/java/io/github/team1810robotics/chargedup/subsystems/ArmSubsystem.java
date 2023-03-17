@@ -4,7 +4,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
 import io.github.team1810robotics.lib.util.ArmFeedforward;
 
@@ -19,7 +18,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 public class ArmSubsystem extends TrapezoidProfileSubsystem {
@@ -36,18 +34,12 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         super(LiftConstants.CONSTRAINTS,
               LiftConstants.ARM_INITIAL + LiftConstants.RADIAN_OFFSET);
 
-        this.feedforward = new ArmFeedforward(() -> calculateKs(extenderEncoder),
+        this.feedforward = new ArmFeedforward(() -> LiftConstants.kS,
                                               () -> calculateKg(extenderEncoder),
-                                              () -> calculateKv(extenderEncoder),
-                                              () -> calculateKa(extenderEncoder));
+                                              () -> LiftConstants.kV,
+                                              () -> LiftConstants.kA);
 
         this.motor = new CANSparkMax(LiftConstants.MOTOR_ID, MotorType.kBrushed);
-
-        // TODO: check
-        motor.setControlFramePeriodMs(10);
-        motor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10); // https://docs.revrobotics.com/sparkmax/operating-modes/control-interfaces#position-control-on-the-roborio
-        motor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
-        // end of todo
 
         motor.restoreFactoryDefaults();
         motor.setInverted(true);
@@ -83,8 +75,6 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         double feed = feedforward.calculate(getDistance(), encoder.getVelocity());
 
         motor.setVoltage(pid + feed);
-        // TODO: remove later
-        SmartDashboard.putData("Arm PID", pidController);
     }
 
     public double getPIDError() {
@@ -136,10 +126,6 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         trim = 0;
     }
 
-    private double calculateKs(DoubleSupplier extender) {
-        return LiftConstants.kS;
-    }
-
     /**
      * calculateKg's magic numbers come from here:
      * https://www.desmos.com/calculator/qlubzqpbu1
@@ -147,14 +133,6 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
     private double calculateKg(DoubleSupplier extender) {
         double e = extender.getAsDouble();
         return (6.5324e-8 * (e * e)) + (3.36428e-4 * e) + 0.228167920645;
-    }
-
-    private double calculateKv(DoubleSupplier extender) {
-        return LiftConstants.kV;
-    }
-
-    private double calculateKa(DoubleSupplier extender) {
-        return LiftConstants.kA;
     }
 
     /**

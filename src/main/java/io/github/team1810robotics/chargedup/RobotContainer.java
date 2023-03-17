@@ -65,7 +65,7 @@ public class RobotContainer {
         pipebomb_high.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
         pipebomb_reset.onTrue(new Reset(armSubsystem, extenderSubsystem));
 
-        pipebomb_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.25)));
+        pipebomb_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
         pipebomb_trimDown.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
 
         pipebomb_altExtenderIn.whileTrue(new Intake(intakeSubsystem, true));

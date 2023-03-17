@@ -165,7 +165,7 @@ public final class Constants {
         }
 
         public static final class LiftConstants {
-            public static final int MOTOR_ID = 20;
+            public static final int MOTOR_ID = 16;
 
             public static final int ENCODER_CPR = 1536;
             public static final double ENCODER_DISTANCE_PER_PULSE = (2 * Math.PI) / ENCODER_CPR;
@@ -180,14 +180,13 @@ public final class Constants {
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians
             public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad per sec
 
-
             public static final double kS = 0.50;
             public static final double kV = 0.65;
             public static final double kA = 0.10;
 
-            public static final double kP = 70;
+            public static final double kP = 12;
             public static final double kI = 0;
-            public static final double kD = 5;
+            public static final double kD = 0;
 
             private static final double MAX_SPEED = 1; // m/s
             private static final double MAX_ACCEL = 1; // m/s/s

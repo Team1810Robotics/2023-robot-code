@@ -54,9 +54,9 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         // fastest way to get it to work and im lazy
         if (pipebomb.getJoystickExtender() == 1) {
-            m_robotContainer.extenderSubsystem.move(false);
-        } else if (pipebomb.getJoystickExtender() == -1) {
             m_robotContainer.extenderSubsystem.move(true);
+        } else if (pipebomb.getJoystickExtender() == -1) {
+            m_robotContainer.extenderSubsystem.move(false);
         } else {
             m_robotContainer.extenderSubsystem.stop();
         }
