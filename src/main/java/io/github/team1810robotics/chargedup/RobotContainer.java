@@ -38,9 +38,6 @@ public class RobotContainer {
                 () -> true));
 
         populateAutoChooser();
-        for (var choices : autoChooser) {
-            Shuffleboard.getTab("Autonomous").add(choices);
-        }
 
         configureButtonBindings();
     }
@@ -92,6 +89,10 @@ public class RobotContainer {
     }
 
     private void populateAutoChooser() {
+        // only way ive found to do it. Please fix if you know a better way
+        autoChooser.add(new SendableChooser<>());
+        autoChooser.add(new SendableChooser<>());
+
         for (var c : autoChooser) {
             c.setDefaultOption("Null", new InstantCommand());
         }
@@ -105,10 +106,11 @@ public class RobotContainer {
         score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Low", new LowCube(armSubsystem, extenderSubsystem, intakeSubsystem));
-        score.addOption("Auto Dock", new AutoDock(driveSubsystem));
+        Shuffleboard.getTab("Autonomous").add("Score", score);
 
         dock.addOption("Don't Dock", new InstantCommand());
         dock.addOption("Dock", new AutoDock(driveSubsystem));
+        Shuffleboard.getTab("Autonomous").add("Dock", dock);
     }
 
     /** builds a SequentialCommandGroup for auto */
