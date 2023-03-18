@@ -57,12 +57,14 @@ public final class IO {
     public static final JoystickButton pipebomb_high           = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.high.value));
     public static final JoystickButton pipebomb_mid            = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.mid.value));
     public static final JoystickButton pipebomb_low            = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.low.value));
-    public static final JoystickButton pipebomb_altIntakeOut   = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altIntakeOut.value));
-    public static final JoystickButton pipebomb_altIntakeIn    = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altIntakeIn.value));
     public static final JoystickButton pipebomb_trimDown       = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.trimDown.value));
     public static final JoystickButton pipebomb_trimUp         = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.trimUp.value));
     public static final JoystickButton pipebomb_altExtenderOut = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altExtenderOut.value));
     public static final JoystickButton pipebomb_altExtenderIn  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altExtenderIn.value));
+    public static final JoystickButton pipebomb_extenderIn     = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.extenderIn.value));
+    public static final JoystickButton pipebomb_extenderOut    = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.extenderOut.value));
+    public static final JoystickButton pipebomb_intake         = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.intake.value));
+    public static final JoystickButton pipebomb_outtake        = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.outtake.value));
 
     private IO() {/* what does sleep feel like */}
 }

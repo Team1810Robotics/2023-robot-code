@@ -2,16 +2,12 @@ package io.github.team1810robotics.chargedup;
 
 import static io.github.team1810robotics.chargedup.controller.IO.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static io.github.team1810robotics.chargedup.Constants.*;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.AutoDock;
@@ -20,7 +16,8 @@ import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
 
 public class RobotContainer {
 
-    List<SendableChooser<Command>> autoChooser = new ArrayList<>();
+    private SendableChooser<Command> score = new SendableChooser<>();
+    private SendableChooser<Command> dock = new SendableChooser<>();
 
     /* Subsystems */
     public final DriveSubsystem driveSubsystem = new DriveSubsystem();
@@ -65,11 +62,14 @@ public class RobotContainer {
         pipebomb_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
         pipebomb_trimDown.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
 
-        pipebomb_altExtenderIn.whileTrue(new Intake(intakeSubsystem, true));
-        pipebomb_altExtenderOut.whileTrue(new Intake(intakeSubsystem, false));
+        pipebomb_altExtenderIn.whileTrue(new Extender(extenderSubsystem, true));
+        pipebomb_altExtenderOut.whileTrue(new Extender(extenderSubsystem, false));
 
-        pipebomb_altIntakeIn.whileTrue(new Extender(extenderSubsystem, true));
-        pipebomb_altIntakeOut.whileTrue(new Extender(extenderSubsystem, false));
+        pipebomb_extenderIn.whileTrue(new Extender(extenderSubsystem, true));
+        pipebomb_extenderOut.whileTrue(new Extender(extenderSubsystem, false));
+
+        pipebomb_intake.whileTrue(new Intake(intakeSubsystem, true));
+        pipebomb_outtake.whileTrue(new Intake(intakeSubsystem, false));
     }
 
     private void setXboxManipulator() {
@@ -89,36 +89,23 @@ public class RobotContainer {
     }
 
     private void populateAutoChooser() {
-        // only way ive found to do it. Please fix if you know a better way
-        autoChooser.add(new SendableChooser<>());
-        autoChooser.add(new SendableChooser<>());
 
-        for (var c : autoChooser) {
-            c.setDefaultOption("Null", new InstantCommand());
-        }
-
-        var score = autoChooser.get(0);
-        var dock = autoChooser.get(1);
-
+        score.setDefaultOption("Null", new InstantCommand());
         score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
-        score.addOption("Cone Low", new LowCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
-        score.addOption("Cube Low", new LowCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         Shuffleboard.getTab("Autonomous").add("Score", score);
 
+        dock.setDefaultOption("Null", new InstantCommand());
         dock.addOption("Don't Dock", new InstantCommand());
-        dock.addOption("Dock", new AutoDock(driveSubsystem));
+        dock.addOption("Dock", new AutoDock(armSubsystem, driveSubsystem));
         Shuffleboard.getTab("Autonomous").add("Dock", dock);
     }
 
     /** builds a SequentialCommandGroup for auto */
     private Command sequenceAutoChooserCommands(double delay) {
-        Command out = new InstantCommand();
-        for (var c : autoChooser) {
-            out = out.andThen(new WaitCommand(delay), c.getSelected());
-        }
-        return out;
+        return score.getSelected()
+               .andThen(dock.getSelected());
     }
 }

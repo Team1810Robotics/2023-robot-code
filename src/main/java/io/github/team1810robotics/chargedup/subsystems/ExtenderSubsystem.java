@@ -24,6 +24,8 @@ public class ExtenderSubsystem extends SubsystemBase {
         closeLimitSwitch = new DigitalInput(ExtenderConstants.CLOSE_LS);
 
         Shuffleboard.getTab("Arm").addNumber("Extender Encoder", this::getDistance);
+        Shuffleboard.getTab("Arm").addBoolean("Close LS", this::getCloseLS);
+        Shuffleboard.getTab("Arm").addBoolean("Far LS", this::getFarLS);
     }
 
     public double getDistance() {
@@ -32,6 +34,10 @@ public class ExtenderSubsystem extends SubsystemBase {
 
     public boolean getCloseLS() {
         return (!closeLimitSwitch.get());
+    }
+
+    public boolean getFarLS() {
+        return (!farLimitSwitch.get());
     }
 
     public void move(boolean in) {

@@ -21,7 +21,7 @@ public class BBExtender extends CommandBase {
     @Override
     public void execute() {
         // false denoting direction not a lack of movement :/
-        extender.move(false);
+        extender.move(true);
     }
 
     @Override

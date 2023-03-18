@@ -22,7 +22,14 @@ public class Extender extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return extender.getCloseLS() && !in;
+        if (extender.getCloseLS() && !in)
+            return true;
+
+        if (extender.getFarLS() && in)
+            return true;
+
+        return false;
+
     }
 
     @Override
