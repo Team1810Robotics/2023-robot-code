@@ -141,21 +141,22 @@ public final class Constants {
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 1;
 
         public static final double CHARGE_STATION_TILT_DEG = 13; // FIXME
-        public static final double LEVEL_DEG = 0; // FIXME
+        public static final double LEVEL_DEG = 6; // FIXME
 
-        public static final double FAST_SPEED = 0.4;
+        public static final double FAST_SPEED = 0.6;
         public static final double SLOW_SPEED = 0.2;
 
-        private static final double DEBOUNCE_TIME = 0.2;
+        private static final double DEBOUNCE_TIME = 0.15;
         public static final int DEBOUNCE_TICKS = (int)(DEBOUNCE_TIME * 50);
 
-        public static final int EXTENDER_DEADBAND = 200; // FIXME: complete swag
-        public static final int HIGH_EXTENDER = 4000; // FIXME: complete swag
-        public static final int MID_EXTENDER = 2000; // FIXME: complete swag
-        public static final int LOW_EXTENDER = 0; // FIXME: complete swag
+        public static final int EXTENDER_DEADBAND = 500;
+        public static final int HIGH_EXTENDER = 4300;
+        public static final int MID_EXTENDER = 0;
+        public static final int LOW_EXTENDER = 0;
     }
 
     public static final class ArmConstants {
+        public static final double RESET  = Math.toRadians(90);
         public static final double LOW    = Math.toRadians(-30);
         public static final double MEDIUM = Math.toRadians(22);
         public static final double HIGH   = Math.toRadians(31);

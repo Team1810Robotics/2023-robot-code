@@ -21,6 +21,7 @@ public class Dock {
     }
 
     public double autoBalance() {
+        System.out.println("State: " + state.name());
         switch(state) {
             case driveToStation:
             return getToStation();
@@ -93,9 +94,9 @@ public class Dock {
         }
 
         if (getTilt() >= AutoConstants.LEVEL_DEG) {
-            return 0.1;
+            return 0.125;
         } else if (getTilt() <= -AutoConstants.LEVEL_DEG) {
-            return -0.1;
+            return -0.125;
         }
 
         return 0;

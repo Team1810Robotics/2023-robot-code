@@ -4,9 +4,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 
 public class Pipebomb extends GenericHID {
 
-    public static final int intakeAxis = 0;
-    public static final int extenderAxis = 1;
-
     public Pipebomb(int port) {
         super(port);
     }
@@ -17,28 +14,21 @@ public class Pipebomb extends GenericHID {
         mid(3),
         low(4),
 
-        altIntakeOut(5),
-        altIntakeIn(6),
+        altExtenderOut(5),
+        altExtenderIn(6),
 
         trimDown(7),
         trimUp(8),
 
-        altExtenderOut(9),
-        altExtenderIn(10);
-
+        intake(11),
+        outtake(10),
+        extenderIn(9),
+        extenderOut(12);
 
         public final int value;
 
         Button(int value) {
             this.value = value;
         }
-    }
-
-    public double getJoystickExtender() {
-        return getRawAxis(extenderAxis);
-    }
-
-    public double getJoystickIntake() {
-        return getRawAxis(intakeAxis);
     }
 }

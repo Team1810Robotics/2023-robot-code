@@ -1,7 +1,7 @@
 package io.github.team1810robotics.chargedup.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
+import io.github.team1810robotics.chargedup.Constants.ArmConstants;
 import io.github.team1810robotics.chargedup.subsystems.ArmSubsystem;
 import io.github.team1810robotics.chargedup.subsystems.ExtenderSubsystem;
 
@@ -19,7 +19,7 @@ public class Reset extends CommandBase {
 
     @Override
     public void execute() {
-        arm.setGoal(LiftConstants.ARM_INITIAL);
+        arm.setGoal(ArmConstants.RESET);
 
         extender.move(false);
     }
