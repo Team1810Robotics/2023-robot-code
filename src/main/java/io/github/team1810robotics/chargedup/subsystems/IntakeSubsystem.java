@@ -21,7 +21,8 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.setInverted(IntakeConstants.MOTOR_INVERTED);
 
         camera = new PhotonCamera(IntakeConstants.CAMERA_NAME);
-
+        camera.setDriverMode(true);
+        
         lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
     }
 

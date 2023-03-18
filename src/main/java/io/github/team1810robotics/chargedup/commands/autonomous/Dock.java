@@ -5,7 +5,7 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import io.github.team1810robotics.chargedup.Constants.*;
 import io.github.team1810robotics.chargedup.subsystems.DriveSubsystem;
 
-// TODO: chech all signs e.g. - > <
+// TODO: check all signs e.g. - > <
 public class Dock {
 
     private Pigeon2 gyro;
