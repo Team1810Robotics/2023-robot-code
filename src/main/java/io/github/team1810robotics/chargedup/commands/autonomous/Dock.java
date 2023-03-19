@@ -5,7 +5,6 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import io.github.team1810robotics.chargedup.Constants.*;
 import io.github.team1810robotics.chargedup.subsystems.DriveSubsystem;
 
-
 public class Dock {
 
     private Pigeon2 gyro;
@@ -93,9 +92,9 @@ public class Dock {
         }
 
         if (getTilt() >= AutoConstants.LEVEL_DEG) {
-            return 0.1;
+            return AutoConstants.BALANCE_SPEED;
         } else if (getTilt() <= -AutoConstants.LEVEL_DEG) {
-            return -0.1;
+            return -0.125;
         }
 
         return 0;

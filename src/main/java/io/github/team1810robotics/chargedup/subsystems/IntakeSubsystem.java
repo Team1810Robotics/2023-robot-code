@@ -21,6 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.setInverted(IntakeConstants.MOTOR_INVERTED);
 
         camera = new PhotonCamera(IntakeConstants.CAMERA_NAME);
+        camera.setDriverMode(true);
 
         lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
     }
@@ -40,8 +41,8 @@ public class IntakeSubsystem extends SubsystemBase {
     /**
      * By default the linebreak is HIGH if the
      * line is NOT broken and LOW if it is
-     * @return HIGH - line broken <br>
-     *         LOW - line connected
+     * @return TRUE - line broken <p>
+     *         FALSE - line connected
      */
     public boolean lineBreak() {
         return !lineBreak.get();

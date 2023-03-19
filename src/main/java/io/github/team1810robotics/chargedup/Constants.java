@@ -140,19 +140,22 @@ public final class Constants {
         public static final double MAX_SPEED_METERS_PER_SECOND = DriveConstants.MAX_SPEED;
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 1;
 
-        public static final double CHARGE_STATION_TILT_DEG = 13; // FIXME
-        public static final double LEVEL_DEG = 6; // FIXME
+        public static final double CHARGE_STATION_TILT_DEG = 13;
+        public static final double LEVEL_DEG = 6;
 
         public static final double FAST_SPEED = 0.6;
         public static final double SLOW_SPEED = 0.2;
+        public static final double BALANCE_SPEED = 0.125;
 
         private static final double DEBOUNCE_TIME = 0.15;
         public static final int DEBOUNCE_TICKS = (int)(DEBOUNCE_TIME * 50);
 
         public static final int EXTENDER_DEADBAND = 500;
-        public static final int HIGH_EXTENDER = 4300;
-        public static final int MID_EXTENDER = 0;
-        public static final int LOW_EXTENDER = 0;
+
+        public static final int CUBE_HIGH_EXTENDER = 4300;
+        public static final int CUBE_MID_EXTENDER = 0;
+        public static final int CONE_HIGH_EXTENDER = 0; // FIXME
+        public static final int CONE_MID_EXTENDER = 0; // FIXME
     }
 
     public static final class ArmConstants {
