@@ -21,7 +21,6 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.setInverted(IntakeConstants.MOTOR_INVERTED);
 
         camera = new PhotonCamera(IntakeConstants.CAMERA_NAME);
-        camera.setDriverMode(true);
 
         lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
     }
@@ -52,7 +51,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.set(0);
     }
 
-    public boolean hasCube() { //TODO: Deletion if not used
+    public boolean hasCube() {
         var result = camera.getLatestResult();
         if (!result.hasTargets())
             return false;

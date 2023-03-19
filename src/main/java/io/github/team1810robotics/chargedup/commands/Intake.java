@@ -23,7 +23,6 @@ public class Intake extends CommandBase {
 
     @Override
     public boolean isFinished() {
-
         if (intake.lineBreak() && in)
             return true;
 

@@ -97,7 +97,8 @@ public class RobotContainer {
         Shuffleboard.getTab("Autonomous").add("Score", score);
 
         dock.setDefaultOption("Don't Dock", new InstantCommand());
-        dock.addOption("Dock", new AutoDock(armSubsystem, driveSubsystem, extenderSubsystem));
+        dock.addOption("Dock (RIO ACCEL STYLE)", new AutoDock(armSubsystem, driveSubsystem, extenderSubsystem));
+        dock.addOption("Dock (1108 STYLE)", driveSubsystem.autoBalance1108());
         Shuffleboard.getTab("Autonomous").add("Dock", dock);
     }
 

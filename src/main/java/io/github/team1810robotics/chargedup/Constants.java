@@ -171,7 +171,7 @@ public final class Constants {
             public static final int LINE_BREAK_PORT = 2;
 
             public static final String CAMERA_NAME = "OV5781";
-            public static final int MIN_TARGET_AREA = 10; // % 
+            public static final int MIN_TARGET_AREA = 10; // %
         }
 
         public static final class ExtenderConstants {

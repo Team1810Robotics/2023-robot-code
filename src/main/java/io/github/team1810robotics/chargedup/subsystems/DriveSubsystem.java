@@ -19,11 +19,13 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
-    public SwerveModule[] swerveModules;
+    public SwerveModule swerveModules[];
     public Pigeon2 gyro;
     private ShuffleboardContainer moduleContainer[] = new ShuffleboardContainer[4];
 
@@ -110,6 +112,26 @@ public class DriveSubsystem extends SubsystemBase {
         for (SwerveModule module : swerveModules) {
             module.stop();
         }
+    }
+
+    private void setWheelsX() {
+        swerveModules[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)),  false);
+        swerveModules[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false);
+        swerveModules[2].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false);
+        swerveModules[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)),  false);
+    }
+
+    public CommandBase autoBalance1108() {
+        return Commands.race(
+                Commands.sequence(
+                    Commands.run(
+                        () -> drive(new Translation2d(-2/DriveConstants.MAX_SPEED, 0), 0, false, false), this)
+                            .until(() -> Math.abs(gyro.getPitch()) >= 14.3),
+                    Commands.run(
+                        () -> drive(new Translation2d(-0.3/DriveConstants.MAX_SPEED, 0), 0, false, false), this)
+                            .until(() -> Math.abs(gyro.getPitch()) <= 12.5),
+                    Commands.run(this::setWheelsX, this)),
+                Commands.waitSeconds(15));
     }
 
     @Override

@@ -2,7 +2,6 @@ package io.github.team1810robotics.chargedup.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-//import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.*;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -12,15 +11,12 @@ import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
 
 public class ExtenderSubsystem extends SubsystemBase {
     private final Relay extenderMotor;
-    //TODO: Implement while Talon is installed
-    //private final Talon extenderMotor;
     private final Encoder extenderEncoder;
     private final DigitalInput farLimitSwitch;
     private final DigitalInput closeLimitSwitch;
 
     public ExtenderSubsystem() {
         extenderMotor = new Relay(ExtenderConstants.RELAY_ID, Direction.kBoth);
-        //extenderMotor = new Talon(ExtenderConstants.RELAY_ID);
         extenderEncoder = new Encoder(ExtenderConstants.ENCODER_PORTS[0], ExtenderConstants.ENCODER_PORTS[1]);
         extenderEncoder.setReverseDirection(true);
 
@@ -44,8 +40,8 @@ public class ExtenderSubsystem extends SubsystemBase {
         return (!farLimitSwitch.get());
     }
 
-    public void move(boolean out) {
-        if (out) {
+    public void move(boolean in) {
+        if (in) {
             forward();
         } else {
             backward();
@@ -54,21 +50,14 @@ public class ExtenderSubsystem extends SubsystemBase {
 
     public void stop() {
         extenderMotor.set(Value.kOff);
-        //extenderMotor.set(0.0);
     }
 
     private void forward() {
         extenderMotor.set(Value.kForward);
-        //extenderMotor.set(1.0);
-        if (!farLimitSwitch.get()) {
-        } else {
-            // stop();
-        }
     }
 
     private void backward() {
         extenderMotor.set(Value.kReverse);
-        //extenderMotor.set(-1.0);
     }
 
     @Override

@@ -12,7 +12,7 @@ import io.github.team1810robotics.chargedup.subsystems.IntakeSubsystem;
 public class MidCube extends SequentialCommandGroup {
     public MidCube(ArmSubsystem arm, ExtenderSubsystem extender, IntakeSubsystem intake) {
         addCommands(new InstantCommand(() -> arm.setGoal(ArmConstants.MEDIUM)),
-                    new WaitCommand(1.5),
+                    new WaitCommand(1),
                     // false denoting direction not a lack of movement :/
                     new InstantCommand(() -> intake.intake(false)),
                     new WaitCommand(0.5),
