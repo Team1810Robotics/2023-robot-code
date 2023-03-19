@@ -6,15 +6,21 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+//import io.github.team1810robotics.chargedup.Constants.ArmConstants.IntakeConstants;
+
+//import org.photonvision.PhotonCamera;
 
 public class VisionSubsystem extends SubsystemBase {
 
+    
     private final NetworkTable table;
+    //public final static PhotonCamera camera = new PhotonCamera(IntakeConstants.CAMERA_NAME);
 
     public VisionSubsystem() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
-    }
 
+    }
+    //TODO: Deletion
     /** Checks if the limelight has a valid target */
     public boolean targetValid() {
         return table.getEntry("tv").getDouble(0) == 1;
@@ -46,4 +52,5 @@ public class VisionSubsystem extends SubsystemBase {
 
         return new Pose3d(t3d, r3d);
     }
+
 }

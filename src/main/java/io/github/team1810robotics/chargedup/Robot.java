@@ -3,6 +3,7 @@ package io.github.team1810robotics.chargedup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+//import io.github.team1810robotics.chargedup.subsystems.VisionSubsystem;
 public class Robot extends TimedRobot {
     public static CTREConfigs ctreConfigs;
 
@@ -42,6 +43,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        //VisionSubsystem.camera.setDriverMode(true); //TODO: Possible implement
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }

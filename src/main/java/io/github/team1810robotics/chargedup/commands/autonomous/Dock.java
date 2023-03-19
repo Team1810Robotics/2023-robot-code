@@ -5,7 +5,7 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import io.github.team1810robotics.chargedup.Constants.*;
 import io.github.team1810robotics.chargedup.subsystems.DriveSubsystem;
 
-// TODO: check all signs e.g. - > <
+
 public class Dock {
 
     private Pigeon2 gyro;
@@ -21,7 +21,6 @@ public class Dock {
     }
 
     public double autoBalance() {
-        System.out.println("State: " + state.name());
         switch(state) {
             case driveToStation:
             return getToStation();
@@ -94,9 +93,9 @@ public class Dock {
         }
 
         if (getTilt() >= AutoConstants.LEVEL_DEG) {
-            return 0.125;
+            return 0.1;
         } else if (getTilt() <= -AutoConstants.LEVEL_DEG) {
-            return -0.125;
+            return -0.1;
         }
 
         return 0;
