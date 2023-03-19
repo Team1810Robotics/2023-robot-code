@@ -110,7 +110,7 @@ public class SwerveModule {
         return new SwerveModuleState(
             Conversions.falconToMPS(driveMotor.getSelectedSensorVelocity(), DriveConstants.WHEEL_CIRCUMFERENCE, DriveConstants.DRIVE_GEAR_RATIO), 
             getAngle()
-        ); 
+        );
     }
 
     public SwerveModulePosition getPosition() {

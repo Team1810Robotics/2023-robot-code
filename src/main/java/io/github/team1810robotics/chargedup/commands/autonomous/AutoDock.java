@@ -5,16 +5,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import io.github.team1810robotics.chargedup.Constants.ArmConstants;
 import io.github.team1810robotics.chargedup.subsystems.ArmSubsystem;
 import io.github.team1810robotics.chargedup.subsystems.DriveSubsystem;
+import io.github.team1810robotics.chargedup.subsystems.ExtenderSubsystem;
 
 public class AutoDock extends CommandBase {
 
     private DriveSubsystem drive;
     private ArmSubsystem arm;
+    private ExtenderSubsystem extender;
     private Dock dock;
 
-    public AutoDock(ArmSubsystem armSubsystem, DriveSubsystem driveSubsystem) {
+    public AutoDock(ArmSubsystem armSubsystem, DriveSubsystem driveSubsystem, ExtenderSubsystem extenderSubsystem) {
         this.drive = driveSubsystem;
         this.arm = armSubsystem;
+        this.extender = extenderSubsystem;
         this.dock = new Dock(driveSubsystem);
 
         addRequirements(driveSubsystem);
@@ -27,6 +30,12 @@ public class AutoDock extends CommandBase {
 
     @Override
     public void execute() {
+        if (!extender.getCloseLS()) {
+            extender.move(false);
+        } else {
+            extender.stop();
+        }
+
         double speed = dock.autoBalance();
         drive.drive(new Translation2d(-speed, 0), 0, true, false);
     }

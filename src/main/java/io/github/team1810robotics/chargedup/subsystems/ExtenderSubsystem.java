@@ -40,8 +40,8 @@ public class ExtenderSubsystem extends SubsystemBase {
         return (!farLimitSwitch.get());
     }
 
-    public void move(boolean in) {
-        if (in) {
+    public void move(boolean out) {
+        if (out) {
             forward();
         } else {
             backward();
@@ -54,10 +54,6 @@ public class ExtenderSubsystem extends SubsystemBase {
 
     private void forward() {
         extenderMotor.set(Value.kForward);
-        if (!farLimitSwitch.get()) {
-        } else {
-            // stop();
-        }
     }
 
     private void backward() {

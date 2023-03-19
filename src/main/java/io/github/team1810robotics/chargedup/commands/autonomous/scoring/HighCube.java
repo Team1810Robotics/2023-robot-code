@@ -13,7 +13,7 @@ import io.github.team1810robotics.chargedup.subsystems.IntakeSubsystem;
 public class HighCube extends SequentialCommandGroup {
     public HighCube(ArmSubsystem arm, ExtenderSubsystem extender, IntakeSubsystem intake) {
         addCommands(new InstantCommand(() -> arm.setGoal(ArmConstants.HIGH)),
-                    new BBExtender(extender, AutoConstants.HIGH_EXTENDER),
+                    new BBExtender(extender, AutoConstants.CUBE_HIGH_EXTENDER),
                     // false denoting direction not a lack of movement :/
                     new InstantCommand(() -> intake.intake(false)),
                     new WaitCommand(0.5),

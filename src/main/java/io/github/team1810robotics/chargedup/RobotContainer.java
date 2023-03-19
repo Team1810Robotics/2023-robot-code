@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.AutoDock;
-import io.github.team1810robotics.chargedup.commands.autonomous.paths.GrabShelf;
 import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
 
 public class RobotContainer {
 
     private SendableChooser<Command> score = new SendableChooser<>();
     private SendableChooser<Command> dock = new SendableChooser<>();
+    private Command autoCommand = null;
 
     /* Subsystems */
     public final DriveSubsystem driveSubsystem = new DriveSubsystem();
@@ -41,7 +41,6 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
-        leftJoystick_Button11.onTrue(new GrabShelf(driveSubsystem, armSubsystem, intakeSubsystem, extenderSubsystem).andThen(new Reset(armSubsystem, extenderSubsystem)));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
         setXboxManipulator();
@@ -49,7 +48,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return sequenceAutoChooserCommands(0.5);
+        return autoCommand;
     }
 
     // please stop. : )
@@ -90,22 +89,20 @@ public class RobotContainer {
 
     private void populateAutoChooser() {
 
-        score.setDefaultOption("Null", new InstantCommand());
+        score.setDefaultOption("Don't Score", new InstantCommand());
         score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         Shuffleboard.getTab("Autonomous").add("Score", score);
 
-        dock.setDefaultOption("Null", new InstantCommand());
-        dock.addOption("Don't Dock", new InstantCommand());
-        dock.addOption("Dock", new AutoDock(armSubsystem, driveSubsystem));
+        dock.setDefaultOption("Don't Dock", new InstantCommand());
+        dock.addOption("Dock", new AutoDock(armSubsystem, driveSubsystem, extenderSubsystem));
         Shuffleboard.getTab("Autonomous").add("Dock", dock);
     }
 
-    /** builds a SequentialCommandGroup for auto */
-    private Command sequenceAutoChooserCommands(double delay) {
-        return score.getSelected()
-               .andThen(dock.getSelected());
+    public void sequenceAutoChooserCommands() {
+        autoCommand = score.getSelected()
+                      .andThen(dock.getSelected());
     }
 }

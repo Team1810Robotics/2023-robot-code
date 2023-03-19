@@ -23,8 +23,6 @@ public class Intake extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        /* if (intake.hasCube())
-            return true; */
 
         if (intake.lineBreak() && in)
             return true;
