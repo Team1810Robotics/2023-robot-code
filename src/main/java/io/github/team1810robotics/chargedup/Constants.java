@@ -137,8 +137,8 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double MAX_SPEED_METERS_PER_SECOND = DriveConstants.MAX_SPEED;
-        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 1;
+        public static final double MAX_SPEED = 3;
+        public static final double MAX_ACCELERATION = 2;
 
         public static final double CHARGE_STATION_TILT_DEG = 13;
         public static final double LEVEL_DEG = 6;
@@ -156,6 +156,7 @@ public final class Constants {
         public static final int CUBE_MID_EXTENDER = 0;
         public static final int CONE_HIGH_EXTENDER = 0; // FIXME
         public static final int CONE_MID_EXTENDER = 0; // FIXME
+        public static final int CUBE_FLOOR_EXTENDER = 4000; // FIXME
     }
 
     public static final class ArmConstants {
@@ -206,8 +207,8 @@ public final class Constants {
             public static final double kI = 0;
             public static final double kD = 0;
 
-            private static final double MAX_SPEED = 1; // m/s
-            private static final double MAX_ACCEL = 1; // m/s/s
+            private static final double MAX_SPEED = 3; // m/s
+            private static final double MAX_ACCEL = 2; // m/s/s
             public static final TrapezoidProfile.Constraints CONSTRAINTS =
                 new TrapezoidProfile.Constraints(MAX_SPEED, MAX_ACCEL);
         }

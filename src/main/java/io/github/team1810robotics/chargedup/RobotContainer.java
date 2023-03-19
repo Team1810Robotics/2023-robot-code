@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.AutoDock;
+import io.github.team1810robotics.chargedup.commands.autonomous.ScoreOutsideCube;
 import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
 
 public class RobotContainer {
@@ -90,6 +91,7 @@ public class RobotContainer {
     private void populateAutoChooser() {
 
         score.setDefaultOption("Don't Score", new InstantCommand());
+        score.addOption("Run Cube", new ScoreOutsideCube(driveSubsystem, armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
