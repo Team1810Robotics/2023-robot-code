@@ -45,6 +45,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        m_robotContainer.intakeSubsystem.forceDriverCamera();
+
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }

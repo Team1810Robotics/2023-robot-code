@@ -18,7 +18,7 @@ public class RobotContainer {
 
     private SendableChooser<Command> score = new SendableChooser<>();
     private SendableChooser<Command> dock = new SendableChooser<>();
-    private Command autoCommand = null;
+    public Command autoCommand = null;
 
     /* Subsystems */
     public final DriveSubsystem driveSubsystem = new DriveSubsystem();
@@ -44,7 +44,7 @@ public class RobotContainer {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
-        setXboxManipulator();
+        // setXboxManipulator();
         setManipulator();
     }
 
@@ -62,8 +62,8 @@ public class RobotContainer {
         pipebomb_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
         pipebomb_trimDown.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
 
-        pipebomb_altExtenderIn.whileTrue(new Extender(extenderSubsystem, true));
-        pipebomb_altExtenderOut.whileTrue(new Extender(extenderSubsystem, false));
+        pipebomb_altExtenderIn.whileTrue(new Arm(armSubsystem, ArmConstants.HIGH));
+        pipebomb_altExtenderOut.whileTrue(new Arm(armSubsystem, Math.toRadians(5)));
 
         pipebomb_extenderIn.whileTrue(new Extender(extenderSubsystem, true));
         pipebomb_extenderOut.whileTrue(new Extender(extenderSubsystem, false));
@@ -100,12 +100,15 @@ public class RobotContainer {
 
         dock.setDefaultOption("Don't Dock", new InstantCommand());
         dock.addOption("Dock (RIO ACCEL STYLE)", new AutoDock(armSubsystem, driveSubsystem, extenderSubsystem));
-        dock.addOption("Dock (1108 STYLE)", driveSubsystem.autoBalance1108());
+        dock.addOption("Dock (1108 STYLE)", driveSubsystem.autoBalance1108(armSubsystem));
         Shuffleboard.getTab("Autonomous").add("Dock", dock);
     }
 
     public void sequenceAutoChooserCommands() {
+        if (autoCommand != null) return;
+
         autoCommand = score.getSelected()
+                      .andThen(new Reset(armSubsystem, extenderSubsystem))
                       .andThen(dock.getSelected());
     }
 }

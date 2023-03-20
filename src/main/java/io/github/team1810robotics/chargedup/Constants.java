@@ -154,9 +154,9 @@ public final class Constants {
 
         public static final int CUBE_HIGH_EXTENDER = 4300;
         public static final int CUBE_MID_EXTENDER = 0;
-        public static final int CONE_HIGH_EXTENDER = 0; // FIXME
-        public static final int CONE_MID_EXTENDER = 0; // FIXME
-        public static final int CUBE_FLOOR_EXTENDER = 4000; // FIXME
+        public static final int CONE_HIGH_EXTENDER = 10000;
+        public static final int CONE_MID_EXTENDER = 1500;
+        public static final int CUBE_FLOOR_EXTENDER = 2300;
     }
 
     public static final class ArmConstants {
@@ -176,7 +176,7 @@ public final class Constants {
         }
 
         public static final class ExtenderConstants {
-            public static final int RELAY_ID = 0;
+            public static final int MOTOR_ID = 0;
             public static final int ENCODER_PORTS[] = {6, 7};
 
             public static final int CLOSE_LS = 5;
@@ -207,8 +207,8 @@ public final class Constants {
             public static final double kI = 0;
             public static final double kD = 0;
 
-            private static final double MAX_SPEED = 3; // m/s
-            private static final double MAX_ACCEL = 2; // m/s/s
+            private static final double MAX_SPEED = 3; // rad/s
+            private static final double MAX_ACCEL = 3; // rad/s/s
             public static final TrapezoidProfile.Constraints CONSTRAINTS =
                 new TrapezoidProfile.Constraints(MAX_SPEED, MAX_ACCEL);
         }

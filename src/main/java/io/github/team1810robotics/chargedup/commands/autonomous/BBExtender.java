@@ -26,8 +26,13 @@ public class BBExtender extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return inRange(extender.getDistance() - extenderAmount,
-                       AutoConstants.EXTENDER_DEADBAND);
+        if (inRange(extender.getDistance() - extenderAmount, AutoConstants.EXTENDER_DEADBAND))
+            return true;
+
+        if (extender.getFarLS())
+            return true;
+
+        return false;
     }
 
     @Override

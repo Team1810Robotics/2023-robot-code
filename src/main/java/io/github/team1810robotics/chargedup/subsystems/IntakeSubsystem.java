@@ -37,6 +37,10 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.set(MathUtil.clamp(speed, -1, 1));
     }
 
+    public void forceDriverCamera() {
+        camera.setDriverMode(true);
+    }
+
     /**
      * By default the linebreak is HIGH if the
      * line is NOT broken and LOW if it is

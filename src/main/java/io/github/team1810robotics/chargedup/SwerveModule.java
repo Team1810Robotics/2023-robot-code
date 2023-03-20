@@ -22,8 +22,8 @@ public class SwerveModule {
     private Rotation2d angleOffset;
     private Rotation2d lastAngle;
 
-    private TalonFX steerMotor;
-    private TalonFX driveMotor;
+    public TalonFX steerMotor;
+    public TalonFX driveMotor;
     private CANCoder canCoder;
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.DRIVE_kS, DriveConstants.DRIVE_kV, DriveConstants.DRIVE_kA);
