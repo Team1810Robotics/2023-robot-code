@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
-import io.github.team1810robotics.chargedup.commands.autonomous.AutoDock;
+import io.github.team1810robotics.chargedup.commands.autonomous.GrabDock;
 import io.github.team1810robotics.chargedup.commands.autonomous.ScoreOutsideCube;
 import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
 
@@ -18,6 +18,7 @@ public class RobotContainer {
 
     private SendableChooser<Command> score = new SendableChooser<>();
     private SendableChooser<Command> dock = new SendableChooser<>();
+    private SendableChooser<Command> path = new SendableChooser<>();
     public Command autoCommand = null;
 
     /* Subsystems */
@@ -49,7 +50,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return autoCommand;
+        return sequenceAutoChooserCommands();
     }
 
     // please stop. : )
@@ -72,7 +73,7 @@ public class RobotContainer {
         pipebomb_outtake.whileTrue(new Intake(intakeSubsystem, false));
     }
 
-    private void setXboxManipulator() {
+    /* private void setXboxManipulator() {
         manipulatorXbox_A.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
         manipulatorXbox_B.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
         manipulatorXbox_Y.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
@@ -86,29 +87,31 @@ public class RobotContainer {
 
         manipulatorXbox_RStick.whileTrue(new Extender(extenderSubsystem, false));
         manipulatorXbox_LStick.whileTrue(new Extender(extenderSubsystem, true));
-    }
+    } */
 
     private void populateAutoChooser() {
 
         score.setDefaultOption("Don't Score", new InstantCommand());
-        score.addOption("Run Cube", new ScoreOutsideCube(driveSubsystem, armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Run Cube", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Score", score);
+        Shuffleboard.getTab("Autonomous").add("Score", score).withSize(1, 2).withPosition(0, 0);
+
+        path.setDefaultOption("No Path", new InstantCommand());
+        path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
+        path.setDefaultOption("2 Piece",   new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
+        Shuffleboard.getTab("Autonomous").add("Path", path).withSize(1, 2).withPosition(0, 2);
 
         dock.setDefaultOption("Don't Dock", new InstantCommand());
-        dock.addOption("Dock (RIO ACCEL STYLE)", new AutoDock(armSubsystem, driveSubsystem, extenderSubsystem));
-        dock.addOption("Dock (1108 STYLE)", driveSubsystem.autoBalance1108(armSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Dock", dock);
+        dock.addOption("Dock", driveSubsystem.autoBalance(armSubsystem, extenderSubsystem));
+        Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(1, 2).withPosition(0, 4);
     }
 
-    public void sequenceAutoChooserCommands() {
-        if (autoCommand != null) return;
-
-        autoCommand = score.getSelected()
-                      .andThen(new Reset(armSubsystem, extenderSubsystem))
-                      .andThen(dock.getSelected());
+    private Command sequenceAutoChooserCommands() {
+        return score.getSelected()
+                    .andThen(path.getSelected())
+                    .andThen(dock.getSelected());
     }
 }

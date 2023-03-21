@@ -1,6 +1,7 @@
 package io.github.team1810robotics.chargedup.subsystems;
 
 import io.github.team1810robotics.chargedup.SwerveModule;
+import io.github.team1810robotics.chargedup.commands.autonomous.BBExtender;
 
 import static io.github.team1810robotics.chargedup.Constants.*;
 
@@ -22,7 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -123,29 +123,29 @@ public class DriveSubsystem extends SubsystemBase {
         swerveModules[3].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)),  false);
     }
 
-    public CommandBase autoBalance1108(ArmSubsystem arm) {
+    public CommandBase autoBalance(ArmSubsystem arm, ExtenderSubsystem extender) {
         return Commands.race(
                 Commands.sequence(
+                    new BBExtender(extender, 0),
                     new InstantCommand(() -> arm.setGoal(ArmConstants.LOW), arm),
                     Commands.run(
-                        () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("Fast\tRoll: " + getRoll()))
+                        () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> Math.abs(getRoll()) >= 16),
                     Commands.run(
-                        () -> drive(new Translation2d(-1 / DriveConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("Int \tRoll: " + getRoll()))
+                        () -> drive(new Translation2d(-1 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> 10 >= Math.abs(getRoll())),
                     Commands.run(
-                        () -> drive(new Translation2d(-0.75 / DriveConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("Int \tRoll: " + getRoll()))
+                        () -> drive(new Translation2d(-0.75 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> 13 <= Math.abs(getRoll())),
                     Commands.run(
-                        () -> drive(new Translation2d(-0.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("Slow\tRoll: " + getRoll()))
+                        () -> drive(new Translation2d(-0.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> Math.abs(getRoll()) <= 12),
-                    Commands.run(this::setWheelsX, this).alongWith(new PrintCommand("Set X?"))),
+                    Commands.run(this::setWheelsX, this)),
                 Commands.waitSeconds(15));
     }
 
     private double getRoll() {
         var r = gyro.getRoll();
-        System.out.println("Roll: " + r);
         return r;
     }
 

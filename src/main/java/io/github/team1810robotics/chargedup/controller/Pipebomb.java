@@ -21,7 +21,7 @@ public class Pipebomb extends GenericHID {
 
         trimDown(7),
         trimUp(8),
-        
+
         // Joystick
         intake(11),
         outtake(10),

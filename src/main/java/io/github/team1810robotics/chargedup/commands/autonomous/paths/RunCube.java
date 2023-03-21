@@ -24,4 +24,12 @@ public class RunCube {
 
         return new FollowPath(trajectory, drive);
     }
+
+    public static Command toDock(DriveSubsystem drive) {
+        PathPlannerTrajectory trajectory = PathPlanner.loadPath("cubeToDock",
+            AutoConstants.MAX_SPEED,
+            AutoConstants.MAX_ACCELERATION);
+
+        return new FollowPath(trajectory, drive);
+    }
 }
