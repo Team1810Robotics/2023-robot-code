@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static io.github.team1810robotics.chargedup.Constants.ArmConstants.*;
@@ -23,6 +24,8 @@ public class IntakeSubsystem extends SubsystemBase {
         camera = new PhotonCamera(IntakeConstants.CAMERA_NAME);
 
         lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
+
+        Shuffleboard.getTab("Arm").addBoolean("Beam Break", this::lineBreak);
     }
 
     public void intake(boolean in) {
