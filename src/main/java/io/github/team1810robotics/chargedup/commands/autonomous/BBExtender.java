@@ -11,6 +11,8 @@ public class BBExtender extends CommandBase {
     private ExtenderSubsystem extender;
     private double extenderAmount;
 
+    private boolean direction;
+
     public BBExtender(ExtenderSubsystem extenderSubsystem, double extenderAmount) {
         this.extender = extenderSubsystem;
         this.extenderAmount = extenderAmount;
@@ -19,9 +21,13 @@ public class BBExtender extends CommandBase {
     }
 
     @Override
+    public void initialize() {
+        direction = (extender.getDistance() <= extenderAmount);
+    }
+
+    @Override
     public void execute() {
-        // false denoting direction not a lack of movement :/
-        extender.move(true);
+        extender.move(direction);
     }
 
     @Override
