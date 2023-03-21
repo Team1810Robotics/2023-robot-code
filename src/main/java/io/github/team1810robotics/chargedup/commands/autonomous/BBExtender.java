@@ -35,7 +35,10 @@ public class BBExtender extends CommandBase {
         if (inRange(extender.getDistance() - extenderAmount, AutoConstants.EXTENDER_DEADBAND))
             return true;
 
-        if (extender.getFarLS())
+        if (extender.getFarLS() & direction)
+            return true;
+
+        if (extender.getCloseLS() & !direction)
             return true;
 
         return false;
