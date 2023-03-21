@@ -30,7 +30,6 @@ public class DriveSubsystem extends SubsystemBase {
     public SwerveModule swerveModules[];
     public Pigeon2 gyro;
     private ShuffleboardContainer moduleContainer[] = new ShuffleboardContainer[4];
-    public static Music music;
 
     public DriveSubsystem() {
         gyro = new Pigeon2(DriveConstants.PIGEON_ID);
@@ -43,8 +42,6 @@ public class DriveSubsystem extends SubsystemBase {
             new SwerveModule(2, DriveConstants.BL.CONSTANTS),
             new SwerveModule(3, DriveConstants.BR.CONSTANTS)
         };
-
-        music = new Music(swerveModules);
 
         swerveOdometry = new SwerveDriveOdometry(DriveConstants.SWERVE_KINEMATICS, getGyroYaw(), getModulePositions());
 
