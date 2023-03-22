@@ -103,7 +103,7 @@ public class RobotContainer {
 
         path.setDefaultOption("No Path", new ResetExtender(extenderSubsystem));
         path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
-        path.setDefaultOption("2 Piece",   new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
+        path.setDefaultOption("2 Piece", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         Shuffleboard.getTab("Autonomous").add("Path", path).withSize(2, 1).withPosition(2, 0);
 
         dock.setDefaultOption("Don't Dock", new InstantCommand());
