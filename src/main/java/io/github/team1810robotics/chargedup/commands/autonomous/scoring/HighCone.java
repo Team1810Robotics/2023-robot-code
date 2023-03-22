@@ -12,7 +12,7 @@ import io.github.team1810robotics.chargedup.subsystems.IntakeSubsystem;
 
 public class HighCone extends SequentialCommandGroup {
     public HighCone(ArmSubsystem arm, ExtenderSubsystem extender, IntakeSubsystem intake) {
-        addCommands(new InstantCommand(() -> arm.setGoal(ArmConstants.HIGH)),
+        addCommands(new InstantCommand(() -> arm.setGoal(ArmConstants.HIGH - Math.toRadians(0))),
                     new BBExtender(extender, AutoConstants.CONE_HIGH_EXTENDER),
                     // false denoting direction not a lack of movement :/
                     new InstantCommand(() -> intake.intake(false)),

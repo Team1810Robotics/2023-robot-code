@@ -137,7 +137,7 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double MAX_SPEED = 3;
+        public static final double MAX_SPEED = DriveConstants.MAX_SPEED;
         public static final double MAX_ACCELERATION = 2;
 
         public static final double CHARGE_STATION_TILT_DEG = 13;
@@ -156,7 +156,7 @@ public final class Constants {
         public static final int CUBE_MID_EXTENDER = 0;
         public static final int CONE_HIGH_EXTENDER = 10000;
         public static final int CONE_MID_EXTENDER = 1500;
-        public static final int CUBE_FLOOR_EXTENDER = 2300;
+        public static final int CUBE_FLOOR_EXTENDER = 4000;
     }
 
     public static final class ArmConstants {
@@ -203,7 +203,7 @@ public final class Constants {
             public static final double kV = 0.65;
             public static final double kA = 0.10;
 
-            public static final double kP = 12;
+            public static final double kP = 24;
             public static final double kI = 0;
             public static final double kD = 0;
 

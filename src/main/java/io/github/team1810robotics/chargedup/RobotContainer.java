@@ -59,7 +59,7 @@ public class RobotContainer {
     private void setManipulator() {
         pipebomb_low.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
         pipebomb_mid.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
-        pipebomb_high.onTrue(new Arm(armSubsystem, ArmConstants.HIGH + 10));
+        pipebomb_high.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
         pipebomb_reset.onTrue(new Reset(armSubsystem, extenderSubsystem));
 
         pipebomb_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));

@@ -125,19 +125,18 @@ public class DriveSubsystem extends SubsystemBase {
     public CommandBase autoBalance(ArmSubsystem arm, ExtenderSubsystem extender) {
         return Commands.race(
                 Commands.sequence(
-                    // 
                     new InstantCommand(() -> arm.setGoal(ArmConstants.LOW), arm),
                     Commands.run(
                         () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> Math.abs(getRoll()) >= 16),
                     Commands.run(
-                        () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
+                        () -> drive(new Translation2d(-1 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> 10 >= Math.abs(getRoll())),
                     Commands.run(
-                        () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
+                        () -> drive(new Translation2d(-1 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> 13 <= Math.abs(getRoll())),
                     Commands.run(
-                        () -> drive(new Translation2d(-0.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
+                        () -> drive(new Translation2d(-0.4 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> Math.abs(getRoll()) <= 12),
                     Commands.run(this::setWheelsX, this)),
                 Commands.waitSeconds(15));
