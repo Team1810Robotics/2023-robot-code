@@ -38,8 +38,8 @@ public class BBExtender extends CommandBase {
         if (extender.getFarLS() & direction)
             return true;
 
-        if (extender.getCloseLS() & !direction)
-            return true;
+        /* if (extender.getCloseLS() & !direction)
+            return true; */
 
         return false;
     }

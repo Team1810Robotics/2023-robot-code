@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
 import io.github.team1810robotics.chargedup.commands.autonomous.GrabDock;
+import io.github.team1810robotics.chargedup.commands.autonomous.ResetExtender;
 import io.github.team1810robotics.chargedup.commands.autonomous.ScoreOutsideCube;
 import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
 
@@ -43,6 +44,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
+        leftJoystick_Button11.onTrue(new ResetExtender(extenderSubsystem));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
         // setXboxManipulator();
@@ -57,7 +59,7 @@ public class RobotContainer {
     private void setManipulator() {
         pipebomb_low.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
         pipebomb_mid.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
-        pipebomb_high.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
+        pipebomb_high.onTrue(new Arm(armSubsystem, ArmConstants.HIGH + 10));
         pipebomb_reset.onTrue(new Reset(armSubsystem, extenderSubsystem));
 
         pipebomb_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
@@ -97,16 +99,16 @@ public class RobotContainer {
         score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Score", score).withSize(1, 2).withPosition(0, 0);
+        Shuffleboard.getTab("Autonomous").add("Score", score).withSize(2, 1).withPosition(0, 0);
 
-        path.setDefaultOption("No Path", new InstantCommand());
+        path.setDefaultOption("No Path", new ResetExtender(extenderSubsystem));
         path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         path.setDefaultOption("2 Piece",   new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Path", path).withSize(1, 2).withPosition(0, 2);
+        Shuffleboard.getTab("Autonomous").add("Path", path).withSize(2, 1).withPosition(2, 0);
 
         dock.setDefaultOption("Don't Dock", new InstantCommand());
         dock.addOption("Dock", driveSubsystem.autoBalance(armSubsystem, extenderSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(1, 2).withPosition(0, 4);
+        Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(2, 1).withPosition(4, 0);
     }
 
     private Command sequenceAutoChooserCommands() {

@@ -150,7 +150,7 @@ public final class Constants {
         private static final double DEBOUNCE_TIME = 0.15;
         public static final int DEBOUNCE_TICKS = (int)(DEBOUNCE_TIME * 50);
 
-        public static final int EXTENDER_DEADBAND = 500;
+        public static final int EXTENDER_DEADBAND = 100;
 
         public static final int CUBE_HIGH_EXTENDER = 4300;
         public static final int CUBE_MID_EXTENDER = 0;

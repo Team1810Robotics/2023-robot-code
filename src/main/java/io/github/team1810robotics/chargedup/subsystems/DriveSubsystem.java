@@ -1,7 +1,6 @@
 package io.github.team1810robotics.chargedup.subsystems;
 
 import io.github.team1810robotics.chargedup.SwerveModule;
-import io.github.team1810robotics.chargedup.commands.autonomous.BBExtender;
 
 import static io.github.team1810robotics.chargedup.Constants.*;
 
@@ -126,16 +125,16 @@ public class DriveSubsystem extends SubsystemBase {
     public CommandBase autoBalance(ArmSubsystem arm, ExtenderSubsystem extender) {
         return Commands.race(
                 Commands.sequence(
-                    new BBExtender(extender, 0),
+                    // 
                     new InstantCommand(() -> arm.setGoal(ArmConstants.LOW), arm),
                     Commands.run(
                         () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> Math.abs(getRoll()) >= 16),
                     Commands.run(
-                        () -> drive(new Translation2d(-1 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
+                        () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> 10 >= Math.abs(getRoll())),
                     Commands.run(
-                        () -> drive(new Translation2d(-0.75 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
+                        () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
                             .until(() -> 13 <= Math.abs(getRoll())),
                     Commands.run(
                         () -> drive(new Translation2d(-0.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
