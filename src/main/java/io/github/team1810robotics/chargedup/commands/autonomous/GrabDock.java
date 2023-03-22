@@ -13,7 +13,7 @@ public class GrabDock extends SequentialCommandGroup {
     public GrabDock(DriveSubsystem drive, ExtenderSubsystem extender, ArmSubsystem arm, IntakeSubsystem intake) {
         addCommands(new Reset(arm, extender),
 
-                    RunCube.grabCube(drive)/*,
+                    RunCube.grabCube(drive),
 
                     // pickup cube
                     new InstantCommand(() -> arm.setGoal(ArmConstants.LOW)),
@@ -21,7 +21,7 @@ public class GrabDock extends SequentialCommandGroup {
                     new InstantCommand(() -> intake.intake(true)),
                     new BBExtender(extender, AutoConstants.CUBE_FLOOR_EXTENDER),
                     new InstantCommand(() -> intake.stop()),
-                    new Reset(arm, extender) ,
+                    new Reset(arm, extender)/* ,
 
                     RunCube.toDock(drive) */);
     }
