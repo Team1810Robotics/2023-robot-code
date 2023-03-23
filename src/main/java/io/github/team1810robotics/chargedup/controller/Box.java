@@ -2,9 +2,9 @@ package io.github.team1810robotics.chargedup.controller;
 
 import edu.wpi.first.wpilibj.GenericHID;
 
-public class Pipebomb extends GenericHID {
+public class Box extends GenericHID {
 
-    public Pipebomb(int port) {
+    public Box(int port) {
         super(port);
     }
 

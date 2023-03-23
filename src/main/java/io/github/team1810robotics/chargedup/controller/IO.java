@@ -11,7 +11,7 @@ public final class IO {
 
     public static final Joystick leftJoystick = Log.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
     public static final Joystick rightJoystick = Log.catchAll(() -> new Joystick(OIConstants.ROTATION_JOYSTICK_PORT));
-    public static final Pipebomb pipebomb = Log.catchAll(() -> new Pipebomb(OIConstants.MANIPULATOR_CONTROLLER_PORT));
+    public static final Box box = Log.catchAll(() -> new Box(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     public static final XboxController xboxController = new XboxController(3);
 
     // Xbox buttons
@@ -53,18 +53,18 @@ public final class IO {
     public static final JoystickButton rightJoystick_Button11 = Log.catchAll(() -> new JoystickButton(rightJoystick, 11));
 
     // manipulator buttons
-    public static final JoystickButton pipebomb_reset          = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.reset.value));
-    public static final JoystickButton pipebomb_high           = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.high.value));
-    public static final JoystickButton pipebomb_mid            = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.mid.value));
-    public static final JoystickButton pipebomb_low            = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.low.value));
-    public static final JoystickButton pipebomb_trimDown       = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.trimDown.value));
-    public static final JoystickButton pipebomb_trimUp         = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.trimUp.value));
-    public static final JoystickButton pipebomb_altExtenderOut = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altExtenderOut.value));
-    public static final JoystickButton pipebomb_altExtenderIn  = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.altExtenderIn.value));
-    public static final JoystickButton pipebomb_extenderIn     = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.extenderIn.value));
-    public static final JoystickButton pipebomb_extenderOut    = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.extenderOut.value));
-    public static final JoystickButton pipebomb_intake         = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.intake.value));
-    public static final JoystickButton pipebomb_outtake        = Log.catchAll(() -> new JoystickButton(pipebomb, Pipebomb.Button.outtake.value));
+    public static final JoystickButton box_reset          = Log.catchAll(() -> new JoystickButton(box, Box.Button.reset.value));
+    public static final JoystickButton box_high           = Log.catchAll(() -> new JoystickButton(box, Box.Button.high.value));
+    public static final JoystickButton box_mid            = Log.catchAll(() -> new JoystickButton(box, Box.Button.mid.value));
+    public static final JoystickButton box_low            = Log.catchAll(() -> new JoystickButton(box, Box.Button.low.value));
+    public static final JoystickButton box_trimDown       = Log.catchAll(() -> new JoystickButton(box, Box.Button.trimDown.value));
+    public static final JoystickButton box_trimUp         = Log.catchAll(() -> new JoystickButton(box, Box.Button.trimUp.value));
+    public static final JoystickButton box_altExtenderOut = Log.catchAll(() -> new JoystickButton(box, Box.Button.altExtenderOut.value));
+    public static final JoystickButton box_altExtenderIn  = Log.catchAll(() -> new JoystickButton(box, Box.Button.altExtenderIn.value));
+    public static final JoystickButton box_extenderIn     = Log.catchAll(() -> new JoystickButton(box, Box.Button.extenderIn.value));
+    public static final JoystickButton box_extenderOut    = Log.catchAll(() -> new JoystickButton(box, Box.Button.extenderOut.value));
+    public static final JoystickButton box_intake         = Log.catchAll(() -> new JoystickButton(box, Box.Button.intake.value));
+    public static final JoystickButton box_outtake        = Log.catchAll(() -> new JoystickButton(box, Box.Button.outtake.value));
 
     private IO() {/* what does sleep feel like */}
 }

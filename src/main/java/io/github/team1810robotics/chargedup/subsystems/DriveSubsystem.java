@@ -1,6 +1,7 @@
 package io.github.team1810robotics.chargedup.subsystems;
 
 import io.github.team1810robotics.chargedup.SwerveModule;
+import io.github.team1810robotics.chargedup.commands.autonomous.ResetExtender;
 
 import static io.github.team1810robotics.chargedup.Constants.*;
 
@@ -125,6 +126,7 @@ public class DriveSubsystem extends SubsystemBase {
     public CommandBase autoBalance(ArmSubsystem arm, ExtenderSubsystem extender) {
         return Commands.race(
                 Commands.sequence(
+                    new ResetExtender(extender),
                     new InstantCommand(() -> arm.setGoal(ArmConstants.LOW), arm),
                     Commands.run(
                         () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)

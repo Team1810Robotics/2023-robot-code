@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
-import io.github.team1810robotics.chargedup.commands.autonomous.GrabDock;
 import io.github.team1810robotics.chargedup.commands.autonomous.ResetExtender;
 import io.github.team1810robotics.chargedup.commands.autonomous.ScoreOutsideCube;
 import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
@@ -44,7 +43,6 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
-        leftJoystick_Button11.onTrue(new ResetExtender(extenderSubsystem));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
         // setXboxManipulator();
@@ -57,22 +55,22 @@ public class RobotContainer {
 
     // please stop. : )
     private void setManipulator() {
-        pipebomb_low.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
-        pipebomb_mid.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
-        pipebomb_high.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
-        pipebomb_reset.onTrue(new Reset(armSubsystem, extenderSubsystem));
+        box_low.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
+        box_mid.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
+        box_high.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
+        box_reset.onTrue(new Reset(armSubsystem, extenderSubsystem));
 
-        pipebomb_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
-        pipebomb_trimDown.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
+        box_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
+        box_trimDown.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
 
-        pipebomb_altExtenderIn.whileTrue(new Arm(armSubsystem, ArmConstants.HIGH));
-        pipebomb_altExtenderOut.whileTrue(new Arm(armSubsystem, Math.toRadians(5)));
+        box_altExtenderIn.whileTrue(new Arm(armSubsystem, ArmConstants.HIGH));
+        box_altExtenderOut.whileTrue(new Arm(armSubsystem, Math.toRadians(5)));
 
-        pipebomb_extenderIn.whileTrue(new Extender(extenderSubsystem, true));
-        pipebomb_extenderOut.whileTrue(new Extender(extenderSubsystem, false));
+        box_extenderIn.whileTrue(new Extender(extenderSubsystem, true));
+        box_extenderOut.whileTrue(new Extender(extenderSubsystem, false));
 
-        pipebomb_intake.whileTrue(new Intake(intakeSubsystem, true));
-        pipebomb_outtake.whileTrue(new Intake(intakeSubsystem, false));
+        box_intake.whileTrue(new Intake(intakeSubsystem, true));
+        box_outtake.whileTrue(new Intake(intakeSubsystem, false));
     }
 
     /* private void setXboxManipulator() {
@@ -102,13 +100,13 @@ public class RobotContainer {
         Shuffleboard.getTab("Autonomous").add("Score", score).withSize(2, 1).withPosition(0, 0);
 
         path.setDefaultOption("No Path", new ResetExtender(extenderSubsystem));
-        path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
-        path.setDefaultOption("2 Piece", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Path", path).withSize(2, 1).withPosition(2, 0);
+        // path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
+        // path.setDefaultOption("2 Piece", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
+        Shuffleboard.getTab("Autonomous").add("Path", path).withSize(2, 1).withPosition(6, 0);
 
         dock.setDefaultOption("Don't Dock", new InstantCommand());
         dock.addOption("Dock", driveSubsystem.autoBalance(armSubsystem, extenderSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(2, 1).withPosition(4, 0);
+        Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(2, 1).withPosition(2, 0);
     }
 
     private Command sequenceAutoChooserCommands() {
