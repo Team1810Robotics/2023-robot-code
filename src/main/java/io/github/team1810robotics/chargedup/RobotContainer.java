@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import io.github.team1810robotics.chargedup.commands.*;
 import io.github.team1810robotics.chargedup.subsystems.*;
+import io.github.team1810robotics.chargedup.commands.autonomous.CloseOffline;
+import io.github.team1810robotics.chargedup.commands.autonomous.FarOffline;
 import io.github.team1810robotics.chargedup.commands.autonomous.ResetExtender;
 import io.github.team1810robotics.chargedup.commands.autonomous.ScoreOutsideCube;
 import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
@@ -63,11 +65,11 @@ public class RobotContainer {
         box_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
         box_trimDown.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
 
-        box_altExtenderIn.whileTrue(new Arm(armSubsystem, ArmConstants.HIGH));
+        box_altExtenderIn.whileTrue(new Arm(armSubsystem, ArmConstants.SUBSTATION_HIGH));
         box_altExtenderOut.whileTrue(new Arm(armSubsystem, Math.toRadians(5)));
 
-        box_extenderIn.whileTrue(new Extender(extenderSubsystem, true));
-        box_extenderOut.whileTrue(new Extender(extenderSubsystem, false));
+        box_extenderOut.whileTrue(new Extender(extenderSubsystem, true));
+        box_extenderIn.whileTrue(new Extender(extenderSubsystem, false));
 
         box_intake.whileTrue(new Intake(intakeSubsystem, true));
         box_outtake.whileTrue(new Intake(intakeSubsystem, false));
@@ -100,6 +102,8 @@ public class RobotContainer {
         Shuffleboard.getTab("Autonomous").add("Score", score).withSize(2, 1).withPosition(0, 0);
 
         path.setDefaultOption("No Path", new ResetExtender(extenderSubsystem));
+        path.addOption("Far Offline", new FarOffline(driveSubsystem, armSubsystem, extenderSubsystem));
+        path.addOption("Close Offline", new CloseOffline(driveSubsystem, armSubsystem, extenderSubsystem));
         // path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         // path.setDefaultOption("2 Piece", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         Shuffleboard.getTab("Autonomous").add("Path", path).withSize(2, 1).withPosition(6, 0);

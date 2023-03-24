@@ -25,8 +25,8 @@ public class Box extends GenericHID {
         // Joystick
         intake(11),
         outtake(10),
-        extenderIn(9),
-        extenderOut(12);
+        extenderOut(9),
+        extenderIn(12);
 
         public final int value;
 

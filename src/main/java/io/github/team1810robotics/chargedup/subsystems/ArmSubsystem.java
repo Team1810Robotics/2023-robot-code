@@ -126,6 +126,10 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         trim = 0;
     }
 
+    public double getMaxDriveSpeed() {
+        return -0.0954929658551 * getDistance() + 2.15;
+    }
+
     /**
      * calculateKg's magic numbers come from here:
      * https://www.desmos.com/calculator/qlubzqpbu1

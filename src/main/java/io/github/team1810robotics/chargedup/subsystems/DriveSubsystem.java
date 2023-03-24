@@ -16,6 +16,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -62,7 +64,7 @@ public class DriveSubsystem extends SubsystemBase {
                             translation.getY(),
                             rotation));
 
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.MAX_SPEED);
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, ((DriverStation.isAutonomousEnabled()) ? AutoConstants.MAX_SPEED : DriveConstants.MAX_SPEED));
 
         for (SwerveModule mod : swerveModules) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -129,17 +131,17 @@ public class DriveSubsystem extends SubsystemBase {
                     new ResetExtender(extender),
                     new InstantCommand(() -> arm.setGoal(ArmConstants.LOW), arm),
                     Commands.run(
-                        () -> drive(new Translation2d(-1.5 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
-                            .until(() -> Math.abs(getRoll()) >= 16),
+                        () -> drive(new Translation2d(-1 / AutoConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("slow start"))
+                            .until(() -> Math.abs(getRoll()) >= 25),
                     Commands.run(
-                        () -> drive(new Translation2d(-1 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
-                            .until(() -> 10 >= Math.abs(getRoll())),
-                    Commands.run(
-                        () -> drive(new Translation2d(-1 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
-                            .until(() -> 13 <= Math.abs(getRoll())),
-                    Commands.run(
-                        () -> drive(new Translation2d(-0.4 / DriveConstants.MAX_SPEED, 0), 0, false, false), this)
+                        () -> drive(new Translation2d(-0.3 / AutoConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("int 1"))
                             .until(() -> Math.abs(getRoll()) <= 12),
+                    // Commands.run(
+                    //     () -> drive(new Translation2d(-0.3 / AutoConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("int 2"))
+                    //         .until(() -> Math.abs(getRoll()) >= 15),
+                    Commands.run(
+                        () -> drive(new Translation2d(-0.22 / AutoConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("finish"))
+                            .until(() -> Math.abs(getRoll()) <= 12.55),
                     Commands.run(this::setWheelsX, this)),
                 Commands.waitSeconds(15));
     }
@@ -152,7 +154,6 @@ public class DriveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         swerveOdometry.update(getGyroYaw(), getModulePositions());
-
         SmartDashboard.putNumber("Gyro Yaw", getGyroYaw().getDegrees());
         SmartDashboard.putNumber("Gyro Temp in F", gyro.getTemp() * (9. / 5.) + 32);
         SmartDashboard.putBoolean("Gyro Zero", (Math.abs(getGyroYaw().getDegrees()) % 360) < 0.5);
@@ -188,5 +189,7 @@ public class DriveSubsystem extends SubsystemBase {
             moduleContainer[mod.moduleNumber].addNumber("Module Velocity",
                     () -> mod.getState().speedMetersPerSecond);
         }
+
+        Shuffleboard.getTab("Autonomous").addDouble("Roll", this::getRoll);
     }
 }

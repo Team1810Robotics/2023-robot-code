@@ -86,7 +86,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double MAX_SPEED = 2.2;
+        public static final double MAX_SPEED = 2;
         /** Radians per Second */
         public static final double MAX_ANGULAR_VELOCITY = Math.PI / 2;
 
@@ -137,18 +137,8 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double MAX_SPEED = DriveConstants.MAX_SPEED;
+        public static final double MAX_SPEED = 2.2;
         public static final double MAX_ACCELERATION = 2;
-
-        public static final double CHARGE_STATION_TILT_DEG = 13;
-        public static final double LEVEL_DEG = 6;
-
-        public static final double FAST_SPEED = 0.6;
-        public static final double SLOW_SPEED = 0.2;
-        public static final double BALANCE_SPEED = 0.125;
-
-        private static final double DEBOUNCE_TIME = 0.15;
-        public static final int DEBOUNCE_TICKS = (int)(DEBOUNCE_TIME * 50);
 
         public static final int EXTENDER_DEADBAND = 100;
 
@@ -164,6 +154,7 @@ public final class Constants {
         public static final double LOW    = Math.toRadians(-30);
         public static final double MEDIUM = Math.toRadians(22);
         public static final double HIGH   = Math.toRadians(31);
+        public static final double SUBSTATION_HIGH = Math.toRadians(36.5);
 
         public static final class IntakeConstants {
             public static final int MOTOR_ID = 14;
@@ -207,8 +198,8 @@ public final class Constants {
             public static final double kI = 0;
             public static final double kD = 0;
 
-            private static final double MAX_SPEED = 3; // rad/s
-            private static final double MAX_ACCEL = 3; // rad/s/s
+            private static final double MAX_SPEED = 4; // rad/s
+            private static final double MAX_ACCEL = 4; // rad/s/s
             public static final TrapezoidProfile.Constraints CONSTRAINTS =
                 new TrapezoidProfile.Constraints(MAX_SPEED, MAX_ACCEL);
         }
