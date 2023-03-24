@@ -153,14 +153,14 @@ public final class Constants {
         public static final double RESET  = Math.toRadians(90);
         public static final double LOW    = Math.toRadians(-30);
         public static final double MEDIUM = Math.toRadians(22);
-        public static final double HIGH   = Math.toRadians(31);
+        public static final double HIGH   = Math.toRadians(33);
         public static final double SUBSTATION_HIGH = Math.toRadians(36.5);
 
         public static final class IntakeConstants {
             public static final int MOTOR_ID = 14;
             public static final boolean MOTOR_INVERTED = false;
 
-            public static final int LINE_BREAK_PORT = 2;
+            public static final int LINE_BREAK_PORT = 3;
 
             public static final String CAMERA_NAME = "OV5781";
             public static final int MIN_TARGET_AREA = 10; // %
@@ -169,6 +169,8 @@ public final class Constants {
         public static final class ExtenderConstants {
             public static final int MOTOR_ID = 0;
             public static final int ENCODER_PORTS[] = {6, 7};
+
+            public static final int MAX_OUT = 5000;
 
             public static final int CLOSE_LS = 5;
             public static final int FAR_LS = 4;

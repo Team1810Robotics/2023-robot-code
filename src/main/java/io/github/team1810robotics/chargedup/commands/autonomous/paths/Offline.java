@@ -18,7 +18,7 @@ public class Offline {
     }
 
     public static Command farOffline(DriveSubsystem drive) {
-        PathPlannerTrajectory trajectory = PathPlanner.loadPath("farOffline",
+        PathPlannerTrajectory trajectory = PathPlanner.loadPath("farOffine",
             AutoConstants.MAX_SPEED,
             AutoConstants.MAX_ACCELERATION);
 

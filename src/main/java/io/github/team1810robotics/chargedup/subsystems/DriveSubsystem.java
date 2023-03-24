@@ -63,7 +63,6 @@ public class DriveSubsystem extends SubsystemBase {
                             translation.getX(),
                             translation.getY(),
                             rotation));
-
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, ((DriverStation.isAutonomousEnabled()) ? AutoConstants.MAX_SPEED : DriveConstants.MAX_SPEED));
 
         for (SwerveModule mod : swerveModules) {

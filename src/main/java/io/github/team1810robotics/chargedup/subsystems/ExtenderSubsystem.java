@@ -25,6 +25,7 @@ public class ExtenderSubsystem extends SubsystemBase {
         Shuffleboard.getTab("Arm").addNumber("Extender Encoder", this::getDistance);
         Shuffleboard.getTab("Arm").addBoolean("Close LS", this::getCloseLS);
         Shuffleboard.getTab("Arm").addBoolean("Far LS", this::getFarLS);
+        Shuffleboard.getTab("Arm").addBoolean("Passed Half Extender", () -> getDistance() >= ExtenderConstants.MAX_OUT / 2);
     }
 
     public double getDistance() {
