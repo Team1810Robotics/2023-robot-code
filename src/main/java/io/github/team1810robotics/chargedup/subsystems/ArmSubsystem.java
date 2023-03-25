@@ -47,7 +47,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         this.encoder = motor.getEncoder(Type.kQuadrature, LiftConstants.ENCODER_CPR);
 
         encoder.setInverted(true);
-        encoder.setPosition(LiftConstants.ENCODER_OFFSET + 0.13);
+        encoder.setPosition(LiftConstants.ENCODER_OFFSET + 0.1395);
 
         encoder.setPositionConversionFactor(LiftConstants.ENCODER_POSITION_FACTOR);
         encoder.setVelocityConversionFactor(LiftConstants.ENCODER_VELOCITY_FACTOR);
@@ -124,10 +124,6 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
 
     public void zeroTrim() {
         trim = 0;
-    }
-
-    public double getMaxDriveSpeed() {
-        return -0.0954929658551 * getDistance() + 2.15;
     }
 
     /**
