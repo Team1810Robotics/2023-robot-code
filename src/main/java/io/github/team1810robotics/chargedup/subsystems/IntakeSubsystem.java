@@ -57,15 +57,4 @@ public class IntakeSubsystem extends SubsystemBase {
     public boolean intakeMove() {
         return Math.abs(motor.get()) >= 0.1;
     }
-
-    public boolean hasCube() {
-        var result = camera.getLatestResult();
-        if (!result.hasTargets())
-            return false;
-
-        if (result.getBestTarget().getArea() <= IntakeConstants.MIN_TARGET_AREA)
-            return false;
-
-        return true;
-    }
 }

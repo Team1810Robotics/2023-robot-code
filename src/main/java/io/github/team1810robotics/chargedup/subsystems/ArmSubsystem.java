@@ -47,7 +47,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem {
         this.encoder = motor.getEncoder(Type.kQuadrature, LiftConstants.ENCODER_CPR);
 
         encoder.setInverted(true);
-        encoder.setPosition(LiftConstants.ENCODER_OFFSET + 0.1395);
+        encoder.setPosition(LiftConstants.ENCODER_OFFSET + 0.137);
 
         encoder.setPositionConversionFactor(LiftConstants.ENCODER_POSITION_FACTOR);
         encoder.setVelocityConversionFactor(LiftConstants.ENCODER_VELOCITY_FACTOR);
