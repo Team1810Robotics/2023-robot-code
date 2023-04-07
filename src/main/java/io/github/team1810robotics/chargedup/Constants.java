@@ -21,6 +21,7 @@ import io.github.team1810robotics.lib.util.SwerveModuleConstants;
  * <pre> {@code import static io.github.team1810robotics.chargedup.Constants.*;} </pre>
  */
 public final class Constants {
+    public static final int DISTANCE_SENSOR = 0;
     public static final class DriveConstants {
         public static final int PIGEON_ID = 13;
         public static final boolean INVERT_GYRO = false; // Always ensure Gyro is CCW+ CW-
@@ -88,7 +89,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double MAX_SPEED = 2;
         /** Radians per Second */
-        public static final double MAX_ANGULAR_VELOCITY = Math.PI / 2;
+        public static final double MAX_ANGULAR_VELOCITY = Math.PI / 3.2;
 
         /* Neutral Modes */
         public static final NeutralMode STEER_NEUTRAL_MODE = NeutralMode.Brake;
@@ -154,7 +155,7 @@ public final class Constants {
         public static final double LOW    = Math.toRadians(-30);
         public static final double MEDIUM = Math.toRadians(22);
         public static final double HIGH   = Math.toRadians(33);
-        public static final double SUBSTATION_HIGH = Math.toRadians(36.5);
+        public static final double SUBSTATION_HIGH = Math.toRadians(38.8);
 
         public static final class IntakeConstants {
             public static final int MOTOR_ID = 14;
@@ -163,7 +164,6 @@ public final class Constants {
             public static final int LINE_BREAK_PORT = 3;
 
             public static final String CAMERA_NAME = "OV5781";
-            public static final int MIN_TARGET_AREA = 10; // %
         }
 
         public static final class ExtenderConstants {
@@ -196,12 +196,12 @@ public final class Constants {
             public static final double kV = 0.65;
             public static final double kA = 0.10;
 
-            public static final double kP = 24;
+            public static final double kP = 48;
             public static final double kI = 0;
             public static final double kD = 0;
 
-            private static final double MAX_SPEED = 4; // rad/s
-            private static final double MAX_ACCEL = 4; // rad/s/s
+            private static final double MAX_SPEED = 10; // rad/s
+            private static final double MAX_ACCEL = 10; // rad/s/s
             public static final TrapezoidProfile.Constraints CONSTRAINTS =
                 new TrapezoidProfile.Constraints(MAX_SPEED, MAX_ACCEL);
         }

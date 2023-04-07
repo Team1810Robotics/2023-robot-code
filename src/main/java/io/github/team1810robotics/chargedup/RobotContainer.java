@@ -41,6 +41,8 @@ public class RobotContainer {
         populateAutoChooser();
 
         configureButtonBindings();
+
+        // Shuffleboard.getTab("Arm").addDouble("Distance cm", () -> 29.988 * Math.pow(distanceSensor.getAverageVoltage(), -1.173));
     }
 
     private void configureButtonBindings() {
@@ -65,8 +67,8 @@ public class RobotContainer {
         box_trimUp.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(0.5)));
         box_trimDown.whileTrue(new ApplyTrim(armSubsystem, Math.toRadians(-0.25)));
 
-        box_altExtenderIn.whileTrue(new Arm(armSubsystem, ArmConstants.SUBSTATION_HIGH));
-        box_altExtenderOut.whileTrue(new Arm(armSubsystem, Math.toRadians(5)));
+        box_altExtenderIn.onTrue(new Arm(armSubsystem, ArmConstants.SUBSTATION_HIGH));
+        box_altExtenderOut.onTrue(new Arm(armSubsystem, Math.toRadians(5)));
 
         box_extenderOut.whileTrue(new Extender(extenderSubsystem, true));
         box_extenderIn.whileTrue(new Extender(extenderSubsystem, false));
@@ -116,6 +118,7 @@ public class RobotContainer {
     private Command sequenceAutoChooserCommands() {
         return score.getSelected()
                     .andThen(path.getSelected())
-                    .andThen(dock.getSelected());
+                    .andThen(dock.getSelected())
+                    .andThen(() -> driveSubsystem.setGyroYaw(180));
     }
 }
