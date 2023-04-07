@@ -21,6 +21,7 @@ import io.github.team1810robotics.lib.util.SwerveModuleConstants;
  * <pre> {@code import static io.github.team1810robotics.chargedup.Constants.*;} </pre>
  */
 public final class Constants {
+    public static final int DISTANCE_SENSOR = 0;
     public static final class DriveConstants {
         public static final int PIGEON_ID = 13;
         public static final boolean INVERT_GYRO = false; // Always ensure Gyro is CCW+ CW-
@@ -88,7 +89,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double MAX_SPEED = 2;
         /** Radians per Second */
-        public static final double MAX_ANGULAR_VELOCITY = Math.PI / 4;
+        public static final double MAX_ANGULAR_VELOCITY = Math.PI / 3.2;
 
         /* Neutral Modes */
         public static final NeutralMode STEER_NEUTRAL_MODE = NeutralMode.Brake;

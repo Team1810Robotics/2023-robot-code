@@ -107,6 +107,12 @@ public class DriveSubsystem extends SubsystemBase {
         gyro.setYaw(0);
     }
 
+    /** yaw in deg */
+    public void setGyroYaw(double yaw) {
+        System.out.println("Set Yaw: " + yaw);
+        gyro.setYaw(yaw);
+    }
+
     public Rotation2d getGyroYaw() {
         return (DriveConstants.INVERT_GYRO) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
