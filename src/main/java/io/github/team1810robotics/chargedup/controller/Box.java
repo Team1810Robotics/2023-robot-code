@@ -2,6 +2,7 @@ package io.github.team1810robotics.chargedup.controller;
 
 import edu.wpi.first.wpilibj.GenericHID;
 
+/** Class for more easily interfacing with Button Box Josh made */
 public class Box extends GenericHID {
 
     public Box(int port) {
@@ -19,6 +20,7 @@ public class Box extends GenericHID {
         altExtenderOut(5),
         altExtenderIn(6),
 
+        // Trim switch
         trimDown(7),
         trimUp(8),
 

@@ -21,17 +21,21 @@ import io.github.team1810robotics.lib.util.SwerveModuleConstants;
  * <pre> {@code import static io.github.team1810robotics.chargedup.Constants.*;} </pre>
  */
 public final class Constants {
+    // TODO: remove
     public static final int DISTANCE_SENSOR = 0;
+
+    // constants need for drive
     public static final class DriveConstants {
         public static final int PIGEON_ID = 13;
         public static final boolean INVERT_GYRO = false; // Always ensure Gyro is CCW+ CW-
 
+        // get the constants for the module we are using (an SDS MK4 L2)
         public static final COTSFalconSwerveConstants CHOSEN_MODULE =
             COTSFalconSwerveConstants.SDSMK4(COTSFalconSwerveConstants.driveGearRatios.SDSMK4_L2);
 
         /* Drivetrain Constants */
-        public static final double TRACKWIDTH = 0.74;
-        public static final double WHEELBASE = 0.74;
+        public static final double TRACKWIDTH = 0.74; // distance between the front and back wheels
+        public static final double WHEELBASE = 0.74; // distance between the right and left wheels
         public static final double WHEEL_CIRCUMFERENCE = CHOSEN_MODULE.wheelCircumference;
 
         public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
@@ -74,6 +78,7 @@ public final class Constants {
         public static final double STEER_kF = CHOSEN_MODULE.angleKF;
 
         /* Drive Motor PID Values */
+        // these come from sysid
         public static final double DRIVE_kP = 0.35444;
         public static final double DRIVE_kI = 0.0;
         public static final double DRIVE_kD = 0.0;
@@ -81,6 +86,7 @@ public final class Constants {
 
         /* Drive Motor Characterization Values
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
+        // divide by 12 is a lie actually but im really not sure why
         public static final double DRIVE_kS = 0.29170;
         public static final double DRIVE_kV = 2.16650;
         public static final double DRIVE_kA = 0.46999;
@@ -89,7 +95,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double MAX_SPEED = 2;
         /** Radians per Second */
-        public static final double MAX_ANGULAR_VELOCITY = Math.PI / 3.2;
+        public static final double MAX_ANGULAR_VELOCITY = Math.PI / 3.2; // everyones favorite unit circle constant π/3.2
 
         /* Neutral Modes */
         public static final NeutralMode STEER_NEUTRAL_MODE = NeutralMode.Brake;
@@ -138,25 +144,30 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
+        /* max speed for bot during auto paths */
         public static final double MAX_SPEED = 2.2;
         public static final double MAX_ACCELERATION = 2;
 
+        // the ticks off that the extender can be before the command tells it to stop
         public static final int EXTENDER_DEADBAND = 100;
 
+        // tested values to figure out the extension amount to score each place
         public static final int CUBE_HIGH_EXTENDER = 4300;
         public static final int CUBE_MID_EXTENDER = 0;
-        public static final int CONE_HIGH_EXTENDER = 10000;
+        public static final int CONE_HIGH_EXTENDER = 10000; // set super high because hitting the ls is more consistent
         public static final int CONE_MID_EXTENDER = 1500;
         public static final int CUBE_FLOOR_EXTENDER = 4000;
     }
 
     public static final class ArmConstants {
+        // diffrent angle values for the arm
         public static final double RESET  = Math.toRadians(90);
         public static final double LOW    = Math.toRadians(-30);
         public static final double MEDIUM = Math.toRadians(22);
         public static final double HIGH   = Math.toRadians(33);
         public static final double SUBSTATION_HIGH = Math.toRadians(38.8);
 
+        /** normal constants */
         public static final class IntakeConstants {
             public static final int MOTOR_ID = 14;
             public static final boolean MOTOR_INVERTED = false;
@@ -170,36 +181,60 @@ public final class Constants {
             public static final int MOTOR_ID = 0;
             public static final int ENCODER_PORTS[] = {6, 7};
 
+            // just used for shuffleboard. not an accurate value
             public static final int MAX_OUT = 5000;
 
-            public static final int CLOSE_LS = 5;
-            public static final int FAR_LS = 4;
+            public static final int CLOSE_LS = 5; // port number
+            public static final int FAR_LS = 4; // port number
         }
 
+        /**
+         * Lift is really what will soon become arm but i made the parent class
+         * called arm so this will remain lift
+         */
         public static final class LiftConstants {
             public static final int MOTOR_ID = 16;
 
+            // quadrature encoder clicks per revolution
             public static final int ENCODER_CPR = 1536;
+            // not used. . .
             public static final double ENCODER_DISTANCE_PER_PULSE = (2 * Math.PI) / ENCODER_CPR;
 
+            /* `ENCODER_OFFSET` is better explained in `ArmSubsystem#setPosition()` */
             public static final int ENCODER_OFFSET = 550;
+            // the expected initial position of the arm
             public static final double ARM_INITIAL = Math.PI / 2;
+            // also better in `ArmSubsystem#setPosition()`
             public static final double RADIAN_OFFSET = ENCODER_OFFSET * ((2 * Math.PI) / LiftConstants.GEAR_RATIO);
 
+            // current limit of the motor controller
             public static final int CURRENT_LIMIT = 15;
 
+            // gear ratio between the arm and the encoder
             public static final double GEAR_RATIO = (4 / 1);
+            // find the conversion rate from CPR to radians
             public static final double ENCODER_POSITION_FACTOR = ((2 * Math.PI) / GEAR_RATIO); // radians
-            public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad per sec
+            // find the conversion rate from CPR to radians per second
+            public static final double ENCODER_VELOCITY_FACTOR = ENCODER_POSITION_FACTOR / 60; // rad/s
 
+            /* because we couldnt get sysid to work these values are a combo
+             * of re-calc and so good ole SWAGs. that is why the values are so round
+             */
             public static final double kS = 0.50;
             public static final double kV = 0.65;
             public static final double kA = 0.10;
 
+            // the kp basically says move at max speed until you are less than 1/4 rad off
             public static final double kP = 48;
             public static final double kI = 0;
             public static final double kD = 0;
 
+            /*
+             * the arm could never actually go this fast. if i had more time i
+             * would have rewritten the `armSubsystem` so that it didnt need to
+             * use constraints but the quick in-comp fix to speed up the arm
+             * was to just put the max way higher than the arm could ever get
+             */
             private static final double MAX_SPEED = 10; // rad/s
             private static final double MAX_ACCEL = 10; // rad/s/s
             public static final TrapezoidProfile.Constraints CONSTRAINTS =
@@ -207,6 +242,7 @@ public final class Constants {
         }
     }
 
+    /** normal constants */
     public static final class OIConstants {
         public static final int MOVEMENT_JOYSTICK_PORT = 0;
         public static final int ROTATION_JOYSTICK_PORT = 1;

@@ -18,11 +18,15 @@ public class Intake extends CommandBase {
 
     @Override
     public void execute() {
+        // move the intake in the denoted direction
+        // that being in or not in
         intake.intake(in);
     }
 
     @Override
     public boolean isFinished() {
+        // if the linebreak is tripped and the inake is moving in
+        // stop the command
         if (intake.lineBreak() && in)
             return true;
 
@@ -31,6 +35,7 @@ public class Intake extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        // when the command stops stop the intake
         intake.stop();
     }
 }

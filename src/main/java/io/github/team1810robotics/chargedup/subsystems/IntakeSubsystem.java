@@ -24,10 +24,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
         lineBreak = new DigitalInput(IntakeConstants.LINE_BREAK_PORT);
 
+        /** debug stuff */
         Shuffleboard.getTab("Arm").addBoolean("Beam Break", this::lineBreak);
         Shuffleboard.getTab("Arm").addBoolean("Intake Running", this::intakeMove);
     }
 
+    /** found making a boolean control the motor easiest */
     public void intake(boolean in) {
         if (in) {
             motor.set(1);
@@ -36,25 +38,33 @@ public class IntakeSubsystem extends SubsystemBase {
         }
     }
 
+    /** attempting to set the intake camera to be in color
+     * it didnt want to seem to work for us or if it did it would revert
+     * halfway through the match
+     */
     public void forceDriverCamera() {
         camera.setDriverMode(true);
     }
 
     /**
-     * By default the linebreak is HIGH if the
-     * line is NOT broken and LOW if it is
+     * Switch is active low now
      * @return TRUE - line broken <p>
      *         FALSE - line connected
      */
     public boolean lineBreak() {
+        // default is active high. invert to make it active low
         return !lineBreak.get();
     }
 
+    /** wrapper fn to stop the motor */
     public void stop() {
         motor.set(0);
     }
 
+    // thing that josh wanted me to add
+    /** @return true if the intake is moving */
     public boolean intakeMove() {
+        // take the absolue value of the motor velocity and if its moving return true
         return Math.abs(motor.get()) >= 0.1;
     }
 }

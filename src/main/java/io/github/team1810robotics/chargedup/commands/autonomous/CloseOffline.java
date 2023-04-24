@@ -7,6 +7,7 @@ import io.github.team1810robotics.chargedup.subsystems.ArmSubsystem;
 import io.github.team1810robotics.chargedup.subsystems.DriveSubsystem;
 import io.github.team1810robotics.chargedup.subsystems.ExtenderSubsystem;
 
+/** resets the arm and follows the closeOffline path */
 public class CloseOffline extends SequentialCommandGroup {
     public CloseOffline(DriveSubsystem drive, ArmSubsystem arm, ExtenderSubsystem extender) {
         addCommands(new Reset(arm, extender),

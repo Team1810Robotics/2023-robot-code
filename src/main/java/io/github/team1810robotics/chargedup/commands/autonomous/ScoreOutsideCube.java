@@ -12,6 +12,7 @@ import io.github.team1810robotics.chargedup.subsystems.DriveSubsystem;
 import io.github.team1810robotics.chargedup.subsystems.ExtenderSubsystem;
 import io.github.team1810robotics.chargedup.subsystems.IntakeSubsystem;
 
+// auto path (thats all you get)
 public class ScoreOutsideCube extends SequentialCommandGroup {
     public ScoreOutsideCube(DriveSubsystem drive, ExtenderSubsystem extender, ArmSubsystem arm, IntakeSubsystem intake) {
                     // path to cube

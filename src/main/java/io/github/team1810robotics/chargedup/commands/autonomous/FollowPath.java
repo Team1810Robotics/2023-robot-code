@@ -13,6 +13,7 @@ public class FollowPath extends PPSwerveControllerCommand {
     DriveSubsystem driveSubsystem;
 
     public FollowPath(PathPlannerTrajectory trajectory, DriveSubsystem driveSubsystem) {
+        // make a PPSwerveController
         super(trajectory,
               driveSubsystem::getPose,
               DriveConstants.SWERVE_KINEMATICS,
@@ -34,23 +35,30 @@ public class FollowPath extends PPSwerveControllerCommand {
 
     @Override
     public void initialize() {
+        // run the super's `initialize()`
         super.initialize();
+        // reset out odometry to the inital pose of the path so that we arent
+        // completely screwed up. . . only slightly
         driveSubsystem.resetOdometry(trajectory.getInitialHolonomicPose());
     }
 
     @Override
     public void execute() {
+        // run the super's `execute()`
         super.execute();
     }
 
     @Override
     public boolean isFinished() {
+        // run the super's `isFinished()`
         return super.isFinished();
     }
 
     @Override
     public void end(boolean interrupted) {
+        // run the super's `end()`
         super.end(interrupted);
+        // stop the bot again just to make sure ;)
         driveSubsystem.stop();
     }
 }

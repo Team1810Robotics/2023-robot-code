@@ -15,9 +15,13 @@ public class ApplyTrim extends CommandBase {
 
     @Override
     public void execute() {
+        // apply trim is a command for convenience
+        // allows it to be called rapidly by a button without needing to make
+        // an instant command for it
         arm.setTrim(trim);
     }
 
+    /** why did i write this?? */
     @Override
     public void end(boolean interrupted) {
         arm.setTrim(0);

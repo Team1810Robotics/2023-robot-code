@@ -9,6 +9,7 @@ import io.github.team1810robotics.chargedup.commands.Reset;
 import io.github.team1810robotics.chargedup.commands.autonomous.paths.RunCube;
 import io.github.team1810robotics.chargedup.subsystems.*;
 
+// auto path (thats all you get)
 public class GrabDock extends SequentialCommandGroup {
     public GrabDock(DriveSubsystem drive, ExtenderSubsystem extender, ArmSubsystem arm, IntakeSubsystem intake) {
         addCommands(new Reset(arm, extender),

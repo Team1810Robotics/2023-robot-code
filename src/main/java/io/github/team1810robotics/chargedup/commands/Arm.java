@@ -17,6 +17,7 @@ public class Arm extends CommandBase {
 
     @Override
     public void initialize() {
+        // when the command is initialized zero the trim so stuff stays in order
         arm.zeroTrim();
     }
 

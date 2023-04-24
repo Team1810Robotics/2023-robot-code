@@ -9,6 +9,7 @@ import com.ctre.phoenix.sensors.SensorTimeBase;
 
 import static io.github.team1810robotics.chargedup.Constants.*;
 
+/** bunch of swerve module constants being applied */
 public final class CTREConfigs {
     public TalonFXConfiguration swerveAngleFXConfig;
     public TalonFXConfiguration swerveDriveFXConfig;

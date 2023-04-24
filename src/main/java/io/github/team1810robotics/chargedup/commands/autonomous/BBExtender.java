@@ -22,19 +22,24 @@ public class BBExtender extends CommandBase {
 
     @Override
     public void initialize() {
+        // figure out the direction that the extender should move
         direction = (extender.getDistance() <= extenderAmount);
     }
 
     @Override
     public void execute() {
+        // move
         extender.move(direction);
     }
 
     @Override
     public boolean isFinished() {
+        // try to figure out if the extender is where it needs to be based off
+        // of a deadband
         if (inRange(extender.getDistance() - extenderAmount, AutoConstants.EXTENDER_DEADBAND))
             return true;
 
+        // or if the far ls is hit
         if (extender.getFarLS() & direction)
             return true;
 
@@ -46,6 +51,7 @@ public class BBExtender extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        // stop the extender
         extender.stop();
     }
 
