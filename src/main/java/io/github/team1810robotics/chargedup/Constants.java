@@ -148,6 +148,20 @@ public final class Constants {
         public static final int CONE_HIGH_EXTENDER = 10000;
         public static final int CONE_MID_EXTENDER = 1500;
         public static final int CUBE_FLOOR_EXTENDER = 4000;
+
+        // TODO: Tune these values
+        public static final class DriveMotor {
+            public static final double kP = 0.0;
+            public static final double kI = 0.0;
+            public static final double kD = 0.0;
+        }
+
+        // TODO: Tune these values
+        public static final class SteerMotor {
+            public static final double kP = 0.0;
+            public static final double kI = 0.0;
+            public static final double kD = 0.0;
+        }
     }
 
     public static final class ArmConstants {
