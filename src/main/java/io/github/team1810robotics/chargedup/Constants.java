@@ -138,8 +138,9 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double MAX_SPEED = 2.2;
-        public static final double MAX_ACCELERATION = 2;
+        // TODO: mess with values. in general making it slower is better
+        public static final double MAX_SPEED = 0.5;
+        public static final double MAX_ACCELERATION = 1.0;
 
         public static final int EXTENDER_DEADBAND = 100;
 
