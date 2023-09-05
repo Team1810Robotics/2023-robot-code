@@ -52,5 +52,6 @@ public class FollowPath extends PPSwerveControllerCommand {
     public void end(boolean interrupted) {
         super.end(interrupted);
         driveSubsystem.stop();
+        driveSubsystem.restoreYawAfterTrajectory();
     }
 }

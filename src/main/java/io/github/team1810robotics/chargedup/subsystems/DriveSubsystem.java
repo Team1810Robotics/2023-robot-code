@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -31,7 +32,9 @@ public class DriveSubsystem extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule swerveModules[];
     public Pigeon2 gyro;
+
     private ShuffleboardContainer moduleContainer[] = new ShuffleboardContainer[4];
+    private double trajectoryAdjustmentAngle = 0.0;
 
     public DriveSubsystem() {
         gyro = new Pigeon2(DriveConstants.PIGEON_ID);
@@ -108,9 +111,19 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     /** yaw in deg */
-    public void setGyroYaw(double yaw) {
-        System.out.println("Set Yaw: " + yaw);
-        gyro.setYaw(yaw);
+    public ErrorCode setGyroYaw(double yaw) {
+        return gyro.setYaw(yaw);
+    }
+
+    // solution from
+    // https://www.chiefdelphi.com/t/pathplanner-swerve-trajectories-with-holonomic-rotation-stops-too-early/439937/36
+    public ErrorCode setYawForTrajectory(Rotation2d yaw) {
+        trajectoryAdjustmentAngle = getGyroYaw().minus(yaw).getDegrees();
+        return setGyroYaw(yaw.getDegrees());
+    }
+
+    public void restoreYawAfterTrajectory() {
+        setGyroYaw(getGyroYaw().getDegrees() + trajectoryAdjustmentAngle);
     }
 
     public Rotation2d getGyroYaw() {
