@@ -79,12 +79,6 @@ public final class Constants {
         public static final double DRIVE_kD = 0.0;
         public static final double DRIVE_kF = 0.0;
 
-        /* Drive Motor Characterization Values
-         * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double DRIVE_kS = 0.29170;
-        public static final double DRIVE_kV = 2.16650;
-        public static final double DRIVE_kA = 0.46999;
-
         /* Swerve Profiling Values */
         /** Meters per Second */
         public static final double MAX_SPEED = 2;
@@ -138,9 +132,9 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        // TODO: mess with values. in general making it slower is better
-        public static final double MAX_SPEED = 0.5;
-        public static final double MAX_ACCELERATION = 1.0;
+        // TODO: mess with values. in general making it slower during auto is better
+        public static final double MAX_SPEED = 0.75;
+        public static final double MAX_ACCELERATION = 0.5;
 
         public static final int EXTENDER_DEADBAND = 100;
 
@@ -151,7 +145,12 @@ public final class Constants {
         public static final int CUBE_FLOOR_EXTENDER = 4000;
 
         // TODO: Tune these values
+        /* Drive Motor Characterization Values */
         public static final class DriveMotor {
+            public static final double kS = 0.29170;
+            public static final double kV = 2.16650;
+            public static final double kA = 0.46999;
+
             public static final double kP = 0.0;
             public static final double kI = 0.0;
             public static final double kD = 0.0;

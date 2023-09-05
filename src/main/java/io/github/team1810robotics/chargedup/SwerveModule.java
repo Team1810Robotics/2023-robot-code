@@ -4,7 +4,6 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import io.github.team1810robotics.lib.math.Conversions;
 import io.github.team1810robotics.lib.util.CTREModuleState;
@@ -26,7 +25,7 @@ public class SwerveModule {
     public TalonFX driveMotor;
     private CANCoder canCoder;
 
-    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.DRIVE_kS, DriveConstants.DRIVE_kV, DriveConstants.DRIVE_kA);
+    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(AutoConstants.DriveMotor.kS, AutoConstants.DriveMotor.kV, AutoConstants.DriveMotor.kA);
 
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
         this.moduleNumber = moduleNumber;
@@ -56,7 +55,7 @@ public class SwerveModule {
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
         if (isOpenLoop) {
-            double percentOutput = desiredState.speedMetersPerSecond / ((DriverStation.isAutonomousEnabled()) ? AutoConstants.MAX_SPEED : DriveConstants.MAX_SPEED);
+            double percentOutput = desiredState.speedMetersPerSecond / DriveConstants.MAX_SPEED;
             driveMotor.set(ControlMode.PercentOutput, percentOutput);
         } else {
             double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond, DriveConstants.WHEEL_CIRCUMFERENCE, DriveConstants.DRIVE_GEAR_RATIO);

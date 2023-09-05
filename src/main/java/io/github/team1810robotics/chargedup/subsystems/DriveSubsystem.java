@@ -17,7 +17,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
@@ -66,7 +65,7 @@ public class DriveSubsystem extends SubsystemBase {
                             translation.getX(),
                             translation.getY(),
                             rotation));
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, ((DriverStation.isAutonomousEnabled()) ? AutoConstants.MAX_SPEED : DriveConstants.MAX_SPEED));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.MAX_SPEED);
 
         for (SwerveModule mod : swerveModules) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -136,6 +135,7 @@ public class DriveSubsystem extends SubsystemBase {
         }
     }
 
+    // didnt work :(
     private void setWheelsX() {
         swerveModules[0].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)),  false);
         swerveModules[1].setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false);
@@ -149,16 +149,16 @@ public class DriveSubsystem extends SubsystemBase {
                     new ResetExtender(extender),
                     new InstantCommand(() -> arm.setGoal(ArmConstants.LOW), arm),
                     Commands.run(
-                        () -> drive(new Translation2d(-1 / AutoConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("slow start"))
+                        () -> drive(new Translation2d(-1 / 2.2, 0), 0, false, false), this).alongWith(new PrintCommand("slow start"))
                             .until(() -> Math.abs(getRoll()) >= 25),
                     Commands.run(
-                        () -> drive(new Translation2d(-0.3 / AutoConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("int 1"))
+                        () -> drive(new Translation2d(-0.3 / 2.2, 0), 0, false, false), this).alongWith(new PrintCommand("int 1"))
                             .until(() -> Math.abs(getRoll()) <= 12),
                     // Commands.run(
-                    //     () -> drive(new Translation2d(-0.3 / AutoConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("int 2"))
+                    //     () -> drive(new Translation2d(-0.3 / 2.2, 0), 0, false, false), this).alongWith(new PrintCommand("int 2"))
                     //         .until(() -> Math.abs(getRoll()) >= 15),
                     Commands.run(
-                        () -> drive(new Translation2d(-0.22 / AutoConstants.MAX_SPEED, 0), 0, false, false), this).alongWith(new PrintCommand("finish"))
+                        () -> drive(new Translation2d(-0.22 / 2.2, 0), 0, false, false), this).alongWith(new PrintCommand("finish"))
                             .until(() -> Math.abs(getRoll()) <= 12.55),
                     Commands.run(this::setWheelsX, this)),
                 Commands.waitSeconds(15));
