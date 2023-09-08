@@ -4,6 +4,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import io.github.team1810robotics.chargedup.subsystems.DriveSubsystem;
 import static io.github.team1810robotics.chargedup.Constants.*;
 
@@ -28,11 +29,39 @@ public class FollowPath extends PPSwerveControllerCommand {
               driveSubsystem::setModuleStates,
               driveSubsystem);
 
-              this.trajectory = trajectory;
-              this.driveSubsystem = driveSubsystem;
+        this.trajectory = trajectory;
+        this.driveSubsystem = driveSubsystem;
 
-              addRequirements(driveSubsystem);
-            }
+        addRequirements(driveSubsystem);
+    }
+
+    // dumb dont do this in real code
+    public FollowPath(PathPlannerTrajectory trajectory, DriveSubsystem driveSubsystem, int defaultValue) {
+        super(trajectory,
+              driveSubsystem::getPose,
+              DriveConstants.SWERVE_KINEMATICS,
+              new PIDController(
+                SmartDashboard.getNumber("Drive P", defaultValue),
+                SmartDashboard.getNumber("Drive I", defaultValue),
+                SmartDashboard.getNumber("Drive D", defaultValue)),
+              new PIDController(
+                SmartDashboard.getNumber("Drive P", defaultValue),
+                SmartDashboard.getNumber("Drive I", defaultValue),
+                SmartDashboard.getNumber("Drive D", defaultValue)),
+
+              new PIDController(
+                SmartDashboard.getNumber("Steer P", defaultValue),
+                SmartDashboard.getNumber("Steer I", defaultValue),
+                SmartDashboard.getNumber("Steer D", defaultValue)),
+
+              driveSubsystem::setModuleStates,
+              driveSubsystem);
+
+        this.trajectory = trajectory;
+        this.driveSubsystem = driveSubsystem;
+
+        addRequirements(driveSubsystem);
+    }
 
     @Override
     public void initialize() {

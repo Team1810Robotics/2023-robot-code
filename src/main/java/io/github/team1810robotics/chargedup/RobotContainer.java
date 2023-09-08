@@ -39,6 +39,9 @@ public class RobotContainer {
                 () -> -leftJoystick.getZ(),
                 () -> true));
 
+        // TODO: remove at some point
+        Shuffleboard.getTab("Autonomous").addString("Current Drive Command", () -> driveSubsystem.getCurrentCommand().toString());
+
         populateAutoChooser();
 
         configureButtonBindings();
@@ -102,10 +105,11 @@ public class RobotContainer {
         // score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
         // Shuffleboard.getTab("Autonomous").add("Score", score).withSize(2, 1).withPosition(0, 0);
 
+        DontRun dontRun = new DontRun();
         path.setDefaultOption("No Path", new ResetExtender(extenderSubsystem));
-        path.addOption("90 deg rot", DontRun.rotate90deg(driveSubsystem));
-        path.addOption("spin line", DontRun.spinLine(driveSubsystem));
-        path.addOption("line", DontRun.line(driveSubsystem));
+        path.addOption("90 deg rot", dontRun.rotate90deg(driveSubsystem));
+        path.addOption("spin line", dontRun.spinLine(driveSubsystem));
+        path.addOption("line", dontRun.line(driveSubsystem));
         // path.addOption("Far Offline", new FarOffline(driveSubsystem, armSubsystem, extenderSubsystem));
         // path.addOption("Close Offline", new CloseOffline(driveSubsystem, armSubsystem, extenderSubsystem));
         // path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
