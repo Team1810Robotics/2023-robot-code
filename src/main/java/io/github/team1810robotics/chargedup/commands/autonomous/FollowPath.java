@@ -30,6 +30,8 @@ public class FollowPath extends PPSwerveControllerCommand {
 
               this.trajectory = trajectory;
               this.driveSubsystem = driveSubsystem;
+
+              addRequirements(driveSubsystem);
             }
 
     @Override

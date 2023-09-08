@@ -14,6 +14,7 @@ import io.github.team1810robotics.chargedup.commands.autonomous.CloseOffline;
 import io.github.team1810robotics.chargedup.commands.autonomous.FarOffline;
 import io.github.team1810robotics.chargedup.commands.autonomous.ResetExtender;
 import io.github.team1810robotics.chargedup.commands.autonomous.ScoreOutsideCube;
+import io.github.team1810robotics.chargedup.commands.autonomous.paths.DontRun;
 import io.github.team1810robotics.chargedup.commands.autonomous.scoring.*;
 
 public class RobotContainer {
@@ -41,8 +42,6 @@ public class RobotContainer {
         populateAutoChooser();
 
         configureButtonBindings();
-
-        // Shuffleboard.getTab("Arm").addDouble("Distance cm", () -> 29.988 * Math.pow(distanceSensor.getAverageVoltage(), -1.173));
     }
 
     private void configureButtonBindings() {
@@ -95,30 +94,33 @@ public class RobotContainer {
 
     private void populateAutoChooser() {
 
-        score.setDefaultOption("Don't Score", new InstantCommand());
-        score.addOption("Run Cube", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
-        score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
-        score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
-        score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
-        score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Score", score).withSize(2, 1).withPosition(0, 0);
+        // score.setDefaultOption("Don't Score", new InstantCommand());
+        // score.addOption("Run Cube", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
+        // score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
+        // score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
+        // score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
+        // score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
+        // Shuffleboard.getTab("Autonomous").add("Score", score).withSize(2, 1).withPosition(0, 0);
 
         path.setDefaultOption("No Path", new ResetExtender(extenderSubsystem));
-        path.addOption("Far Offline", new FarOffline(driveSubsystem, armSubsystem, extenderSubsystem));
-        path.addOption("Close Offline", new CloseOffline(driveSubsystem, armSubsystem, extenderSubsystem));
+        path.addOption("90 deg rot", DontRun.rotate90deg(driveSubsystem));
+        path.addOption("spin line", DontRun.spinLine(driveSubsystem));
+        path.addOption("line", DontRun.line(driveSubsystem));
+        // path.addOption("Far Offline", new FarOffline(driveSubsystem, armSubsystem, extenderSubsystem));
+        // path.addOption("Close Offline", new CloseOffline(driveSubsystem, armSubsystem, extenderSubsystem));
         // path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         // path.setDefaultOption("2 Piece", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         Shuffleboard.getTab("Autonomous").add("Path", path).withSize(2, 1).withPosition(6, 0);
 
-        dock.setDefaultOption("Don't Dock", new InstantCommand());
-        dock.addOption("Dock", driveSubsystem.autoBalance(armSubsystem, extenderSubsystem));
-        Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(2, 1).withPosition(2, 0);
+        // dock.setDefaultOption("Don't Dock", new InstantCommand());
+        // dock.addOption("Dock", driveSubsystem.autoBalance(armSubsystem, extenderSubsystem));
+        // Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(2, 1).withPosition(2, 0);
     }
 
     private Command sequenceAutoChooserCommands() {
-        return score.getSelected()
-                    .andThen(path.getSelected())
-                    .andThen(dock.getSelected())
-                    .andThen(() -> driveSubsystem.setGyroYaw(180));
+        return /* score.getSelected()
+                    .andThen( */path.getSelected();/* ) */
+                    // .andThen(dock.getSelected())
+                    // .andThen(() -> driveSubsystem.setGyroYaw(180));
     }
 }

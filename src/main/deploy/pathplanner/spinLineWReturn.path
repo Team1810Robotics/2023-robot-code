@@ -28,7 +28,32 @@
         "y": 3.0
       },
       "prevControl": {
+        "x": 4.0,
+        "y": 3.0
+      },
+      "nextControl": {
         "x": 2.0,
+        "y": 3.0
+      },
+      "holonomicAngle": 90.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.0,
+        "y": 3.0
+      },
+      "prevControl": {
+        "x": 2.750966787478937,
         "y": 3.0
       },
       "nextControl": null,
