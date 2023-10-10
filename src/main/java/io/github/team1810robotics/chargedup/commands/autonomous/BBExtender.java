@@ -62,9 +62,6 @@ public class BBExtender extends CommandBase {
      */
     private boolean inRange(double magnitude, double deadband) {
         // -deadband ≤ magnitude ≤ deadband
-        if (-deadband <= magnitude && magnitude <= deadband)
-            return true;
-
-        return false;
+        return (-deadband <= magnitude && magnitude <= deadband);
     }
 }
