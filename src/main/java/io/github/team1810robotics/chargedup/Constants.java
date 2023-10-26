@@ -89,13 +89,18 @@ public final class Constants {
         public static final NeutralMode STEER_NEUTRAL_MODE = NeutralMode.Brake;
         public static final NeutralMode DRIVE_NEUTRAL_MODE = NeutralMode.Brake;
 
+        private static final double FLoffset = 129.902;
+        private static final double FRoffset = 194.414;
+        private static final double BLoffset = 50.537;
+        private static final double BRoffset = 276.064;
+
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class FL {
             public static final int STEER_MOTOR_ID = 3;
             public static final int DRIVE_MOTOR_ID = 4;
             public static final int CAN_CODER_ID = 10;
-            public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(128.85);
+            public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(FLoffset);
             public static final SwerveModuleConstants CONSTANTS =
                 new SwerveModuleConstants(DRIVE_MOTOR_ID, STEER_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -105,7 +110,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 1;
             public static final int DRIVE_MOTOR_ID = 2;
             public static final int CAN_CODER_ID = 9;
-            public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(193.62);
+            public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(FRoffset);
             public static final SwerveModuleConstants CONSTANTS =
                 new SwerveModuleConstants(DRIVE_MOTOR_ID, STEER_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -115,7 +120,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 5;
             public static final int DRIVE_MOTOR_ID = 6;
             public static final int CAN_CODER_ID = 11;
-            public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(52.10);
+            public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(BLoffset);
             public static final SwerveModuleConstants CONSTANTS =
                 new SwerveModuleConstants(DRIVE_MOTOR_ID, STEER_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -125,7 +130,7 @@ public final class Constants {
             public static final int STEER_MOTOR_ID = 7;
             public static final int DRIVE_MOTOR_ID = 8;
             public static final int CAN_CODER_ID = 12;
-            public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(275.71);
+            public static final Rotation2d ANGLE_OFFSET = Rotation2d.fromDegrees(BRoffset);
             public static final SwerveModuleConstants CONSTANTS =
                 new SwerveModuleConstants(DRIVE_MOTOR_ID, STEER_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
