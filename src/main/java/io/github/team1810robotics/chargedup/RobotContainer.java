@@ -39,9 +39,6 @@ public class RobotContainer {
                 () -> -leftJoystick.getZ(),
                 () -> true));
 
-        // TODO: remove at some point
-        Shuffleboard.getTab("Autonomous").addString("Current Drive Command", () -> driveSubsystem.getCurrentCommand().toString());
-
         populateAutoChooser();
 
         configureButtonBindings();
@@ -49,6 +46,14 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         leftJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
+        leftJoystick_Button4.onTrue(new Arm(armSubsystem, ArmConstants.LOW));
+        leftJoystick_Button3.onTrue(new Arm(armSubsystem, ArmConstants.MEDIUM));
+        leftJoystick_Button5.onTrue(new Arm(armSubsystem, ArmConstants.HIGH));
+        leftJoystick_Button6.onTrue(new Reset(armSubsystem, extenderSubsystem));
+        leftJoystick_Trigger.whileTrue(new Intake(intakeSubsystem, true));
+        leftJoystick_Button2.whileTrue(new Intake(intakeSubsystem, false));
+        leftJoystick_Button7.whileTrue(new Extender(extenderSubsystem, true));
+        leftJoystick_Button8.whileTrue(new Extender(extenderSubsystem, false));
         // rightJoystick_Button9.onTrue(new InstantCommand(() -> driveSubsystem.zeroGyro()));
 
         // setXboxManipulator();
@@ -97,34 +102,35 @@ public class RobotContainer {
 
     private void populateAutoChooser() {
 
-        // score.setDefaultOption("Don't Score", new InstantCommand());
-        // score.addOption("Run Cube", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
-        // score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
-        // score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
-        // score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
-        // score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
-        // Shuffleboard.getTab("Autonomous").add("Score", score).withSize(2, 1).withPosition(0, 0);
+        score.setDefaultOption("Don't Score", new InstantCommand());
+        score.addOption("Run Cube", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
+        score.addOption("Cone Hi", new HighCone(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Cone Mid", new MidCone(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Cube Hi", new HighCube(armSubsystem, extenderSubsystem, intakeSubsystem));
+        score.addOption("Cube Mid", new MidCube(armSubsystem, extenderSubsystem, intakeSubsystem));
+        Shuffleboard.getTab("Autonomous").add("Score", score).withSize(2, 1).withPosition(0, 0);
 
-        DontRun dontRun = new DontRun();
+        // DontRun dontRun = new DontRun();
         path.setDefaultOption("No Path", new ResetExtender(extenderSubsystem));
-        path.addOption("90 deg rot", dontRun.rotate90deg(driveSubsystem));
-        path.addOption("spin line", dontRun.spinLine(driveSubsystem));
-        path.addOption("line", dontRun.line(driveSubsystem));
-        // path.addOption("Far Offline", new FarOffline(driveSubsystem, armSubsystem, extenderSubsystem));
-        // path.addOption("Close Offline", new CloseOffline(driveSubsystem, armSubsystem, extenderSubsystem));
+        // path.addOption("90 deg rot", dontRun.rotate90deg(driveSubsystem));
+        // path.addOption("spin line", dontRun.spinLine(driveSubsystem));
+        // path.addOption("line", dontRun.line(driveSubsystem));
+        path.addOption("Far Offline", new FarOffline(driveSubsystem, armSubsystem, extenderSubsystem));
+        path.addOption("Close Offline", new CloseOffline(driveSubsystem, armSubsystem, extenderSubsystem));
         // path.setDefaultOption("Grab & ready Dock", new GrabDock(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         // path.setDefaultOption("2 Piece", new ScoreOutsideCube(driveSubsystem, extenderSubsystem, armSubsystem, intakeSubsystem));
         Shuffleboard.getTab("Autonomous").add("Path", path).withSize(2, 1).withPosition(6, 0);
 
-        // dock.setDefaultOption("Don't Dock", new InstantCommand());
-        // dock.addOption("Dock", driveSubsystem.autoBalance(armSubsystem, extenderSubsystem));
-        // Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(2, 1).withPosition(2, 0);
+        dock.setDefaultOption("Don't Dock", new InstantCommand());
+        dock.addOption("Dock", driveSubsystem.autoBalance(armSubsystem, extenderSubsystem));
+        Shuffleboard.getTab("Autonomous").add("Dock", dock).withSize(2, 1).withPosition(2, 0);
     }
 
     private Command sequenceAutoChooserCommands() {
-        return /* score.getSelected()
-                    .andThen( */path.getSelected();/* ) */
-                    // .andThen(dock.getSelected())
+        return score.getSelected()
+                    .andThen(new Reset(armSubsystem, extenderSubsystem))
+                    .andThen(path.getSelected())
+                    .andThen(dock.getSelected());
                     // .andThen(() -> driveSubsystem.setGyroYaw(180));
     }
 }
